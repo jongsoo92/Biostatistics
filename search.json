@@ -1,0 +1,93 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "의학통계학(MED2104)",
+    "section": "",
+    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "descriptive_statistics.html#파일-불러오기",
+    "href": "descriptive_statistics.html#파일-불러오기",
+    "title": "2  기술통계",
+    "section": "2.1 파일 불러오기",
+    "text": "2.1 파일 불러오기\n\ngetwd()\n\n[1] \"/Users/jongsoo/Biostatistics/Biostatistics\"\n\nsetwd(dir=\"/Users/jongsoo/Downloads\")\ngetwd()\n\n[1] \"/Users/jongsoo/Downloads\"\n\n#| invisible(install.packages(\"haven\",repos = 'http://cran.us.r-project.org'))\nlibrary(haven)\ndata = read_sav(\"HN19_실습.sav\")\nknitr::kable(head(data))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nID\nsex\nage\nHE_BMI\nsmoke\ncursmoke\nedu\nmarri_1\nDI1_dg\nDI1_ag\nDE1_dg\nDE1_ag\nDI2_dg\nDI2_ag\nHE_sbp1\nHE_sbp2\nHE_sbp3\nHE_dbp1\nHE_dbp2\nHE_dbp3\nHE_sbp\nHE_dbp\nHE_ht\nHE_wt\nHE_wc\nHE_chol\nHE_TG\nBD1\nBP5\nmh_stress\nBP16_1\nBP16_2\n\n\n\n\nA531220402\n2\n45\n19.96642\n3\n0\n4\n2\n0\n45\n0\n45\n0\n45\n106\n104\n102\n74\n72\n70\n103\n71\n171.9\n59.0\n73.9\n197\n40\n2\n2\n1\n5\n6\n\n\nL501322401\n1\n51\n24.87020\n2\n0\n3\n1\n0\n51\n0\n51\n1\n50\n120\n112\n114\n76\n76\n72\n113\n74\n169.2\n71.2\n85.7\n242\n166\n2\n2\n0\n5\n5\n\n\nD510288401\n2\n23\n21.77763\n3\n0\n4\n2\n0\n23\n0\n23\n0\n23\n114\n112\n110\n80\n84\n80\n111\n82\n166.4\n60.3\n75.1\n192\n46\n2\n2\n1\n7\n10\n\n\nM503205101\n2\n68\n23.59494\n3\n0\n1\n1\n1\n66\n0\n68\n1\n67\n140\n136\n134\n74\n78\n74\n135\n76\n155.7\n57.2\n83.9\n138\n59\n2\n1\n0\n3\n3\n\n\nB512234004\n1\n28\n24.47525\n2\n0\n4\n2\n0\n28\n0\n28\n0\n28\n110\n104\n110\n76\n76\n78\n107\n77\n170.2\n70.9\n82.2\n209\n175\n2\n2\n0\n6\n10\n\n\nK501305402\n2\n56\n27.50619\n3\n0\n3\n1\n1\n56\n0\n56\n0\n56\n144\n144\n142\n82\n80\n82\n143\n81\n157.0\n67.8\n88.4\n170\n135\n1\n2\n0\n4\n4"
+  },
+  {
+    "objectID": "descriptive_statistics.html#기술통계량",
+    "href": "descriptive_statistics.html#기술통계량",
+    "title": "2  기술통계",
+    "section": "2.2 기술통계량",
+    "text": "2.2 기술통계량\n\n2.2.1 소숫점 셋째자리 반올림\n\n\n2.2.2 Minimum\n\nmin(data$age)\n\n[1] 20\n\n\n\n\n2.2.3 Maximum\n\nmax(data$age)\n\n[1] 80\n\n\n\n\n2.2.4 Range\n\nrange(data$age)\n\n[1] 20 80\n\nrange(data$age)[1]#min\n\n[1] 20\n\nrange(data$age)[2]#max\n\n[1] 80\n\n\n\n\n2.2.5 Quantile\n\nquantile(data$age,0.25)\n\n  25% \n37.75 \n\nquantile(data$age,0.75)\n\n  75% \n65.25 \n\n\n\n\n2.2.6 interquartile range\n\nIQR(data$age)\n\n[1] 27.5\n\n\n\n\n2.2.7 Standard devidation\n\nsd(data$age)\n\n[1] 16.97444\n\n\n\n\n2.2.8 Variance\n\nvar(data$age)\n\n[1] 288.1317\n\n\n\n\n2.2.9 Skewness\n\nlibrary(moments)\nskewness(data$age)\n\n[1] 0.02470892\n\n\n\n\n2.2.10 Kurtosis\n\nkurtosis(data$age)\n\n[1] 1.940932\n\n\n\n# summary: Min, 1st quartile, Median, Mean, 3rd quartile, Max\nsummary(data$age)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n  20.00   37.75   51.00   51.31   65.25   80.00 \n\n# min: minimum\nmin(data$age)\n\n[1] 20\n\n# max: maximum\nmax(data$age)\n\n[1] 80\n\n# range: range = [min, max]\nrange(data$age)\n\n[1] 20 80\n\n# quantile: \nquantile(data$age, 0.25)\n\n  25% \n37.75 \n\n# IQR: interquartile range\nIQR(data$age)\n\n[1] 27.5\n\n# Standard devidation: \nsd(data$age)\n\n[1] 16.97444\n\n# Variance: \nvar(data$age)\n\n[1] 288.1317\n\n# Skewness\ninstall.packages(\"moments\", repos = 'http://cran.us.r-project.org')\n\n\n다운로드된 바이너리 패키지들은 다음의 위치에 있습니다\n    /var/folders/yp/03fysc6x5mqb63q6zm6wp_dm0000gn/T//RtmpkbPFKg/downloaded_packages\n\nlibrary(moments)\nskewness(data$age)\n\n[1] 0.02470892\n\n# Kurtosis\nkurtosis(data$age)\n\n[1] 1.940932\n\n\n\n\n2.2.11 Stem and leaf plot\n\nstem(data$age)\n\n\n  The decimal point is 1 digit(s) to the right of the |\n\n  2 | 001111122222222333333344444444\n  2 | 55555555666666677788889999999\n  3 | 0000000001111112222333333334444444444\n  3 | 55555556666666666777777777777888888888999999999\n  4 | 0000000000111111122222222223333333333344444444\n  4 | 5555555555555556666677777777778888888999999999\n  5 | 0000000000000111111111222222233333333333344444\n  5 | 555555566666666666677777778888888888888888999999999\n  6 | 000000011222222222223333333344444444444\n  6 | 5555666666666667777777788888899999999999\n  7 | 000011111112222223333334444444444\n  7 | 5555556666666667778889999999999\n  8 | 0000000000000000000000000\n\n\n\n\n2.2.12 Histogram\n\nhist(data$age)\n\nlibrary(ggplot2)\n\n\n\npp &lt;- ggplot(data, aes(x=age)) + geom_histogram(binwidth=1, color=\"blue\", fill=\"white\")\npp\n\n\n\n\n\n\n2.2.13 Box plot\n\nboxplot(data$age)\n\n\n\nlibrary(ggplot2)\npp &lt;- ggplot(data,aes(x=age)) + geom_boxplot()\npp\n\n\n\n\n\n\n2.2.14 Box plot 2 groups\n\nboxplot(data$age~data$sex)\n\n\n\nlibrary(ggplot2)\ndata$sex = as.factor(data$sex)\npp &lt;- ggplot(data,aes(x=sex, y= age)) + geom_boxplot()\npp"
+  },
+  {
+    "objectID": "probabilities_and_distributions.html",
+    "href": "probabilities_and_distributions.html",
+    "title": "3  확률과 분포",
+    "section": "",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "compare_two_groups.html",
+    "href": "compare_two_groups.html",
+    "title": "4  두 집단 평균비교",
+    "section": "",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "compare_more_than_three_groups.html",
+    "href": "compare_more_than_three_groups.html",
+    "title": "5  세 집단 이상 평균비교",
+    "section": "",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "compare_two_proportions.html",
+    "href": "compare_two_proportions.html",
+    "title": "6  두 집단의 분율비교",
+    "section": "",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "regression.html",
+    "href": "regression.html",
+    "title": "7  회귀분석",
+    "section": "",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "logistic_regression.html",
+    "href": "logistic_regression.html",
+    "title": "8  로지스틱 회귀분석",
+    "section": "",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "survival_analysis.html",
+    "href": "survival_analysis.html",
+    "title": "9  생존분석",
+    "section": "",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "sample_size_in_clinical_trial.html",
+    "href": "sample_size_in_clinical_trial.html",
+    "title": "10  Sample size in Clinical Trial",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  }
+]
