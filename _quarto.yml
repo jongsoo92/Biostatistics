@@ -4,7 +4,8 @@ project:
 book:
   title: "의학통계학(MED2104)"
   author: "Jongsoo Hong"
-  date: "8/28/2023"
+  keyword: descriptive statistics, t-test, ANOVA, regression, logistic, survival
+  url: https://jongsoo92.github.io/Biostatistics/
   chapters:
     - index.qmd
     - intro.qmd
@@ -22,6 +23,10 @@ book:
   page-navigation: true
   sidebar:
     search: true
+  repo-url: https://jongsoo92.github.io/Biostatistics/
+  repo-subdir: book
+  repo-branch: main
+  repo-actions: [edit, issue, source]
   downloads: [pdf]
 bibliography: references.bib
 
