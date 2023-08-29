@@ -227,6 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#fishers-exact-test" id="toc-fishers-exact-test" class="nav-link" data-scroll-target="#fishers-exact-test"><span class="header-section-number">6.2</span> Fisher’s exact test</a></li>
   <li><a href="#mantel-haenszel-chi-square-test" id="toc-mantel-haenszel-chi-square-test" class="nav-link" data-scroll-target="#mantel-haenszel-chi-square-test"><span class="header-section-number">6.3</span> Mantel-Haenszel chi-square test</a></li>
   <li><a href="#mcnemar-test" id="toc-mcnemar-test" class="nav-link" data-scroll-target="#mcnemar-test"><span class="header-section-number">6.4</span> McNemar test</a></li>
+  <li><a href="#weight-cases-example" id="toc-weight-cases-example" class="nav-link" data-scroll-target="#weight-cases-example"><span class="header-section-number">6.5</span> Weight cases example</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://jongsoo92.github.io/Biostatistics/edit/main/book/compare_two_proportions.qmd" class="toc-action">Edit this page</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/blob/main/book/compare_two_proportions.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -260,17 +261,193 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>필요한 패키지를 로딩중입니다: carData</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read_sav</span>(<span class="st">"HN19_실습.sav"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sex <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sex <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>sex)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>sex)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"Male"</span>,<span class="st">"Female"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>DE1_dg <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>DE1_dg)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>DE1_dg) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>sex,data<span class="sc">$</span>DE1_dg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        
+          No Yes
+  Male   189  23
+  Female 259  29</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(data<span class="sc">$</span>sex,data<span class="sc">$</span>DE1_dg),<span class="dv">1</span>),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        
+            No   Yes
+  Male   0.892 0.108
+  Female 0.899 0.101</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(data<span class="sc">$</span>sex,data<span class="sc">$</span>DE1_dg),<span class="at">correct=</span><span class="cn">FALSE</span>)<span class="co"># Asymptotic significance</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  table(data$sex, data$DE1_dg)
+X-squared = 0.079648, df = 1, p-value = 0.7778</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(data<span class="sc">$</span>sex,data<span class="sc">$</span>DE1_dg),<span class="at">correct=</span><span class="cn">TRUE</span>)<span class="co"># Continuity Correction</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test with Yates' continuity correction
+
+data:  table(data$sex, data$DE1_dg)
+X-squared = 0.017955, df = 1, p-value = 0.8934</code></pre>
+</div>
 </div>
 </section>
 <section id="fishers-exact-test" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="fishers-exact-test"><span class="header-section-number">6.2</span> Fisher’s exact test</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>cursmoke <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>cursmoke)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>cursmoke) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>cursmoke,data<span class="sc">$</span>DE1_dg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     
+       No Yes
+  No  373  43
+  Yes  75   9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(data<span class="sc">$</span>cursmoke,data<span class="sc">$</span>DE1_dg),<span class="dv">1</span>),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     
+         No   Yes
+  No  0.897 0.103
+  Yes 0.893 0.107</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(data<span class="sc">$</span>cursmoke,data<span class="sc">$</span>DE1_dg),<span class="at">correct=</span><span class="cn">FALSE</span>)<span class="co"># Asymptotic significance</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  table(data$cursmoke, data$DE1_dg)
+X-squared = 0.010702, df = 1, p-value = 0.9176</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(data<span class="sc">$</span>cursmoke,data<span class="sc">$</span>DE1_dg),<span class="at">correct=</span><span class="cn">TRUE</span>)<span class="co"># Continuity Correction</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test with Yates' continuity correction
+
+data:  table(data$cursmoke, data$DE1_dg)
+X-squared = 3.1536e-30, df = 1, p-value = 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(<span class="fu">table</span>(data<span class="sc">$</span>cursmoke,data<span class="sc">$</span>DE1_dg))<span class="co"># Fisher's exact test</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Fisher's Exact Test for Count Data
+
+data:  table(data$cursmoke, data$DE1_dg)
+p-value = 0.847
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+ 0.427615 2.284097
+sample estimates:
+odds ratio 
+   1.04085 </code></pre>
+</div>
+</div>
 </section>
 <section id="mantel-haenszel-chi-square-test" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="mantel-haenszel-chi-square-test"><span class="header-section-number">6.3</span> Mantel-Haenszel chi-square test</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+다음의 패키지를 부착합니다: 'DescTools'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:car':
+
+    Recode</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>BMI_gp <span class="ot">=</span> <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">20</span>, <span class="dv">1</span>,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">25</span>,<span class="dv">2</span>,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_BMI<span class="sc">&gt;</span><span class="dv">25</span>,<span class="dv">3</span>,<span class="cn">NA</span>)))</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>BMI_gp <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>BMI_gp)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>BMI_gp) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"light"</span>,<span class="st">"normal"</span>,<span class="st">"heavy"</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>DI1_dg,data<span class="sc">$</span>BMI_gp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   
+    light normal heavy
+  0    53    220   104
+  1     8     60    52</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(data<span class="sc">$</span>DI1_dg,data<span class="sc">$</span>BMI_gp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  table(data$DI1_dg, data$BMI_gp)
+X-squared = 12.371, df = 2, p-value = 0.002059</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">MHChisqTest</span>(<span class="fu">table</span>(data<span class="sc">$</span>DI1_dg,data<span class="sc">$</span>BMI_gp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Mantel-Haenszel Chi-Square
+
+data:  table(data$DI1_dg, data$BMI_gp)
+X-squared = 12.157, df = 1, p-value = 0.0004891</code></pre>
+</div>
+</div>
 </section>
 <section id="mcnemar-test" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="mcnemar-test"><span class="header-section-number">6.4</span> McNemar test</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sbp_group1 <span class="ot">=</span> <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_sbp1<span class="sc">&lt;=</span><span class="dv">120</span>,<span class="st">"normal"</span>,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_sbp1<span class="sc">&gt;</span><span class="dv">120</span>,<span class="st">"danger"</span>,<span class="cn">NA</span>))</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sbp_group2 <span class="ot">=</span> <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_sbp2<span class="sc">&lt;=</span><span class="dv">120</span>,<span class="st">"normal"</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_sbp2<span class="sc">&gt;</span><span class="dv">120</span>,<span class="st">"danger"</span>,<span class="cn">NA</span>))</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>sbp_group1,data<span class="sc">$</span>sbp_group2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        
+         danger normal
+  danger    199     27
+  normal     22    250</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcnemar.test</span>(<span class="fu">table</span>(data<span class="sc">$</span>sbp_group1,data<span class="sc">$</span>sbp_group2),<span class="at">correct=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    McNemar's Chi-squared test
+
+data:  table(data$sbp_group1, data$sbp_group2)
+McNemar's chi-squared = 0.5102, df = 1, p-value = 0.4751</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcnemar.test</span>(<span class="fu">table</span>(data<span class="sc">$</span>sbp_group1,data<span class="sc">$</span>sbp_group2),<span class="at">correct=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    McNemar's Chi-squared test with continuity correction
+
+data:  table(data$sbp_group1, data$sbp_group2)
+McNemar's chi-squared = 0.32653, df = 1, p-value = 0.5677</code></pre>
+</div>
+</div>
+</section>
+<section id="weight-cases-example" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="weight-cases-example"><span class="header-section-number">6.5</span> Weight cases example</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">28</span>,<span class="dv">5</span>,<span class="dv">25</span>),<span class="at">nrow=</span><span class="dv">2</span>,<span class="at">ncol=</span><span class="dv">2</span>,<span class="at">byrow =</span> T)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>test_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    2   28
+[2,]    5   25</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Fisher's Exact Test for Count Data
+
+data:  test_data
+p-value = 0.4238
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+ 0.03189243 2.46223985
+sample estimates:
+odds ratio 
+ 0.3630951 </code></pre>
+</div>
+</div>
 
 
 </section>
