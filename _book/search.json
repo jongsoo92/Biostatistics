@@ -25,7 +25,7 @@
     "href": "descriptive_statistics.html#기술통계량",
     "title": "2  기술통계",
     "section": "2.2 기술통계량",
-    "text": "2.2 기술통계량\n\n2.2.1 소숫점 셋째자리 반올림\n\n\n2.2.2 Minimum\n\nmin(data$age)\n\n[1] 20\n\n\n\n\n2.2.3 Maximum\n\nmax(data$age)\n\n[1] 80\n\n\n\n\n2.2.4 Range\n\nrange(data$age)\n\n[1] 20 80\n\nrange(data$age)[1]#min\n\n[1] 20\n\nrange(data$age)[2]#max\n\n[1] 80\n\n\n\n\n2.2.5 Quantile\n\nquantile(data$age,0.25)\n\n  25% \n37.75 \n\nquantile(data$age,0.75)\n\n  75% \n65.25 \n\n\n\n\n2.2.6 interquartile range\n\nIQR(data$age)\n\n[1] 27.5\n\n\n\n\n2.2.7 Standard devidation\n\nsd(data$age)\n\n[1] 16.97444\n\n\n\n\n2.2.8 Variance\n\nvar(data$age)\n\n[1] 288.1317\n\n\n\n\n2.2.9 Skewness\n\nlibrary(moments)\nskewness(data$age)\n\n[1] 0.02470892\n\n\n\n\n2.2.10 Kurtosis\n\nkurtosis(data$age)\n\n[1] 1.940932\n\n\n\n# summary: Min, 1st quartile, Median, Mean, 3rd quartile, Max\nsummary(data$age)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n  20.00   37.75   51.00   51.31   65.25   80.00 \n\n# min: minimum\nmin(data$age)\n\n[1] 20\n\n# max: maximum\nmax(data$age)\n\n[1] 80\n\n# range: range = [min, max]\nrange(data$age)\n\n[1] 20 80\n\n# quantile: \nquantile(data$age, 0.25)\n\n  25% \n37.75 \n\n# IQR: interquartile range\nIQR(data$age)\n\n[1] 27.5\n\n# Standard devidation: \nsd(data$age)\n\n[1] 16.97444\n\n# Variance: \nvar(data$age)\n\n[1] 288.1317\n\n# Skewness\ninstall.packages(\"moments\", repos = 'http://cran.us.r-project.org')\n\n\n다운로드된 바이너리 패키지들은 다음의 위치에 있습니다\n    /var/folders/yp/03fysc6x5mqb63q6zm6wp_dm0000gn/T//RtmpSvqxsu/downloaded_packages\n\nlibrary(moments)\nskewness(data$age)\n\n[1] 0.02470892\n\n# Kurtosis\nkurtosis(data$age)\n\n[1] 1.940932\n\n\n\n\n2.2.11 Stem and leaf plot\n\nstem(data$age)\n\n\n  The decimal point is 1 digit(s) to the right of the |\n\n  2 | 001111122222222333333344444444\n  2 | 55555555666666677788889999999\n  3 | 0000000001111112222333333334444444444\n  3 | 55555556666666666777777777777888888888999999999\n  4 | 0000000000111111122222222223333333333344444444\n  4 | 5555555555555556666677777777778888888999999999\n  5 | 0000000000000111111111222222233333333333344444\n  5 | 555555566666666666677777778888888888888888999999999\n  6 | 000000011222222222223333333344444444444\n  6 | 5555666666666667777777788888899999999999\n  7 | 000011111112222223333334444444444\n  7 | 5555556666666667778889999999999\n  8 | 0000000000000000000000000\n\n\n\n\n2.2.12 Histogram\n\nhist(data$age)\n\nlibrary(ggplot2)\n\n\n\npp &lt;- ggplot(data, aes(x=age)) + geom_histogram(binwidth=1, color=\"blue\", fill=\"white\")\npp\n\n\n\n\n\n\n2.2.13 Box plot\n\nboxplot(data$age)\n\n\n\nlibrary(ggplot2)\npp &lt;- ggplot(data,aes(x=age)) + geom_boxplot()\npp\n\n\n\n\n\n\n2.2.14 Box plot 2 groups\n\nboxplot(data$age~data$sex)\n\n\n\nlibrary(ggplot2)\ndata$sex = as.factor(data$sex)\npp &lt;- ggplot(data,aes(x=sex, y= age)) + geom_boxplot()\npp"
+    "text": "2.2 기술통계량\n\n2.2.1 소숫점 셋째자리 반올림\n\n\n2.2.2 Minimum\n\nmin(data$age)\n\n[1] 20\n\n\n\n\n2.2.3 Maximum\n\nmax(data$age)\n\n[1] 80\n\n\n\n\n2.2.4 Range\n\nrange(data$age)\n\n[1] 20 80\n\nrange(data$age)[1]#min\n\n[1] 20\n\nrange(data$age)[2]#max\n\n[1] 80\n\n\n\n\n2.2.5 Quantile\n\nquantile(data$age,0.25)\n\n  25% \n37.75 \n\nquantile(data$age,0.75)\n\n  75% \n65.25 \n\n\n\n\n2.2.6 interquartile range\n\nIQR(data$age)\n\n[1] 27.5\n\n\n\n\n2.2.7 Standard devidation\n\nsd(data$age)\n\n[1] 16.97444\n\n\n\n\n2.2.8 Variance\n\nvar(data$age)\n\n[1] 288.1317\n\n\n\n\n2.2.9 Skewness\n\nlibrary(moments)\nskewness(data$age)\n\n[1] 0.02470892\n\n\n\n\n2.2.10 Kurtosis\n\nkurtosis(data$age)\n\n[1] 1.940932\n\n\n\n# summary: Min, 1st quartile, Median, Mean, 3rd quartile, Max\nsummary(data$age)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n  20.00   37.75   51.00   51.31   65.25   80.00 \n\n# min: minimum\nmin(data$age)\n\n[1] 20\n\n# max: maximum\nmax(data$age)\n\n[1] 80\n\n# range: range = [min, max]\nrange(data$age)\n\n[1] 20 80\n\n# quantile: \nquantile(data$age, 0.25)\n\n  25% \n37.75 \n\n# IQR: interquartile range\nIQR(data$age)\n\n[1] 27.5\n\n# Standard devidation: \nsd(data$age)\n\n[1] 16.97444\n\n# Variance: \nvar(data$age)\n\n[1] 288.1317\n\n# Skewness\ninstall.packages(\"moments\", repos = 'http://cran.us.r-project.org')\n\n\nThe downloaded binary packages are in\n    /var/folders/yp/03fysc6x5mqb63q6zm6wp_dm0000gn/T//RtmpMcS5Z6/downloaded_packages\n\nlibrary(moments)\nskewness(data$age)\n\n[1] 0.02470892\n\n# Kurtosis\nkurtosis(data$age)\n\n[1] 1.940932\n\n\n\n\n2.2.11 Stem and leaf plot\n\nstem(data$age)\n\n\n  The decimal point is 1 digit(s) to the right of the |\n\n  2 | 001111122222222333333344444444\n  2 | 55555555666666677788889999999\n  3 | 0000000001111112222333333334444444444\n  3 | 55555556666666666777777777777888888888999999999\n  4 | 0000000000111111122222222223333333333344444444\n  4 | 5555555555555556666677777777778888888999999999\n  5 | 0000000000000111111111222222233333333333344444\n  5 | 555555566666666666677777778888888888888888999999999\n  6 | 000000011222222222223333333344444444444\n  6 | 5555666666666667777777788888899999999999\n  7 | 000011111112222223333334444444444\n  7 | 5555556666666667778889999999999\n  8 | 0000000000000000000000000\n\n\n\n\n2.2.12 Histogram\n\nhist(data$age)\n\nlibrary(ggplot2)\n\n\n\npp &lt;- ggplot(data, aes(x=age)) + geom_histogram(binwidth=1, color=\"blue\", fill=\"white\")\npp\n\n\n\n\n\n\n2.2.13 Box plot\n\nboxplot(data$age)\n\n\n\nlibrary(ggplot2)\npp &lt;- ggplot(data,aes(x=age)) + geom_boxplot()\npp\n\n\n\n\n\n\n2.2.14 Box plot 2 groups\n\nboxplot(data$age~data$sex)\n\n\n\nlibrary(ggplot2)\ndata$sex = as.factor(data$sex)\npp &lt;- ggplot(data,aes(x=sex, y= age)) + geom_boxplot()\npp"
   },
   {
     "objectID": "probabilities_and_distributions.html",
@@ -35,39 +35,172 @@
     "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
   },
   {
-    "objectID": "compare_two_groups.html",
-    "href": "compare_two_groups.html",
+    "objectID": "compare_two_groups.html#two-sample-t-test",
+    "href": "compare_two_groups.html#two-sample-t-test",
     "title": "4  두 집단 평균비교",
-    "section": "",
-    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "section": "4.1 Two sample t-test",
+    "text": "4.1 Two sample t-test\n\nlibrary(haven)\nlibrary(ggplot2)\nlibrary(car)\n\nLoading required package: carData\n\ndata = read_sav(\"HN19_실습.sav\")\ndata$sex = as.factor(data$sex)\n\n# 1: Male, 2: Female\nlevels(data$sex)=c(\"Male\",\"Female\")\n\nknitr::kable(head(data[,c(\"ID\",\"sex\",\"age\",\"HE_sbp1\",\"HE_sbp2\")], 10))\n\n\n\n\nID\nsex\nage\nHE_sbp1\nHE_sbp2\n\n\n\n\nA531220402\nFemale\n45\n106\n104\n\n\nL501322401\nMale\n51\n120\n112\n\n\nD510288401\nFemale\n23\n114\n112\n\n\nM503205101\nFemale\n68\n140\n136\n\n\nB512234004\nMale\n28\n110\n104\n\n\nK501305402\nFemale\n56\n144\n144\n\n\nE506278202\nFemale\n66\n138\n132\n\n\nA509211902\nMale\n49\n134\n136\n\n\nH542222102\nFemale\n71\n194\n188\n\n\nN505230601\nFemale\n36\n98\n98\n\n\n\n\npp &lt;- ggplot(data,aes(x=sex, y= age, fill=sex)) + geom_boxplot()\npp\n\n\n\n# 등분산 가정 검토\nleveneTest(age ~ sex, data=data, center = mean)\n\nLevene's Test for Homogeneity of Variance (center = mean)\n       Df F value Pr(&gt;F)\ngroup   1  1.2878  0.257\n      498               \n\n# 등분산 가정이 만족할 때\nt.test(age~sex, data=data, var.equal = TRUE)\n\n\n    Two Sample t-test\n\ndata:  age by sex\nt = -1.6103, df = 498, p-value = 0.108\nalternative hypothesis: true difference in means between group Male and group Female is not equal to 0\n95 percent confidence interval:\n -5.482809  0.543606\nsample estimates:\n  mean in group Male mean in group Female \n            49.89151             52.36111 \n\n# 등분산 가정이 만족하지 않을 때\nt.test(age~sex, data=data, var.equal = FALSE)\n\n\n    Welch Two Sample t-test\n\ndata:  age by sex\nt = -1.598, df = 441.53, p-value = 0.1108\nalternative hypothesis: true difference in means between group Male and group Female is not equal to 0\n95 percent confidence interval:\n -5.5069652  0.5677619\nsample estimates:\n  mean in group Male mean in group Female \n            49.89151             52.36111"
   },
   {
-    "objectID": "compare_more_than_three_groups.html",
-    "href": "compare_more_than_three_groups.html",
+    "objectID": "compare_two_groups.html#paired-t-test",
+    "href": "compare_two_groups.html#paired-t-test",
+    "title": "4  두 집단 평균비교",
+    "section": "4.2 Paired t-test",
+    "text": "4.2 Paired t-test\n\ndata = read_sav(\"HN19_실습.sav\")\nt.test(data$HE_sbp1,data$HE_sbp2,paired=TRUE)\n\n\n    Paired t-test\n\ndata:  data$HE_sbp1 and data$HE_sbp2\nt = 3.3862, df = 497, p-value = 0.0007648\nalternative hypothesis: true mean difference is not equal to 0\n95 percent confidence interval:\n 0.3574025 1.3454088\nsample estimates:\nmean difference \n      0.8514056"
+  },
+  {
+    "objectID": "compare_two_groups.html#정규성-검정normality-test",
+    "href": "compare_two_groups.html#정규성-검정normality-test",
+    "title": "4  두 집단 평균비교",
+    "section": "4.3 정규성 검정(Normality test)",
+    "text": "4.3 정규성 검정(Normality test)\n\n4.3.1 Shapiro-Wilk test\n\nlibrary(haven)\nlibrary(ggplot2)\nlibrary(car)\n\ndata = read_sav(\"HN19_실습.sav\")\nshapiro.test(data$HE_sbp)\n\n\n    Shapiro-Wilk normality test\n\ndata:  data$HE_sbp\nW = 0.97678, p-value = 4.081e-07\n\n\n\n\n4.3.2 정규Q-Q 도표(Normal Q-Q plot)\n\nqqnorm(data$HE_sbp);qqline(data$HE_sbp)\n\n\n\n\n\n\n4.3.3 Kolmogorov-Smirnov test\n\ndata = read_sav(\"HN19_실습.sav\")\nt.test(data$HE_sbp1,data$HE_sbp2,paired=TRUE)\n\n\n    Paired t-test\n\ndata:  data$HE_sbp1 and data$HE_sbp2\nt = 3.3862, df = 497, p-value = 0.0007648\nalternative hypothesis: true mean difference is not equal to 0\n95 percent confidence interval:\n 0.3574025 1.3454088\nsample estimates:\nmean difference \n      0.8514056"
+  },
+  {
+    "objectID": "compare_two_groups.html#mann-whitney-u-test-or-wilcoxon-rank-sum-test",
+    "href": "compare_two_groups.html#mann-whitney-u-test-or-wilcoxon-rank-sum-test",
+    "title": "4  두 집단 평균비교",
+    "section": "4.4 Mann-Whitney U test (or Wilcoxon rank-sum test)",
+    "text": "4.4 Mann-Whitney U test (or Wilcoxon rank-sum test)\n\nwilcox.test(age~sex, data = data)\n\n\n    Wilcoxon rank sum test with continuity correction\n\ndata:  age by sex\nW = 27880, p-value = 0.09726\nalternative hypothesis: true location shift is not equal to 0"
+  },
+  {
+    "objectID": "compare_two_groups.html#wilcoxon-signed-rank-test",
+    "href": "compare_two_groups.html#wilcoxon-signed-rank-test",
+    "title": "4  두 집단 평균비교",
+    "section": "4.5 Wilcoxon signed-rank test",
+    "text": "4.5 Wilcoxon signed-rank test\n\nwilcox.test(data$HE_sbp1, data$HE_sbp2, paired = TRUE)\n\n\n    Wilcoxon signed rank test with continuity correction\n\ndata:  data$HE_sbp1 and data$HE_sbp2\nV = 47066, p-value = 0.000416\nalternative hypothesis: true location shift is not equal to 0"
+  },
+  {
+    "objectID": "compare_more_than_three_groups.html#one-way-anova",
+    "href": "compare_more_than_three_groups.html#one-way-anova",
     "title": "5  세 집단 이상 평균비교",
-    "section": "",
-    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "section": "5.1 One-way ANOVA",
+    "text": "5.1 One-way ANOVA\n\nlibrary(haven)\nlibrary(ggplot2)\nlibrary(car)\n\nLoading required package: carData\n\ndata = read_sav(\"HN19_실습.sav\")\ndata$sex = as.factor(data$sex)\n# to generate BMI group variable\ndata$BMI_gp = ifelse(data$HE_BMI&lt;20,\"1 light\",\n                     ifelse(data$HE_BMI&lt;25,\"2 normal\",\n                            ifelse(data$HE_BMI&gt;=25,\"3 heavy\",NA)))\n\n# boxplot\npp &lt;- ggplot(data,aes(x=BMI_gp, y= HE_sbp, fill=BMI_gp)) +\n  geom_boxplot()\npp\n\nWarning: Removed 2 rows containing non-finite values (`stat_boxplot()`).\n\n\n\n\n# ANOVA\nrslt = aov(HE_sbp~BMI_gp,data=data)\nsummary(rslt)\n\n             Df Sum Sq Mean Sq F value  Pr(&gt;F)   \nBMI_gp        2   3021  1510.6   6.238 0.00211 **\nResiduals   493 119379   242.1                   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n4 observations deleted due to missingness\n\n# 4 observations deleted due to missingness\n## is.na()\nsum(is.na(data$HE_BMI))\n\n[1] 3\n\ntable(data$BMI_gp)\n\n\n 1 light 2 normal  3 heavy \n      61      280      156 \n\nsum(is.na(data$HE_sbp))\n\n[1] 2\n\ndata$HE_BMI[which(is.na(data$HE_sbp)==TRUE)]\n\n[1]       NA 32.98484"
   },
   {
-    "objectID": "compare_two_proportions.html",
-    "href": "compare_two_proportions.html",
+    "objectID": "compare_more_than_three_groups.html#multiple-comparison-bonferroni-procedure",
+    "href": "compare_more_than_three_groups.html#multiple-comparison-bonferroni-procedure",
+    "title": "5  세 집단 이상 평균비교",
+    "section": "5.2 Multiple comparison (Bonferroni procedure)",
+    "text": "5.2 Multiple comparison (Bonferroni procedure)\n\npairwise.t.test(data$age, data$BMI_gp, p.adj = \"bonf\")\n\n\n    Pairwise comparisons using t tests with pooled SD \n\ndata:  data$age and data$BMI_gp \n\n         1 light 2 normal\n2 normal 0.059   -       \n3 heavy  0.037   1.000   \n\nP value adjustment method: bonferroni \n\n# cf. not adjust p-value result\npairwise.t.test(data$age, data$BMI_gp, p.adj = \"none\")\n\n\n    Pairwise comparisons using t tests with pooled SD \n\ndata:  data$age and data$BMI_gp \n\n         1 light 2 normal\n2 normal 0.020   -       \n3 heavy  0.012   0.628   \n\nP value adjustment method: none \n\ndata2 = subset(data,BMI_gp %in%c(\"light\",\"normal\"))"
+  },
+  {
+    "objectID": "compare_more_than_three_groups.html#multiple-comparison-tukeyhsd",
+    "href": "compare_more_than_three_groups.html#multiple-comparison-tukeyhsd",
+    "title": "5  세 집단 이상 평균비교",
+    "section": "5.3 Multiple comparison (TukeyHSD)",
+    "text": "5.3 Multiple comparison (TukeyHSD)\n\nTukeyHSD(rslt)\n\n  Tukey multiple comparisons of means\n    95% family-wise confidence level\n\nFit: aov(formula = HE_sbp ~ BMI_gp, data = data)\n\n$BMI_gp\n                     diff         lwr       upr     p adj\n2 normal-1 light 5.199297  0.03047092 10.368124 0.0482873\n3 heavy-1 light  8.224643  2.69553842 13.753748 0.0014871\n3 heavy-2 normal 3.025346 -0.63699271  6.687684 0.1281154"
+  },
+  {
+    "objectID": "compare_more_than_three_groups.html#kruskal-wallis-test",
+    "href": "compare_more_than_three_groups.html#kruskal-wallis-test",
+    "title": "5  세 집단 이상 평균비교",
+    "section": "5.4 Kruskal-Wallis test",
+    "text": "5.4 Kruskal-Wallis test\n\nkruskal.test(HE_sbp~BMI_gp,data=data)\n\n\n    Kruskal-Wallis rank sum test\n\ndata:  HE_sbp by BMI_gp\nKruskal-Wallis chi-squared = 15.849, df = 2, p-value = 0.0003617"
+  },
+  {
+    "objectID": "compare_more_than_three_groups.html#dunn-procedure",
+    "href": "compare_more_than_three_groups.html#dunn-procedure",
+    "title": "5  세 집단 이상 평균비교",
+    "section": "5.5 Dunn procedure",
+    "text": "5.5 Dunn procedure\n\nlibrary(FSA)\n\nRegistered S3 methods overwritten by 'FSA':\n  method       from\n  confint.boot car \n  hist.boot    car \n\n\n## FSA v0.9.5. See citation('FSA') if used in publication.\n## Run fishR() for related website and fishR('IFAR') for related book.\n\n\n\nAttaching package: 'FSA'\n\n\nThe following object is masked from 'package:car':\n\n    bootCase\n\ndunnTest(HE_sbp~BMI_gp,data=data, method = \"bonferroni\")\n\nWarning: BMI_gp was coerced to a factor.\n\n\nWarning: Some rows deleted from 'x' and 'g' because missing data.\n\n\nDunn (1964) Kruskal-Wallis multiple comparison\n\n\n  p-values adjusted with the Bonferroni method.\n\n\n          Comparison         Z      P.unadj        P.adj\n1 1 light - 2 normal -2.812301 4.918837e-03 0.0147565123\n2  1 light - 3 heavy -3.964764 7.346848e-05 0.0002204054\n3 2 normal - 3 heavy -2.016553 4.374220e-02 0.1312266133"
+  },
+  {
+    "objectID": "compare_two_proportions.html#chi-square-test",
+    "href": "compare_two_proportions.html#chi-square-test",
     "title": "6  두 집단의 분율비교",
-    "section": "",
-    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "section": "6.1 Chi-square test",
+    "text": "6.1 Chi-square test\n\nlibrary(haven)\nlibrary(ggplot2)\nlibrary(car)\n\nLoading required package: carData\n\ndata = read_sav(\"HN19_실습.sav\")\ndata$sex = as.factor(data$sex)\nlevels(data$sex)=c(\"Male\",\"Female\")\ndata$DE1_dg = as.factor(data$DE1_dg)\nlevels(data$DE1_dg) = c(\"No\", \"Yes\")\ntable(data$sex,data$DE1_dg)\n\n        \n          No Yes\n  Male   189  23\n  Female 259  29\n\nround(prop.table(table(data$sex,data$DE1_dg),1),3)\n\n        \n            No   Yes\n  Male   0.892 0.108\n  Female 0.899 0.101\n\nchisq.test(table(data$sex,data$DE1_dg),correct=FALSE)# Asymptotic significance\n\n\n    Pearson's Chi-squared test\n\ndata:  table(data$sex, data$DE1_dg)\nX-squared = 0.079648, df = 1, p-value = 0.7778\n\nchisq.test(table(data$sex,data$DE1_dg),correct=TRUE)# Continuity Correction\n\n\n    Pearson's Chi-squared test with Yates' continuity correction\n\ndata:  table(data$sex, data$DE1_dg)\nX-squared = 0.017955, df = 1, p-value = 0.8934"
   },
   {
-    "objectID": "regression.html",
-    "href": "regression.html",
+    "objectID": "compare_two_proportions.html#fishers-exact-test",
+    "href": "compare_two_proportions.html#fishers-exact-test",
+    "title": "6  두 집단의 분율비교",
+    "section": "6.2 Fisher’s exact test",
+    "text": "6.2 Fisher’s exact test\n\ndata$cursmoke = as.factor(data$cursmoke)\nlevels(data$cursmoke) = c(\"No\", \"Yes\")\ntable(data$cursmoke,data$DE1_dg)\n\n     \n       No Yes\n  No  373  43\n  Yes  75   9\n\nround(prop.table(table(data$cursmoke,data$DE1_dg),1),3)\n\n     \n         No   Yes\n  No  0.897 0.103\n  Yes 0.893 0.107\n\nchisq.test(table(data$cursmoke,data$DE1_dg),correct=FALSE)# Asymptotic significance\n\n\n    Pearson's Chi-squared test\n\ndata:  table(data$cursmoke, data$DE1_dg)\nX-squared = 0.010702, df = 1, p-value = 0.9176\n\nchisq.test(table(data$cursmoke,data$DE1_dg),correct=TRUE)# Continuity Correction\n\n\n    Pearson's Chi-squared test with Yates' continuity correction\n\ndata:  table(data$cursmoke, data$DE1_dg)\nX-squared = 3.1536e-30, df = 1, p-value = 1\n\nfisher.test(table(data$cursmoke,data$DE1_dg))# Fisher's exact test\n\n\n    Fisher's Exact Test for Count Data\n\ndata:  table(data$cursmoke, data$DE1_dg)\np-value = 0.847\nalternative hypothesis: true odds ratio is not equal to 1\n95 percent confidence interval:\n 0.427615 2.284097\nsample estimates:\nodds ratio \n   1.04085"
+  },
+  {
+    "objectID": "compare_two_proportions.html#mantel-haenszel-chi-square-test",
+    "href": "compare_two_proportions.html#mantel-haenszel-chi-square-test",
+    "title": "6  두 집단의 분율비교",
+    "section": "6.3 Mantel-Haenszel chi-square test",
+    "text": "6.3 Mantel-Haenszel chi-square test\n\nlibrary(DescTools)\n\n\nAttaching package: 'DescTools'\n\n\nThe following object is masked from 'package:car':\n\n    Recode\n\ndata$BMI_gp = ifelse(data$HE_BMI&lt;=20, 1,\n                     ifelse(data$HE_BMI&lt;=25,2,\n                            ifelse(data$HE_BMI&gt;25,3,NA)))\ndata$BMI_gp = as.factor(data$BMI_gp)\nlevels(data$BMI_gp) = c(\"light\",\"normal\",\"heavy\")\ntable(data$DI1_dg,data$BMI_gp)\n\n   \n    light normal heavy\n  0    53    220   104\n  1     8     60    52\n\nchisq.test(table(data$DI1_dg,data$BMI_gp))\n\n\n    Pearson's Chi-squared test\n\ndata:  table(data$DI1_dg, data$BMI_gp)\nX-squared = 12.371, df = 2, p-value = 0.002059\n\nMHChisqTest(table(data$DI1_dg,data$BMI_gp))\n\n\n    Mantel-Haenszel Chi-Square\n\ndata:  table(data$DI1_dg, data$BMI_gp)\nX-squared = 12.157, df = 1, p-value = 0.0004891"
+  },
+  {
+    "objectID": "compare_two_proportions.html#mcnemar-test",
+    "href": "compare_two_proportions.html#mcnemar-test",
+    "title": "6  두 집단의 분율비교",
+    "section": "6.4 McNemar test",
+    "text": "6.4 McNemar test\n\ndata$sbp_group1 = ifelse(data$HE_sbp1&lt;=120,\"normal\",\n                         ifelse(data$HE_sbp1&gt;120,\"danger\",NA))\ndata$sbp_group2 = ifelse(data$HE_sbp2&lt;=120,\"normal\",\n                         ifelse(data$HE_sbp2&gt;120,\"danger\",NA))\ntable(data$sbp_group1,data$sbp_group2)\n\n        \n         danger normal\n  danger    199     27\n  normal     22    250\n\nmcnemar.test(table(data$sbp_group1,data$sbp_group2),correct=F)\n\n\n    McNemar's Chi-squared test\n\ndata:  table(data$sbp_group1, data$sbp_group2)\nMcNemar's chi-squared = 0.5102, df = 1, p-value = 0.4751\n\nmcnemar.test(table(data$sbp_group1,data$sbp_group2),correct=T)\n\n\n    McNemar's Chi-squared test with continuity correction\n\ndata:  table(data$sbp_group1, data$sbp_group2)\nMcNemar's chi-squared = 0.32653, df = 1, p-value = 0.5677"
+  },
+  {
+    "objectID": "regression.html#pearsons-correlation",
+    "href": "regression.html#pearsons-correlation",
     "title": "7  회귀분석",
-    "section": "",
-    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "section": "7.1 Pearson’s correlation",
+    "text": "7.1 Pearson’s correlation\n\nlibrary(haven)\nlibrary(ggplot2)\nlibrary(car)\n\nLoading required package: carData\n\ndata = read_sav(\"HN19_실습.sav\")\ndata$sex = as.factor(data$sex)"
+  },
+  {
+    "objectID": "regression.html#spearmans-correlation",
+    "href": "regression.html#spearmans-correlation",
+    "title": "7  회귀분석",
+    "section": "7.2 Spearman’s correlation",
+    "text": "7.2 Spearman’s correlation"
+  },
+  {
+    "objectID": "regression.html#simple-linear-regression",
+    "href": "regression.html#simple-linear-regression",
+    "title": "7  회귀분석",
+    "section": "7.2 Simple linear regression",
+    "text": "7.2 Simple linear regression\n\nknitr::kable(head(data))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nID\nsex\nage\nHE_BMI\nsmoke\ncursmoke\nedu\nmarri_1\nDI1_dg\nDI1_ag\nDE1_dg\nDE1_ag\nDI2_dg\nDI2_ag\nHE_sbp1\nHE_sbp2\nHE_sbp3\nHE_dbp1\nHE_dbp2\nHE_dbp3\nHE_sbp\nHE_dbp\nHE_ht\nHE_wt\nHE_wc\nHE_chol\nHE_TG\nBD1\nBP5\nmh_stress\nBP16_1\nBP16_2\n\n\n\n\nA531220402\n2\n45\n19.96642\n3\n0\n4\n2\n0\n45\n0\n45\n0\n45\n106\n104\n102\n74\n72\n70\n103\n71\n171.9\n59.0\n73.9\n197\n40\n2\n2\n1\n5\n6\n\n\nL501322401\n1\n51\n24.87020\n2\n0\n3\n1\n0\n51\n0\n51\n1\n50\n120\n112\n114\n76\n76\n72\n113\n74\n169.2\n71.2\n85.7\n242\n166\n2\n2\n0\n5\n5\n\n\nD510288401\n2\n23\n21.77763\n3\n0\n4\n2\n0\n23\n0\n23\n0\n23\n114\n112\n110\n80\n84\n80\n111\n82\n166.4\n60.3\n75.1\n192\n46\n2\n2\n1\n7\n10\n\n\nM503205101\n2\n68\n23.59494\n3\n0\n1\n1\n1\n66\n0\n68\n1\n67\n140\n136\n134\n74\n78\n74\n135\n76\n155.7\n57.2\n83.9\n138\n59\n2\n1\n0\n3\n3\n\n\nB512234004\n1\n28\n24.47525\n2\n0\n4\n2\n0\n28\n0\n28\n0\n28\n110\n104\n110\n76\n76\n78\n107\n77\n170.2\n70.9\n82.2\n209\n175\n2\n2\n0\n6\n10\n\n\nK501305402\n2\n56\n27.50619\n3\n0\n3\n1\n1\n56\n0\n56\n0\n56\n144\n144\n142\n82\n80\n82\n143\n81\n157.0\n67.8\n88.4\n170\n135\n1\n2\n0\n4\n4\n\n\n\n\n# not dummy variable for smoke: \nfit1 = lm(HE_TG~sex+age+smoke+HE_BMI+HE_chol,data=data)\nsummary(fit1)\n\n\nCall:\nlm(formula = HE_TG ~ sex + age + smoke + HE_BMI + HE_chol, data = data)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-151.39  -46.11  -14.77   24.28  720.22 \n\nCoefficients:\n             Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -82.63179   34.98569  -2.362  0.01858 *  \nsex2        -11.47697    9.51770  -1.206  0.22847    \nage           0.67222    0.22258   3.020  0.00266 ** \nsmoke       -21.07923    6.10144  -3.455  0.00060 ***\nHE_BMI        4.44588    1.06523   4.174 3.56e-05 ***\nHE_chol       0.66175    0.09771   6.772 3.74e-11 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 81.42 on 477 degrees of freedom\n  (17 observations deleted due to missingness)\nMultiple R-squared:  0.1799,    Adjusted R-squared:  0.1713 \nF-statistic: 20.93 on 5 and 477 DF,  p-value: &lt; 2.2e-16\n\n# as.factor option for smoke: \nfit2 = lm(HE_TG~sex+age+as.factor(smoke)+HE_BMI+HE_chol,data=data)\nsummary(fit2)\n\n\nCall:\nlm(formula = HE_TG ~ sex + age + as.factor(smoke) + HE_BMI + \n    HE_chol, data = data)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-148.23  -44.60  -14.64   23.17  719.41 \n\nCoefficients:\n                    Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)       -101.24796   33.40206  -3.031 0.002569 ** \nsex2               -14.65683    9.99125  -1.467 0.143046    \nage                  0.68933    0.22316   3.089 0.002126 ** \nas.factor(smoke)2  -31.78007   11.91805  -2.667 0.007924 ** \nas.factor(smoke)3  -43.01749   12.22934  -3.518 0.000477 ***\nHE_BMI               4.51578    1.06723   4.231 2.79e-05 ***\nHE_chol              0.66040    0.09771   6.759 4.09e-11 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 81.41 on 476 degrees of freedom\n  (17 observations deleted due to missingness)\nMultiple R-squared:  0.1818,    Adjusted R-squared:  0.1715 \nF-statistic: 17.63 on 6 and 476 DF,  p-value: &lt; 2.2e-16\n\ndata$smoke1 = ifelse(data$smoke==1,1,\n                     ifelse(is.na(data$smoke)==T,NA,0))\ndata$smoke2 = ifelse(data$smoke==2,1,\n                     ifelse(is.na(data$smoke)==T,NA,0))\n\nknitr::kable(head(data[c(\"smoke\",\"smoke1\",\"smoke2\")],10))\n\n\n\n\nsmoke\nsmoke1\nsmoke2\n\n\n\n\n3\n0\n0\n\n\n2\n0\n1\n\n\n3\n0\n0\n\n\n3\n0\n0\n\n\n2\n0\n1\n\n\n3\n0\n0\n\n\n3\n0\n0\n\n\n2\n0\n1\n\n\n1\n1\n0\n\n\n3\n0\n0\n\n\n\n\n## using dummy variables\nfit3 = lm(HE_TG~sex+age+smoke1+smoke2+HE_BMI+HE_chol,data=data)\nsummary(fit3)\n\n\nCall:\nlm(formula = HE_TG ~ sex + age + smoke1 + smoke2 + HE_BMI + HE_chol, \n    data = data)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-148.23  -44.60  -14.64   23.17  719.41 \n\nCoefficients:\n              Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -144.26545   33.29546  -4.333 1.80e-05 ***\nsex2         -14.65683    9.99125  -1.467 0.143046    \nage            0.68933    0.22316   3.089 0.002126 ** \nsmoke1        43.01749   12.22934   3.518 0.000477 ***\nsmoke2        11.23742   11.21990   1.002 0.317064    \nHE_BMI         4.51578    1.06723   4.231 2.79e-05 ***\nHE_chol        0.66040    0.09771   6.759 4.09e-11 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 81.41 on 476 degrees of freedom\n  (17 observations deleted due to missingness)\nMultiple R-squared:  0.1818,    Adjusted R-squared:  0.1715 \nF-statistic: 17.63 on 6 and 476 DF,  p-value: &lt; 2.2e-16\n\nplot(fit3, las=1)\n\n\n\n\n\n\n\n\n\n\n\n\nvif(fit3)\n\n     sex      age   smoke1   smoke2   HE_BMI  HE_chol \n1.785858 1.024355 1.551153 1.603195 1.035967 1.028915"
+  },
+  {
+    "objectID": "regression.html#multiple-linear-regression",
+    "href": "regression.html#multiple-linear-regression",
+    "title": "7  회귀분석",
+    "section": "7.3 Multiple linear regression",
+    "text": "7.3 Multiple linear regression\n\n# to generate dummy variable"
+  },
+  {
+    "objectID": "regression.html#multicollinearity",
+    "href": "regression.html#multicollinearity",
+    "title": "7  회귀분석",
+    "section": "7.4 Multicollinearity",
+    "text": "7.4 Multicollinearity\n\n# VIF"
+  },
+  {
+    "objectID": "regression.html#residual-analysis",
+    "href": "regression.html#residual-analysis",
+    "title": "7  회귀분석",
+    "section": "7.5 Residual analysis",
+    "text": "7.5 Residual analysis"
+  },
+  {
+    "objectID": "regression.html#equal-variance",
+    "href": "regression.html#equal-variance",
+    "title": "7  회귀분석",
+    "section": "7.6 Equal variance",
+    "text": "7.6 Equal variance"
+  },
+  {
+    "objectID": "regression.html#independence",
+    "href": "regression.html#independence",
+    "title": "7  회귀분석",
+    "section": "7.7 Independence",
+    "text": "7.7 Independence"
+  },
+  {
+    "objectID": "regression.html#normality",
+    "href": "regression.html#normality",
+    "title": "7  회귀분석",
+    "section": "7.8 Normality",
+    "text": "7.8 Normality"
   },
   {
     "objectID": "logistic_regression.html",
     "href": "logistic_regression.html",
     "title": "8  로지스틱 회귀분석",
     "section": "",
-    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "text": "library(haven)\nlibrary(ggplot2)\nlibrary(car)\n\nLoading required package: carData\n\ndata = read_sav(\"HN19_실습.sav\")\n\nfinal_data = subset(data,select=c(\"sex\",\"age\",\"HE_sbp\",\"HE_chol\",\"HE_TG\",\"smoke\"))\nfinal_data$sex = as.factor(final_data$sex)\nlevels(final_data$sex) = c(\"Male\", \"Female\")\nfinal_data$smoke = as.factor(final_data$smoke)\nlevels(final_data$smoke) = c(\"current\", \"ex smoker\", \"non smoker\")\nknitr::kable(head(final_data,10))\n\n\n\n\nsex\nage\nHE_sbp\nHE_chol\nHE_TG\nsmoke\n\n\n\n\nFemale\n45\n103\n197\n40\nnon smoker\n\n\nMale\n51\n113\n242\n166\nex smoker\n\n\nFemale\n23\n111\n192\n46\nnon smoker\n\n\nFemale\n68\n135\n138\n59\nnon smoker\n\n\nMale\n28\n107\n209\n175\nex smoker\n\n\nFemale\n56\n143\n170\n135\nnon smoker\n\n\nFemale\n66\n129\n200\n139\nnon smoker\n\n\nMale\n49\n136\n242\n121\nex smoker\n\n\nFemale\n71\n187\n219\n141\ncurrent\n\n\nFemale\n36\n99\n160\n60\nnon smoker"
   },
   {
     "objectID": "survival_analysis.html",
@@ -89,5 +222,68 @@
     "title": "References",
     "section": "",
     "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "compare_two_proportions.html#weight-cases-example",
+    "href": "compare_two_proportions.html#weight-cases-example",
+    "title": "6  두 집단의 분율비교",
+    "section": "6.5 Weight cases example",
+    "text": "6.5 Weight cases example\n\ntest_data = matrix(c(2,28,5,25),nrow=2,ncol=2,byrow = T)\ntest_data\n\n     [,1] [,2]\n[1,]    2   28\n[2,]    5   25\n\nfisher.test(test_data)\n\n\n    Fisher's Exact Test for Count Data\n\ndata:  test_data\np-value = 0.4238\nalternative hypothesis: true odds ratio is not equal to 1\n95 percent confidence interval:\n 0.03189243 2.46223985\nsample estimates:\nodds ratio \n 0.3630951"
+  },
+  {
+    "objectID": "regression.html#pearsons-correlation-spearman-correlation",
+    "href": "regression.html#pearsons-correlation-spearman-correlation",
+    "title": "7  회귀분석",
+    "section": "7.1 Pearson’s correlation & Spearman correlation",
+    "text": "7.1 Pearson’s correlation & Spearman correlation\n\nlibrary(haven)\nlibrary(ggplot2)\nlibrary(car)\n\nLoading required package: carData\n\ndata = read_sav(\"HN19_실습.sav\")\ndata$sex = as.factor(data$sex)\nplot(data$HE_BMI,data$HE_sbp)\n\n\n\npp &lt;- ggplot(data=data, aes(x=HE_BMI, y=HE_sbp)) + geom_point()\npp\n\nWarning: Removed 4 rows containing missing values (`geom_point()`).\n\n\n\n\n# parametric correlation\ncor.test(data$HE_BMI, data$HE_sbp, method = \"pearson\")\n\n\n    Pearson's product-moment correlation\n\ndata:  data$HE_BMI and data$HE_sbp\nt = 2.8147, df = 494, p-value = 0.005077\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n 0.03801333 0.21134263\nsample estimates:\n      cor \n0.1256366 \n\n# non-parametric correlation\ncor.test(data$HE_BMI, data$HE_sbp, method = \"spearman\")\n\nWarning in cor.test.default(data$HE_BMI, data$HE_sbp, method = \"spearman\"):\nCannot compute exact p-value with ties\n\n\n\n    Spearman's rank correlation rho\n\ndata:  data$HE_BMI and data$HE_sbp\nS = 16895709, p-value = 0.0001527\nalternative hypothesis: true rho is not equal to 0\nsample estimates:\n      rho \n0.1692231"
+  },
+  {
+    "objectID": "logistic_regression.html#subset",
+    "href": "logistic_regression.html#subset",
+    "title": "8  로지스틱 회귀분석",
+    "section": "8.1 subset",
+    "text": "8.1 subset\n\nlibrary(haven)\nlibrary(ggplot2)\nlibrary(car)\n\nLoading required package: carData\n\ndata = read_sav(\"HN19_실습.sav\")\n\nfinal_data = subset(data,select=c(\"sex\",\"age\",\"HE_sbp\",\"HE_chol\",\"HE_TG\",\"smoke\",\"DI1_dg\"))\nfinal_data$sex = as.factor(final_data$sex)\nlevels(final_data$sex) = c(\"Male\", \"Female\")\nfinal_data$smoke = as.factor(final_data$smoke)\nlevels(final_data$smoke) = c(\"current\", \"ex smoker\", \"non smoker\")\nfinal_data$smoke = relevel(final_data$smoke, ref = \"current\")\nknitr::kable(head(final_data,10))\n\n\n\n\nsex\nage\nHE_sbp\nHE_chol\nHE_TG\nsmoke\nDI1_dg\n\n\n\n\nFemale\n45\n103\n197\n40\nnon smoker\n0\n\n\nMale\n51\n113\n242\n166\nex smoker\n0\n\n\nFemale\n23\n111\n192\n46\nnon smoker\n0\n\n\nFemale\n68\n135\n138\n59\nnon smoker\n1\n\n\nMale\n28\n107\n209\n175\nex smoker\n0\n\n\nFemale\n56\n143\n170\n135\nnon smoker\n1\n\n\nFemale\n66\n129\n200\n139\nnon smoker\n0\n\n\nMale\n49\n136\n242\n121\nex smoker\n0\n\n\nFemale\n71\n187\n219\n141\ncurrent\n1\n\n\nFemale\n36\n99\n160\n60\nnon smoker\n0"
+  },
+  {
+    "objectID": "logistic_regression.html#logistic-regression",
+    "href": "logistic_regression.html#logistic-regression",
+    "title": "8  로지스틱 회귀분석",
+    "section": "8.2 Logistic regression",
+    "text": "8.2 Logistic regression\n\nlibrary(glmnet)\n\nLoading required package: Matrix\n\n\nLoaded glmnet 4.1-7\n\nfinal_data = final_data[complete.cases(final_data),]\nfinal_data$DI1_dg = as.factor(final_data$DI1_dg)\nfit.logistic = glm(DI1_dg~age+sex+HE_sbp+HE_chol+HE_TG+smoke,\n                   data = final_data,\n                   family = \"binomial\")\nsummary(fit.logistic)\n\n\nCall:\nglm(formula = DI1_dg ~ age + sex + HE_sbp + HE_chol + HE_TG + \n    smoke, family = \"binomial\", data = final_data)\n\nCoefficients:\n                 Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)     -6.198749   1.328036  -4.668 3.05e-06 ***\nage              0.071630   0.010021   7.148 8.82e-13 ***\nsexFemale        0.093012   0.376073   0.247 0.804657    \nHE_sbp           0.025977   0.008968   2.897 0.003771 ** \nHE_chol         -0.012808   0.003755  -3.411 0.000647 ***\nHE_TG            0.002072   0.001506   1.376 0.168762    \nsmokeex smoker  -0.094936   0.418377  -0.227 0.820490    \nsmokenon smoker -0.129367   0.448355  -0.289 0.772935    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 533.08  on 483  degrees of freedom\nResidual deviance: 381.04  on 476  degrees of freedom\nAIC: 397.04\n\nNumber of Fisher Scoring iterations: 5\n\nround(cbind(exp(coef(fit.logistic)),exp(confint(fit.logistic))),3)\n\nWaiting for profiling to be done...\n\n\n                      2.5 % 97.5 %\n(Intercept)     0.002 0.000  0.026\nage             1.074 1.054  1.096\nsexFemale       1.097 0.523  2.297\nHE_sbp          1.026 1.009  1.045\nHE_chol         0.987 0.980  0.994\nHE_TG           1.002 0.999  1.005\nsmokeex smoker  0.909 0.401  2.081\nsmokenon smoker 0.879 0.365  2.135"
+  },
+  {
+    "objectID": "logistic_regression.html#auc-area-under-the-curve",
+    "href": "logistic_regression.html#auc-area-under-the-curve",
+    "title": "8  로지스틱 회귀분석",
+    "section": "8.3 AUC, Area Under the Curve",
+    "text": "8.3 AUC, Area Under the Curve\n\nlibrary(pROC)\n\nType 'citation(\"pROC\")' for a citation.\n\n\n\nAttaching package: 'pROC'\n\n\nThe following objects are masked from 'package:stats':\n\n    cov, smooth, var\n\nlibrary(generalhoslem)\n\nLoading required package: reshape\n\n\n\nAttaching package: 'reshape'\n\n\nThe following object is masked from 'package:Matrix':\n\n    expand\n\n\nLoading required package: MASS\n\n# predicted probabilities\npred_y = predict(fit.logistic, data = final_data, type=\"response\")\n# ROC curve\nplot.roc(final_data$DI1_dg,pred_y)\n\nSetting levels: control = 0, case = 1\n\n\nSetting direction: controls &lt; cases\n\n\n\n\nauc(final_data$DI1_dg,pred_y)\n\nSetting levels: control = 0, case = 1\nSetting direction: controls &lt; cases\n\n\nArea under the curve: 0.854\n\n# Hosmer-Lemeshow test\n## 결과 재확인 필요(2023.08.29)\nlogitgof(final_data$DI1_dg,fitted(fit.logistic))\n\nWarning in logitgof(final_data$DI1_dg, fitted(fit.logistic)): At least one cell\nin the expected frequencies table is &lt; 1. Chi-square approximation may be\nincorrect.\n\n\n\n    Hosmer and Lemeshow test (binary model)\n\ndata:  final_data$DI1_dg, fitted(fit.logistic)\nX-squared = 6.9265, df = 8, p-value = 0.5446"
+  },
+  {
+    "objectID": "survival_analysis.html#kaplan-meier-plot",
+    "href": "survival_analysis.html#kaplan-meier-plot",
+    "title": "9  생존분석",
+    "section": "9.1 Kaplan-Meier plot",
+    "text": "9.1 Kaplan-Meier plot\n\nlibrary(haven)\nlibrary(ggplot2)\nlibrary(survival)\nlibrary(survminer)\n\nLoading required package: ggpubr\n\n\n\nAttaching package: 'survminer'\n\n\nThe following object is masked from 'package:survival':\n\n    myeloma\n\ndata = read_sav(\"HN19_실습.sav\")\nfinal_data = subset(data, age &gt;=40)\nknitr::kable(head(final_data,10))\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nID\nsex\nage\nHE_BMI\nsmoke\ncursmoke\nedu\nmarri_1\nDI1_dg\nDI1_ag\nDE1_dg\nDE1_ag\nDI2_dg\nDI2_ag\nHE_sbp1\nHE_sbp2\nHE_sbp3\nHE_dbp1\nHE_dbp2\nHE_dbp3\nHE_sbp\nHE_dbp\nHE_ht\nHE_wt\nHE_wc\nHE_chol\nHE_TG\nBD1\nBP5\nmh_stress\nBP16_1\nBP16_2\n\n\n\n\nA531220402\n2\n45\n19.96642\n3\n0\n4\n2\n0\n45\n0\n45\n0\n45\n106\n104\n102\n74\n72\n70\n103\n71\n171.9\n59.0\n73.9\n197\n40\n2\n2\n1\n5\n6\n\n\nL501322401\n1\n51\n24.87020\n2\n0\n3\n1\n0\n51\n0\n51\n1\n50\n120\n112\n114\n76\n76\n72\n113\n74\n169.2\n71.2\n85.7\n242\n166\n2\n2\n0\n5\n5\n\n\nM503205101\n2\n68\n23.59494\n3\n0\n1\n1\n1\n66\n0\n68\n1\n67\n140\n136\n134\n74\n78\n74\n135\n76\n155.7\n57.2\n83.9\n138\n59\n2\n1\n0\n3\n3\n\n\nK501305402\n2\n56\n27.50619\n3\n0\n3\n1\n1\n56\n0\n56\n0\n56\n144\n144\n142\n82\n80\n82\n143\n81\n157.0\n67.8\n88.4\n170\n135\n1\n2\n0\n4\n4\n\n\nE506278202\n2\n66\n20.70085\n3\n0\n1\n1\n0\n66\n0\n66\n1\n65\n138\n132\n126\n82\n78\n74\n129\n76\n151.0\n47.2\n73.4\n200\n139\n1\n2\n0\n6\n6\n\n\nA509211902\n1\n49\n22.89580\n2\n0\n4\n1\n0\n49\n0\n49\n0\n49\n134\n136\n136\n74\n72\n72\n136\n72\n179.9\n74.1\n89.3\n242\n121\n2\n2\n0\n6\n6\n\n\nH542222102\n2\n71\n25.90922\n1\n1\n2\n1\n1\n70\n0\n71\n1\n68\n194\n188\n186\n78\n88\n86\n187\n87\n144.1\n53.8\n90.8\n219\n141\n2\n2\n0\n5\n7\n\n\nH521268001\n1\n49\n23.41892\n2\n0\n4\n1\n0\n49\n0\n49\n0\n49\n120\n116\n110\n80\n80\n80\n113\n80\n171.4\n68.8\n80.6\n227\n148\n2\n2\n0\n6\n7\n\n\nH542319001\n2\n64\n20.87199\n3\n0\n1\n1\n0\n64\n0\n64\n0\n64\n134\n134\n130\n78\n76\n76\n132\n76\n154.0\n49.5\n71.8\n224\n99\n2\n2\n1\n4\n4\n\n\nA518230601\n2\n44\n23.47411\n1\n1\n4\n2\n0\n44\n0\n44\n0\n44\n124\n116\n112\n100\n92\n94\n114\n93\n170.7\n68.4\n82.2\n174\n77\n2\n2\n1\n6\n6\n\n\n\n\nfit = survfit(Surv(DI1_ag,DI1_dg) ~ 1, type = \"kaplan-meier\", data = final_data)\nsummary(fit)\n\nCall: survfit(formula = Surv(DI1_ag, DI1_dg) ~ 1, data = final_data, \n    type = \"kaplan-meier\")\n\n time n.risk n.event survival std.err lower 95% CI upper 95% CI\n   18    357       1    0.997 0.00280        0.992        1.000\n   27    356       1    0.994 0.00395        0.987        1.000\n   31    355       1    0.992 0.00483        0.982        1.000\n   32    354       1    0.989 0.00557        0.978        1.000\n   35    353       1    0.986 0.00622        0.974        0.998\n   37    352       1    0.983 0.00680        0.970        0.997\n   39    351       2    0.978 0.00783        0.962        0.993\n   40    349       3    0.969 0.00915        0.951        0.987\n   41    337       3    0.961 0.01033        0.941        0.981\n   43    319       6    0.942 0.01250        0.918        0.967\n   44    303       1    0.939 0.01284        0.915        0.965\n   45    294       5    0.923 0.01447        0.895        0.952\n   46    277       1    0.920 0.01480        0.892        0.950\n   47    272       3    0.910 0.01575        0.880        0.941\n   48    261       3    0.899 0.01669        0.867        0.933\n   49    252       7    0.874 0.01871        0.839        0.912\n   50    237       4    0.860 0.01979        0.822        0.899\n   51    221       2    0.852 0.02036        0.813        0.893\n   52    213       3    0.840 0.02122        0.799        0.883\n   53    203       6    0.815 0.02289        0.771        0.861\n   54    188       4    0.798 0.02399        0.752        0.846\n   55    180       5    0.776 0.02529        0.728        0.827\n   56    169       4    0.757 0.02630        0.707        0.811\n   57    159       1    0.752 0.02656        0.702        0.806\n   58    152       4    0.733 0.02765        0.680        0.789\n   59    138       3    0.717 0.02853        0.663        0.775\n   60    130       3    0.700 0.02943        0.645        0.760\n   61    121       2    0.689 0.03006        0.632        0.750\n   62    117       1    0.683 0.03037        0.626        0.745\n   63    108       8    0.632 0.03297        0.571        0.700\n   64     96       2    0.619 0.03357        0.557        0.688\n   65     87       4    0.591 0.03492        0.526        0.663\n   66     79       2    0.576 0.03560        0.510        0.650\n   67     69       1    0.567 0.03604        0.501        0.642\n   68     64       4    0.532 0.03790        0.462        0.612\n   70     52       3    0.501 0.03964        0.429        0.585\n   71     47       2    0.480 0.04072        0.406        0.567\n   73     42       3    0.446 0.04235        0.370        0.537\n   75     32       1    0.432 0.04325        0.355        0.525\n   76     27       3    0.384 0.04647        0.303        0.486\n   78     21       1    0.365 0.04771        0.283        0.472\n   79     19       1    0.346 0.04892        0.262        0.457\n   80     10       2    0.277 0.05873        0.183        0.420\n\nggsurvplot(fit)"
+  },
+  {
+    "objectID": "survival_analysis.html#log-rank-test",
+    "href": "survival_analysis.html#log-rank-test",
+    "title": "9  생존분석",
+    "section": "9.2 Log-rank test",
+    "text": "9.2 Log-rank test\n\nfit2 = survfit(Surv(DI1_ag,DI1_dg) ~ smoke, type = \"kaplan-meier\", data = final_data)\nsummary(fit2)\n\nCall: survfit(formula = Surv(DI1_ag, DI1_dg) ~ smoke, data = final_data, \n    type = \"kaplan-meier\")\n\n                smoke=1 \n time n.risk n.event survival std.err lower 95% CI upper 95% CI\n   27     53       1    0.981  0.0187        0.945        1.000\n   41     52       2    0.943  0.0317        0.883        1.000\n   43     50       2    0.906  0.0402        0.830        0.988\n   45     43       1    0.885  0.0444        0.802        0.976\n   46     40       1    0.862  0.0485        0.773        0.963\n   47     37       1    0.839  0.0525        0.742        0.949\n   49     35       2    0.791  0.0594        0.683        0.917\n   53     30       1    0.765  0.0630        0.651        0.899\n   55     26       1    0.735  0.0671        0.615        0.879\n   56     23       1    0.703  0.0714        0.577        0.858\n   63     13       1    0.649  0.0840        0.504        0.837\n   65     11       1    0.590  0.0948        0.431        0.809\n   68      6       1    0.492  0.1196        0.305        0.792\n   70      4       1    0.369  0.1393        0.176        0.773\n\n                smoke=2 \n time n.risk n.event survival std.err lower 95% CI upper 95% CI\n   18     83       1    0.988  0.0120        0.965        1.000\n   37     82       1    0.976  0.0168        0.943        1.000\n   39     81       1    0.964  0.0205        0.925        1.000\n   40     80       1    0.952  0.0235        0.907        0.999\n   41     77       1    0.939  0.0263        0.889        0.992\n   43     73       2    0.914  0.0312        0.855        0.977\n   45     66       1    0.900  0.0337        0.836        0.968\n   49     57       2    0.868  0.0392        0.795        0.949\n   50     50       1    0.851  0.0421        0.772        0.938\n   53     43       2    0.811  0.0485        0.722        0.912\n   55     38       1    0.790  0.0518        0.695        0.898\n   57     37       1    0.769  0.0546        0.669        0.883\n   58     32       1    0.745  0.0579        0.639        0.867\n   60     29       3    0.668  0.0669        0.549        0.812\n   61     25       1    0.641  0.0693        0.518        0.792\n   63     22       1    0.612  0.0720        0.486        0.771\n   64     20       1    0.581  0.0746        0.452        0.748\n   68     17       2    0.513  0.0800        0.378        0.696\n   71     14       1    0.476  0.0822        0.339        0.668\n   73     12       2    0.397  0.0856        0.260        0.606\n   78      6       1    0.331  0.0934        0.190        0.575\n\n                smoke=3 \n time n.risk n.event survival std.err lower 95% CI upper 95% CI\n   31    221       1    0.995 0.00451        0.987        1.000\n   32    220       1    0.991 0.00637        0.979        1.000\n   35    219       1    0.986 0.00778        0.971        1.000\n   39    218       1    0.982 0.00897        0.964        1.000\n   40    217       2    0.973 0.01093        0.952        0.995\n   43    196       2    0.963 0.01288        0.938        0.988\n   44    189       1    0.958 0.01378        0.931        0.985\n   45    185       3    0.942 0.01622        0.911        0.975\n   47    175       2    0.932 0.01773        0.897        0.967\n   48    165       3    0.915 0.01992        0.876        0.954\n   49    160       3    0.897 0.02187        0.856        0.941\n   50    155       3    0.880 0.02363        0.835        0.928\n   51    143       2    0.868 0.02485        0.820        0.918\n   52    138       3    0.849 0.02659        0.798        0.903\n   53    130       3    0.829 0.02828        0.776        0.887\n   54    123       4    0.802 0.03041        0.745        0.864\n   55    116       3    0.782 0.03189        0.722        0.847\n   56    109       3    0.760 0.03335        0.697        0.828\n   58     99       3    0.737 0.03489        0.672        0.809\n   59     91       3    0.713 0.03645        0.645        0.788\n   61     80       1    0.704 0.03707        0.635        0.780\n   62     78       1    0.695 0.03767        0.625        0.773\n   63     73       6    0.638 0.04116        0.562        0.724\n   64     65       1    0.628 0.04168        0.551        0.715\n   65     58       3    0.595 0.04354        0.516        0.687\n   66     51       2    0.572 0.04485        0.491        0.667\n   67     46       1    0.560 0.04557        0.477        0.656\n   68     41       1    0.546 0.04646        0.462        0.645\n   70     34       2    0.514 0.04896        0.426        0.619\n   71     30       1    0.497 0.05024        0.407        0.606\n   73     28       1    0.479 0.05148        0.388        0.591\n   75     22       1    0.457 0.05355        0.363        0.575\n   76     19       3    0.385 0.05913        0.285        0.520\n   79     13       1    0.355 0.06155        0.253        0.499\n   80      8       2    0.267 0.07136        0.158        0.450\n\nggsurvplot(fit2, legend.title=\"smoke\",legend.labs=c(\"current\",\"ex smoker\",\"non-smoker\"))\n\n\n\nsurvdiff(Surv(DI1_ag,DI1_dg) ~ smoke, data = final_data)\n\nCall:\nsurvdiff(formula = Surv(DI1_ag, DI1_dg) ~ smoke, data = final_data)\n\n          N Observed Expected (O-E)^2/E (O-E)^2/V\nsmoke=1  53       17     15.3    0.1937     0.228\nsmoke=2  83       28     26.5    0.0821     0.108\nsmoke=3 221       74     77.2    0.1323     0.387\n\n Chisq= 0.4  on 2 degrees of freedom, p= 0.8"
+  },
+  {
+    "objectID": "survival_analysis.html#breslow-test-tarone-ware-test",
+    "href": "survival_analysis.html#breslow-test-tarone-ware-test",
+    "title": "9  생존분석",
+    "section": "9.3 Breslow test & Tarone-Ware test",
+    "text": "9.3 Breslow test & Tarone-Ware test\n\nlibrary(survMisc)\n\n\nAttaching package: 'survMisc'\n\n\nThe following object is masked from 'package:ggplot2':\n\n    autoplot\n\nten(fit2)\n\n      t e   n cg ncg\n  1: 27 1 360  1  53\n  2: 41 2 340  1  52\n  3: 43 2 320  1  50\n  4: 44 0 300  1  47\n  5: 45 1 290  1  43\n ---                \n101: 75 1  32  3  22\n102: 76 3  27  3  19\n103: 77 0  23  3  15\n104: 79 1  19  3  13\n105: 80 2  10  3   8\n\ncomp(ten(fit2))\n\n              chiSq df pChisq\n1          0.418903  2      5\nn          1.321260  2      1\nsqrtN      0.888488  2      2\nS1         0.720640  2      4\nS2         0.729227  2      3\nFH_p=1_q=1 0.069639  2      6\n$tft\n                     Q         Var         Z pNorm\n1           4.9161e+00  5.8693e+01  0.641697     5\nn           1.9430e+03  2.8575e+06  1.149421     1\nsqrtN       1.0123e+02  1.1538e+04  0.942400     2\nS1          5.1309e+00  3.6583e+01  0.848304     4\nS2          5.1325e+00  3.6172e+01  0.853389     3\nFH_p=1_q=1 -8.5474e-02  1.5072e+00 -0.069624     6\n\n$scores\n[1] 1 2 3"
+  },
+  {
+    "objectID": "survival_analysis.html#cox-proportional-hazard-model",
+    "href": "survival_analysis.html#cox-proportional-hazard-model",
+    "title": "9  생존분석",
+    "section": "9.4 Cox proportional hazard model",
+    "text": "9.4 Cox proportional hazard model\n\n# to generate BMI group variable\nfinal_data$BMI_gp = ifelse(final_data$HE_BMI&lt;=22,\"1 light\",\n                     ifelse(final_data$HE_BMI&lt;=26,\"2 normal\",\n                            ifelse(final_data$HE_BMI&gt;26,\"3 heavy\",NA)))\n#final_data$BMI_gp = relevel(final_data$BMI_gp, ref = \"3 heavy\")\ncox.fit &lt;- coxph(Surv(DI1_ag, DI1_dg) ~ age+sex+HE_chol+BMI_gp, data=final_data)\nsummary(cox.fit)\n\nCall:\ncoxph(formula = Surv(DI1_ag, DI1_dg) ~ age + sex + HE_chol + \n    BMI_gp, data = final_data)\n\n  n= 341, number of events= 114 \n   (16 observations deleted due to missingness)\n\n                    coef exp(coef)  se(coef)      z Pr(&gt;|z|)    \nage            -0.044977  0.956020  0.012150 -3.702 0.000214 ***\nsex             0.085525  1.089289  0.195786  0.437 0.662236    \nHE_chol        -0.010243  0.989809  0.002706 -3.786 0.000153 ***\nBMI_gp2 normal -0.059136  0.942578  0.239266 -0.247 0.804787    \nBMI_gp3 heavy   0.595202  1.813397  0.251939  2.362 0.018153 *  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n               exp(coef) exp(-coef) lower .95 upper .95\nage               0.9560     1.0460    0.9335    0.9791\nsex               1.0893     0.9180    0.7421    1.5988\nHE_chol           0.9898     1.0103    0.9846    0.9951\nBMI_gp2 normal    0.9426     1.0609    0.5897    1.5065\nBMI_gp3 heavy     1.8134     0.5515    1.1067    2.9713\n\nConcordance= 0.687  (se = 0.026 )\nLikelihood ratio test= 32.49  on 5 df,   p=5e-06\nWald test            = 31.79  on 5 df,   p=7e-06\nScore (logrank) test = 31.93  on 5 df,   p=6e-06"
   }
 ]

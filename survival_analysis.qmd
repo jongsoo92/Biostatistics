@@ -1,9 +1,45 @@
 # 생존분석
 
-This is a book created from markdown and executable code.
-
-See @knuth84 for additional discussion of literate programming.
-
+## Kaplan-Meier plot
 ```{r}
-1 + 1
+library(haven)
+library(ggplot2)
+library(survival)
+library(survminer)
+
+data = read_sav("HN19_실습.sav")
+final_data = subset(data, age >=40)
+knitr::kable(head(final_data,10))
+
+fit = survfit(Surv(DI1_ag,DI1_dg) ~ 1, type = "kaplan-meier", data = final_data)
+summary(fit)
+ggsurvplot(fit)
+
+```
+
+## Log-rank test
+```{r}
+fit2 = survfit(Surv(DI1_ag,DI1_dg) ~ smoke, type = "kaplan-meier", data = final_data)
+summary(fit2)
+ggsurvplot(fit2, legend.title="smoke",legend.labs=c("current","ex smoker","non-smoker"))
+
+survdiff(Surv(DI1_ag,DI1_dg) ~ smoke, data = final_data)
+```
+
+## Breslow test & Tarone-Ware test
+```{r}
+library(survMisc)
+ten(fit2)
+comp(ten(fit2))
+```
+
+## Cox proportional hazard model
+```{r}
+# to generate BMI group variable
+final_data$BMI_gp = ifelse(final_data$HE_BMI<=22,"1 light",
+                     ifelse(final_data$HE_BMI<=26,"2 normal",
+                            ifelse(final_data$HE_BMI>26,"3 heavy",NA)))
+#final_data$BMI_gp = relevel(final_data$BMI_gp, ref = "3 heavy")
+cox.fit <- coxph(Surv(DI1_ag, DI1_dg) ~ age+sex+HE_chol+BMI_gp, data=final_data)
+summary(cox.fit)
 ```

@@ -54,26 +54,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -238,7 +219,22 @@ div.csl-indent {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link active" data-scroll-target="#two-sample-t-test"><span class="header-section-number">4.1</span> Two sample t-test</a></li>
+  <li><a href="#paired-t-test" id="toc-paired-t-test" class="nav-link" data-scroll-target="#paired-t-test"><span class="header-section-number">4.2</span> Paired t-test</a></li>
+  <li><a href="#정규성-검정normality-test" id="toc-정규성-검정normality-test" class="nav-link" data-scroll-target="#정규성-검정normality-test"><span class="header-section-number">4.3</span> 정규성 검정(Normality test)</a>
+  <ul class="collapse">
+  <li><a href="#shapiro-wilk-test" id="toc-shapiro-wilk-test" class="nav-link" data-scroll-target="#shapiro-wilk-test"><span class="header-section-number">4.3.1</span> Shapiro-Wilk test</a></li>
+  <li><a href="#정규q-q-도표normal-q-q-plot" id="toc-정규q-q-도표normal-q-q-plot" class="nav-link" data-scroll-target="#정규q-q-도표normal-q-q-plot"><span class="header-section-number">4.3.2</span> 정규Q-Q 도표(Normal Q-Q plot)</a></li>
+  <li><a href="#kolmogorov-smirnov-test" id="toc-kolmogorov-smirnov-test" class="nav-link" data-scroll-target="#kolmogorov-smirnov-test"><span class="header-section-number">4.3.3</span> Kolmogorov-Smirnov test</a></li>
+  </ul></li>
+  <li><a href="#mann-whitney-u-test-or-wilcoxon-rank-sum-test" id="toc-mann-whitney-u-test-or-wilcoxon-rank-sum-test" class="nav-link" data-scroll-target="#mann-whitney-u-test-or-wilcoxon-rank-sum-test"><span class="header-section-number">4.4</span> Mann-Whitney U test (or Wilcoxon rank-sum test)</a></li>
+  <li><a href="#wilcoxon-signed-rank-test" id="toc-wilcoxon-signed-rank-test" class="nav-link" data-scroll-target="#wilcoxon-signed-rank-test"><span class="header-section-number">4.5</span> Wilcoxon signed-rank test</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://jongsoo92.github.io/Biostatistics/edit/main/book/compare_two_groups.qmd" class="toc-action">Edit this page</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/blob/main/book/compare_two_groups.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -260,21 +256,252 @@ div.csl-indent {
 
 </header>
 
-<p>This is a book created from markdown and executable code.</p>
-<p>See <span class="citation" data-cites="knuth84">Knuth (<a href="references.html#ref-knuth84" role="doc-biblioref">1984</a>)</span> for additional discussion of literate programming.</p>
+<section id="two-sample-t-test" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="two-sample-t-test"><span class="header-section-number">4.1</span> Two sample t-test</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: carData</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read_sav</span>(<span class="st">"HN19_실습.sav"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sex <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>sex)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1: Male, 2: Female</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>sex)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"Male"</span>,<span class="st">"Female"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(data[,<span class="fu">c</span>(<span class="st">"ID"</span>,<span class="st">"sex"</span>,<span class="st">"age"</span>,<span class="st">"HE_sbp1"</span>,<span class="st">"HE_sbp2"</span>)], <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">sex</th>
+<th style="text-align: right;">age</th>
+<th style="text-align: right;">HE_sbp1</th>
+<th style="text-align: right;">HE_sbp2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A531220402</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">104</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">L501322401</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">112</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">D510288401</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">112</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">M503205101</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">136</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B512234004</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">104</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">K501305402</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">144</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">E506278202</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">138</td>
+<td style="text-align: right;">132</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A509211902</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">134</td>
+<td style="text-align: right;">136</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">H542222102</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">194</td>
+<td style="text-align: right;">188</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N505230601</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">98</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data,<span class="fu">aes</span>(<span class="at">x=</span>sex, <span class="at">y=</span> age, <span class="at">fill=</span>sex)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="compare_two_groups_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 등분산 가정 검토</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(age <span class="sc">~</span> sex, <span class="at">data=</span>data, <span class="at">center =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<pre><code>Levene's Test for Homogeneity of Variance (center = mean)
+       Df F value Pr(&gt;F)
+group   1  1.2878  0.257
+      498               </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 등분산 가정이 만족할 때</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(age<span class="sc">~</span>sex, <span class="at">data=</span>data, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  age by sex
+t = -1.6103, df = 498, p-value = 0.108
+alternative hypothesis: true difference in means between group Male and group Female is not equal to 0
+95 percent confidence interval:
+ -5.482809  0.543606
+sample estimates:
+  mean in group Male mean in group Female 
+            49.89151             52.36111 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 등분산 가정이 만족하지 않을 때</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(age<span class="sc">~</span>sex, <span class="at">data=</span>data, <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  age by sex
+t = -1.598, df = 441.53, p-value = 0.1108
+alternative hypothesis: true difference in means between group Male and group Female is not equal to 0
+95 percent confidence interval:
+ -5.5069652  0.5677619
+sample estimates:
+  mean in group Male mean in group Female 
+            49.89151             52.36111 </code></pre>
+</div>
+</div>
+</section>
+<section id="paired-t-test" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="paired-t-test"><span class="header-section-number">4.2</span> Paired t-test</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read_sav</span>(<span class="st">"HN19_실습.sav"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(data<span class="sc">$</span>HE_sbp1,data<span class="sc">$</span>HE_sbp2,<span class="at">paired=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  data$HE_sbp1 and data$HE_sbp2
+t = 3.3862, df = 497, p-value = 0.0007648
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ 0.3574025 1.3454088
+sample estimates:
+mean difference 
+      0.8514056 </code></pre>
+</div>
+</div>
+</section>
+<section id="정규성-검정normality-test" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="정규성-검정normality-test"><span class="header-section-number">4.3</span> 정규성 검정(Normality test)</h2>
+<section id="shapiro-wilk-test" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="shapiro-wilk-test"><span class="header-section-number">4.3.1</span> Shapiro-Wilk test</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read_sav</span>(<span class="st">"HN19_실습.sav"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data<span class="sc">$</span>HE_sbp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  data$HE_sbp
+W = 0.97678, p-value = 4.081e-07</code></pre>
+</div>
+</div>
+</section>
+<section id="정규q-q-도표normal-q-q-plot" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="정규q-q-도표normal-q-q-plot"><span class="header-section-number">4.3.2</span> 정규Q-Q 도표(Normal Q-Q plot)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(data<span class="sc">$</span>HE_sbp);<span class="fu">qqline</span>(data<span class="sc">$</span>HE_sbp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="compare_two_groups_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="kolmogorov-smirnov-test" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="kolmogorov-smirnov-test"><span class="header-section-number">4.3.3</span> Kolmogorov-Smirnov test</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read_sav</span>(<span class="st">"HN19_실습.sav"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(data<span class="sc">$</span>HE_sbp1,data<span class="sc">$</span>HE_sbp2,<span class="at">paired=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  data$HE_sbp1 and data$HE_sbp2
+t = 3.3862, df = 497, p-value = 0.0007648
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ 0.3574025 1.3454088
+sample estimates:
+mean difference 
+      0.8514056 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="mann-whitney-u-test-or-wilcoxon-rank-sum-test" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="mann-whitney-u-test-or-wilcoxon-rank-sum-test"><span class="header-section-number">4.4</span> Mann-Whitney U test (or Wilcoxon rank-sum test)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(age<span class="sc">~</span>sex, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon rank sum test with continuity correction
+
+data:  age by sex
+W = 27880, p-value = 0.09726
+alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+</div>
+</section>
+<section id="wilcoxon-signed-rank-test" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="wilcoxon-signed-rank-test"><span class="header-section-number">4.5</span> Wilcoxon signed-rank test</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(data<span class="sc">$</span>HE_sbp1, data<span class="sc">$</span>HE_sbp2, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon signed rank test with continuity correction
+
+data:  data$HE_sbp1 and data$HE_sbp2
+V = 47066, p-value = 0.000416
+alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
-<div id="ref-knuth84" class="csl-entry" role="listitem">
-Knuth, Donald E. 1984. <span>“Literate Programming.”</span> <em>Comput. J.</em> 27 (2): 97–111. <a href="https://doi.org/10.1093/comjnl/27.2.97">https://doi.org/10.1093/comjnl/27.2.97</a>.
-</div>
-</div>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -641,4 +868,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://jongsoo92.github.io/Biostatistics/edit/main/book/compare_two_groups.qmd" class="toc-action">Edit this page</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/blob/main/book/compare_two_groups.qmd" class="toc-action">View source</a></p></div></div></div></div></footer></body></html>
+</body></html>

@@ -1,9 +1,44 @@
 # 로지스틱 회귀분석
 
-This is a book created from markdown and executable code.
-
-See @knuth84 for additional discussion of literate programming.
-
+## subset
 ```{r}
-1 + 1
+library(haven)
+library(ggplot2)
+library(car)
+
+data = read_sav("HN19_실습.sav")
+
+final_data = subset(data,select=c("sex","age","HE_sbp","HE_chol","HE_TG","smoke","DI1_dg"))
+final_data$sex = as.factor(final_data$sex)
+levels(final_data$sex) = c("Male", "Female")
+final_data$smoke = as.factor(final_data$smoke)
+levels(final_data$smoke) = c("current", "ex smoker", "non smoker")
+final_data$smoke = relevel(final_data$smoke, ref = "current")
+knitr::kable(head(final_data,10))
+```
+## Logistic regression
+```{r}
+library(glmnet)
+final_data = final_data[complete.cases(final_data),]
+final_data$DI1_dg = as.factor(final_data$DI1_dg)
+fit.logistic = glm(DI1_dg~age+sex+HE_sbp+HE_chol+HE_TG+smoke,
+                   data = final_data,
+                   family = "binomial")
+summary(fit.logistic)
+round(cbind(exp(coef(fit.logistic)),exp(confint(fit.logistic))),3)
+```
+
+## AUC, Area Under the Curve
+```{r}
+library(pROC)
+library(generalhoslem)
+# predicted probabilities
+pred_y = predict(fit.logistic, data = final_data, type="response")
+# ROC curve
+plot.roc(final_data$DI1_dg,pred_y)
+auc(final_data$DI1_dg,pred_y)
+
+# Hosmer-Lemeshow test
+## 결과 재확인 필요(2023.08.29)
+logitgof(final_data$DI1_dg,fitted(fit.logistic))
 ```

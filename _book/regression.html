@@ -54,26 +54,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -238,7 +219,20 @@ div.csl-indent {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#pearsons-correlation-spearman-correlation" id="toc-pearsons-correlation-spearman-correlation" class="nav-link active" data-scroll-target="#pearsons-correlation-spearman-correlation"><span class="header-section-number">7.1</span> Pearson’s correlation &amp; Spearman correlation</a></li>
+  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link" data-scroll-target="#simple-linear-regression"><span class="header-section-number">7.2</span> Simple linear regression</a></li>
+  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"><span class="header-section-number">7.3</span> Multiple linear regression</a></li>
+  <li><a href="#multicollinearity" id="toc-multicollinearity" class="nav-link" data-scroll-target="#multicollinearity"><span class="header-section-number">7.4</span> Multicollinearity</a></li>
+  <li><a href="#residual-analysis" id="toc-residual-analysis" class="nav-link" data-scroll-target="#residual-analysis"><span class="header-section-number">7.5</span> Residual analysis</a></li>
+  <li><a href="#equal-variance" id="toc-equal-variance" class="nav-link" data-scroll-target="#equal-variance"><span class="header-section-number">7.6</span> Equal variance</a></li>
+  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence"><span class="header-section-number">7.7</span> Independence</a></li>
+  <li><a href="#normality" id="toc-normality" class="nav-link" data-scroll-target="#normality"><span class="header-section-number">7.8</span> Normality</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://jongsoo92.github.io/Biostatistics/edit/main/book/regression.qmd" class="toc-action">Edit this page</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/blob/main/book/regression.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -260,21 +254,550 @@ div.csl-indent {
 
 </header>
 
-<p>This is a book created from markdown and executable code.</p>
-<p>See <span class="citation" data-cites="knuth84">Knuth (<a href="references.html#ref-knuth84" role="doc-biblioref">1984</a>)</span> for additional discussion of literate programming.</p>
+<section id="pearsons-correlation-spearman-correlation" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="pearsons-correlation-spearman-correlation"><span class="header-section-number">7.1</span> Pearson’s correlation &amp; Spearman correlation</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: carData</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read_sav</span>(<span class="st">"HN19_실습.sav"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sex <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>sex)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(data<span class="sc">$</span>HE_BMI,data<span class="sc">$</span>HE_sbp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="regression_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>data, <span class="fu">aes</span>(<span class="at">x=</span>HE_BMI, <span class="at">y=</span>HE_sbp)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="regression_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># parametric correlation</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(data<span class="sc">$</span>HE_BMI, data<span class="sc">$</span>HE_sbp, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  data$HE_BMI and data$HE_sbp
+t = 2.8147, df = 494, p-value = 0.005077
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.03801333 0.21134263
+sample estimates:
+      cor 
+0.1256366 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># non-parametric correlation</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(data<span class="sc">$</span>HE_BMI, data<span class="sc">$</span>HE_sbp, <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in cor.test.default(data$HE_BMI, data$HE_sbp, method = "spearman"):
+Cannot compute exact p-value with ties</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Spearman's rank correlation rho
+
+data:  data$HE_BMI and data$HE_sbp
+S = 16895709, p-value = 0.0001527
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.1692231 </code></pre>
 </div>
 </div>
+</section>
+<section id="simple-linear-regression" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="simple-linear-regression"><span class="header-section-number">7.2</span> Simple linear regression</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 4%">
+<col style="width: 2%">
+<col style="width: 4%">
+<col style="width: 1%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 3%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 4%">
+<col style="width: 3%">
+<col style="width: 3%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">sex</th>
+<th style="text-align: right;">age</th>
+<th style="text-align: right;">HE_BMI</th>
+<th style="text-align: right;">smoke</th>
+<th style="text-align: right;">cursmoke</th>
+<th style="text-align: right;">edu</th>
+<th style="text-align: right;">marri_1</th>
+<th style="text-align: right;">DI1_dg</th>
+<th style="text-align: right;">DI1_ag</th>
+<th style="text-align: right;">DE1_dg</th>
+<th style="text-align: right;">DE1_ag</th>
+<th style="text-align: right;">DI2_dg</th>
+<th style="text-align: right;">DI2_ag</th>
+<th style="text-align: right;">HE_sbp1</th>
+<th style="text-align: right;">HE_sbp2</th>
+<th style="text-align: right;">HE_sbp3</th>
+<th style="text-align: right;">HE_dbp1</th>
+<th style="text-align: right;">HE_dbp2</th>
+<th style="text-align: right;">HE_dbp3</th>
+<th style="text-align: right;">HE_sbp</th>
+<th style="text-align: right;">HE_dbp</th>
+<th style="text-align: right;">HE_ht</th>
+<th style="text-align: right;">HE_wt</th>
+<th style="text-align: right;">HE_wc</th>
+<th style="text-align: right;">HE_chol</th>
+<th style="text-align: right;">HE_TG</th>
+<th style="text-align: right;">BD1</th>
+<th style="text-align: right;">BP5</th>
+<th style="text-align: right;">mh_stress</th>
+<th style="text-align: right;">BP16_1</th>
+<th style="text-align: right;">BP16_2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A531220402</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">19.96642</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">102</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">103</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">171.9</td>
+<td style="text-align: right;">59.0</td>
+<td style="text-align: right;">73.9</td>
+<td style="text-align: right;">197</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">L501322401</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">24.87020</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">113</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">169.2</td>
+<td style="text-align: right;">71.2</td>
+<td style="text-align: right;">85.7</td>
+<td style="text-align: right;">242</td>
+<td style="text-align: right;">166</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">D510288401</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">21.77763</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">111</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">166.4</td>
+<td style="text-align: right;">60.3</td>
+<td style="text-align: right;">75.1</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">M503205101</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">23.59494</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">136</td>
+<td style="text-align: right;">134</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">155.7</td>
+<td style="text-align: right;">57.2</td>
+<td style="text-align: right;">83.9</td>
+<td style="text-align: right;">138</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B512234004</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">24.47525</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">170.2</td>
+<td style="text-align: right;">70.9</td>
+<td style="text-align: right;">82.2</td>
+<td style="text-align: right;">209</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">K501305402</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">27.50619</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">142</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">143</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">157.0</td>
+<td style="text-align: right;">67.8</td>
+<td style="text-align: right;">88.4</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># not dummy variable for smoke: </span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> <span class="fu">lm</span>(HE_TG<span class="sc">~</span>sex<span class="sc">+</span>age<span class="sc">+</span>smoke<span class="sc">+</span>HE_BMI<span class="sc">+</span>HE_chol,<span class="at">data=</span>data)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = HE_TG ~ sex + age + smoke + HE_BMI + HE_chol, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-151.39  -46.11  -14.77   24.28  720.22 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -82.63179   34.98569  -2.362  0.01858 *  
+sex2        -11.47697    9.51770  -1.206  0.22847    
+age           0.67222    0.22258   3.020  0.00266 ** 
+smoke       -21.07923    6.10144  -3.455  0.00060 ***
+HE_BMI        4.44588    1.06523   4.174 3.56e-05 ***
+HE_chol       0.66175    0.09771   6.772 3.74e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 81.42 on 477 degrees of freedom
+  (17 observations deleted due to missingness)
+Multiple R-squared:  0.1799,    Adjusted R-squared:  0.1713 
+F-statistic: 20.93 on 5 and 477 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># as.factor option for smoke: </span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">=</span> <span class="fu">lm</span>(HE_TG<span class="sc">~</span>sex<span class="sc">+</span>age<span class="sc">+</span><span class="fu">as.factor</span>(smoke)<span class="sc">+</span>HE_BMI<span class="sc">+</span>HE_chol,<span class="at">data=</span>data)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = HE_TG ~ sex + age + as.factor(smoke) + HE_BMI + 
+    HE_chol, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-148.23  -44.60  -14.64   23.17  719.41 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       -101.24796   33.40206  -3.031 0.002569 ** 
+sex2               -14.65683    9.99125  -1.467 0.143046    
+age                  0.68933    0.22316   3.089 0.002126 ** 
+as.factor(smoke)2  -31.78007   11.91805  -2.667 0.007924 ** 
+as.factor(smoke)3  -43.01749   12.22934  -3.518 0.000477 ***
+HE_BMI               4.51578    1.06723   4.231 2.79e-05 ***
+HE_chol              0.66040    0.09771   6.759 4.09e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 81.41 on 476 degrees of freedom
+  (17 observations deleted due to missingness)
+Multiple R-squared:  0.1818,    Adjusted R-squared:  0.1715 
+F-statistic: 17.63 on 6 and 476 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>smoke1 <span class="ot">=</span> <span class="fu">ifelse</span>(data<span class="sc">$</span>smoke<span class="sc">==</span><span class="dv">1</span>,<span class="dv">1</span>,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">ifelse</span>(<span class="fu">is.na</span>(data<span class="sc">$</span>smoke)<span class="sc">==</span>T,<span class="cn">NA</span>,<span class="dv">0</span>))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>smoke2 <span class="ot">=</span> <span class="fu">ifelse</span>(data<span class="sc">$</span>smoke<span class="sc">==</span><span class="dv">2</span>,<span class="dv">1</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">ifelse</span>(<span class="fu">is.na</span>(data<span class="sc">$</span>smoke)<span class="sc">==</span>T,<span class="cn">NA</span>,<span class="dv">0</span>))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(data[<span class="fu">c</span>(<span class="st">"smoke"</span>,<span class="st">"smoke1"</span>,<span class="st">"smoke2"</span>)],<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">smoke</th>
+<th style="text-align: right;">smoke1</th>
+<th style="text-align: right;">smoke2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## using dummy variables</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">=</span> <span class="fu">lm</span>(HE_TG<span class="sc">~</span>sex<span class="sc">+</span>age<span class="sc">+</span>smoke1<span class="sc">+</span>smoke2<span class="sc">+</span>HE_BMI<span class="sc">+</span>HE_chol,<span class="at">data=</span>data)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = HE_TG ~ sex + age + smoke1 + smoke2 + HE_BMI + HE_chol, 
+    data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-148.23  -44.60  -14.64   23.17  719.41 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -144.26545   33.29546  -4.333 1.80e-05 ***
+sex2         -14.65683    9.99125  -1.467 0.143046    
+age            0.68933    0.22316   3.089 0.002126 ** 
+smoke1        43.01749   12.22934   3.518 0.000477 ***
+smoke2        11.23742   11.21990   1.002 0.317064    
+HE_BMI         4.51578    1.06723   4.231 2.79e-05 ***
+HE_chol        0.66040    0.09771   6.759 4.09e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 81.41 on 476 degrees of freedom
+  (17 observations deleted due to missingness)
+Multiple R-squared:  0.1818,    Adjusted R-squared:  0.1715 
+F-statistic: 17.63 on 6 and 476 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit3, <span class="at">las=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="regression_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="regression_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="regression_files/figure-html/unnamed-chunk-2-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="regression_files/figure-html/unnamed-chunk-2-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     sex      age   smoke1   smoke2   HE_BMI  HE_chol 
+1.785858 1.024355 1.551153 1.603195 1.035967 1.028915 </code></pre>
+</div>
+</div>
+</section>
+<section id="multiple-linear-regression" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="multiple-linear-regression"><span class="header-section-number">7.3</span> Multiple linear regression</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to generate dummy variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="multicollinearity" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="multicollinearity"><span class="header-section-number">7.4</span> Multicollinearity</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># VIF</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="residual-analysis" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="residual-analysis"><span class="header-section-number">7.5</span> Residual analysis</h2>
+</section>
+<section id="equal-variance" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="equal-variance"><span class="header-section-number">7.6</span> Equal variance</h2>
+</section>
+<section id="independence" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="independence"><span class="header-section-number">7.7</span> Independence</h2>
+</section>
+<section id="normality" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="normality"><span class="header-section-number">7.8</span> Normality</h2>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
-<div id="ref-knuth84" class="csl-entry" role="listitem">
-Knuth, Donald E. 1984. <span>“Literate Programming.”</span> <em>Comput. J.</em> 27 (2): 97–111. <a href="https://doi.org/10.1093/comjnl/27.2.97">https://doi.org/10.1093/comjnl/27.2.97</a>.
-</div>
-</div>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -641,4 +1164,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://jongsoo92.github.io/Biostatistics/edit/main/book/regression.qmd" class="toc-action">Edit this page</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/blob/main/book/regression.qmd" class="toc-action">View source</a></p></div></div></div></div></footer></body></html>
+</body></html>

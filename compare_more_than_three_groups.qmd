@@ -1,9 +1,59 @@
 # 세 집단 이상 평균비교
 
-This is a book created from markdown and executable code.
-
-See @knuth84 for additional discussion of literate programming.
+## One-way ANOVA
 
 ```{r}
-1 + 1
+library(haven)
+library(ggplot2)
+library(car)
+
+data = read_sav("HN19_실습.sav")
+data$sex = as.factor(data$sex)
+# to generate BMI group variable
+data$BMI_gp = ifelse(data$HE_BMI<20,"1 light",
+                     ifelse(data$HE_BMI<25,"2 normal",
+                            ifelse(data$HE_BMI>=25,"3 heavy",NA)))
+
+# boxplot
+pp <- ggplot(data,aes(x=BMI_gp, y= HE_sbp, fill=BMI_gp)) +
+  geom_boxplot()
+pp
+# ANOVA
+rslt = aov(HE_sbp~BMI_gp,data=data)
+summary(rslt)
+
+# 4 observations deleted due to missingness
+## is.na()
+sum(is.na(data$HE_BMI))
+table(data$BMI_gp)
+sum(is.na(data$HE_sbp))
+data$HE_BMI[which(is.na(data$HE_sbp)==TRUE)]
+```
+
+## Multiple comparison (Bonferroni procedure)
+
+```{r}
+pairwise.t.test(data$age, data$BMI_gp, p.adj = "bonf")
+# cf. not adjust p-value result
+pairwise.t.test(data$age, data$BMI_gp, p.adj = "none")
+data2 = subset(data,BMI_gp %in%c("light","normal"))
+```
+
+## Multiple comparison (TukeyHSD)
+
+```{r}
+TukeyHSD(rslt)
+```
+
+## Kruskal-Wallis test
+
+```{r}
+kruskal.test(HE_sbp~BMI_gp,data=data)
+```
+
+## Dunn procedure
+
+```{r}
+library(FSA)
+dunnTest(HE_sbp~BMI_gp,data=data, method = "bonferroni")
 ```

@@ -1,9 +1,71 @@
 # 두 집단 평균비교
 
-This is a book created from markdown and executable code.
-
-See @knuth84 for additional discussion of literate programming.
-
+## Two sample t-test
 ```{r}
-1 + 1
+library(haven)
+library(ggplot2)
+library(car)
+
+data = read_sav("HN19_실습.sav")
+data$sex = as.factor(data$sex)
+
+# 1: Male, 2: Female
+levels(data$sex)=c("Male","Female")
+
+knitr::kable(head(data[,c("ID","sex","age","HE_sbp1","HE_sbp2")], 10))
+
+pp <- ggplot(data,aes(x=sex, y= age, fill=sex)) + geom_boxplot()
+pp
+
+# 등분산 가정 검토
+leveneTest(age ~ sex, data=data, center = mean)
+
+# 등분산 가정이 만족할 때
+t.test(age~sex, data=data, var.equal = TRUE)
+
+# 등분산 가정이 만족하지 않을 때
+t.test(age~sex, data=data, var.equal = FALSE)
 ```
+
+## Paired t-test
+```{r}
+data = read_sav("HN19_실습.sav")
+t.test(data$HE_sbp1,data$HE_sbp2,paired=TRUE)
+
+```
+
+## 정규성 검정(Normality test)
+
+### Shapiro-Wilk test
+```{r}
+library(haven)
+library(ggplot2)
+library(car)
+
+data = read_sav("HN19_실습.sav")
+shapiro.test(data$HE_sbp)
+
+```
+
+### 정규Q-Q 도표(Normal Q-Q plot)
+```{r}
+qqnorm(data$HE_sbp);qqline(data$HE_sbp)
+
+```
+### Kolmogorov-Smirnov test
+```{r}
+data = read_sav("HN19_실습.sav")
+t.test(data$HE_sbp1,data$HE_sbp2,paired=TRUE)
+
+```
+
+## Mann-Whitney U test (or Wilcoxon rank-sum test)
+```{r}
+wilcox.test(age~sex, data = data)
+```
+
+## Wilcoxon signed-rank test
+```{r}
+wilcox.test(data$HE_sbp1, data$HE_sbp2, paired = TRUE)
+```
+

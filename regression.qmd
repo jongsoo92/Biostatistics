@@ -1,9 +1,66 @@
 # 회귀분석
 
-This is a book created from markdown and executable code.
-
-See @knuth84 for additional discussion of literate programming.
-
+## Pearson's correlation & Spearman correlation
 ```{r}
-1 + 1
+library(haven)
+library(ggplot2)
+library(car)
+
+data = read_sav("HN19_실습.sav")
+data$sex = as.factor(data$sex)
+plot(data$HE_BMI,data$HE_sbp)
+pp <- ggplot(data=data, aes(x=HE_BMI, y=HE_sbp)) + geom_point()
+pp
+
+# parametric correlation
+cor.test(data$HE_BMI, data$HE_sbp, method = "pearson")
+# non-parametric correlation
+cor.test(data$HE_BMI, data$HE_sbp, method = "spearman")
 ```
+
+## Simple linear regression
+```{r}
+knitr::kable(head(data))
+
+# not dummy variable for smoke: 
+fit1 = lm(HE_TG~sex+age+smoke+HE_BMI+HE_chol,data=data)
+summary(fit1)
+
+# as.factor option for smoke: 
+fit2 = lm(HE_TG~sex+age+as.factor(smoke)+HE_BMI+HE_chol,data=data)
+summary(fit2)
+
+data$smoke1 = ifelse(data$smoke==1,1,
+                     ifelse(is.na(data$smoke)==T,NA,0))
+data$smoke2 = ifelse(data$smoke==2,1,
+                     ifelse(is.na(data$smoke)==T,NA,0))
+
+knitr::kable(head(data[c("smoke","smoke1","smoke2")],10))
+
+## using dummy variables
+fit3 = lm(HE_TG~sex+age+smoke1+smoke2+HE_BMI+HE_chol,data=data)
+summary(fit3)
+plot(fit3, las=1)
+
+vif(fit3)
+                     
+
+```
+## Multiple linear regression
+```{r}
+# to generate dummy variable
+
+```
+
+## Multicollinearity
+```{r}
+# VIF
+
+```
+## Residual analysis
+
+## Equal variance
+
+## Independence
+
+## Normality
