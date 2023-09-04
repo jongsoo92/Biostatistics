@@ -223,9 +223,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link active" data-scroll-target="#two-sample-t-test"><span class="header-section-number">4.1</span> Two sample t-test</a></li>
-  <li><a href="#paired-t-test" id="toc-paired-t-test" class="nav-link" data-scroll-target="#paired-t-test"><span class="header-section-number">4.2</span> Paired t-test</a></li>
-  <li><a href="#정규성-검정normality-test" id="toc-정규성-검정normality-test" class="nav-link" data-scroll-target="#정규성-검정normality-test"><span class="header-section-number">4.3</span> 정규성 검정(Normality test)</a>
+  <li><a href="#독립된-두-집단의-평균검정two-sample-t-test" id="toc-독립된-두-집단의-평균검정two-sample-t-test" class="nav-link active" data-scroll-target="#독립된-두-집단의-평균검정two-sample-t-test"><span class="header-section-number">4.1</span> 독립된 두 집단의 평균검정(two sample t-test)</a></li>
+  <li><a href="#쌍을-이룬-데이터의-평균비교paired-t-test" id="toc-쌍을-이룬-데이터의-평균비교paired-t-test" class="nav-link" data-scroll-target="#쌍을-이룬-데이터의-평균비교paired-t-test"><span class="header-section-number">4.2</span> 쌍을 이룬 데이터의 평균비교(paired t-test)</a></li>
+  <li><a href="#정규성-검정normality-test" id="toc-정규성-검정normality-test" class="nav-link" data-scroll-target="#정규성-검정normality-test"><span class="header-section-number">4.3</span> 정규성 검정(normality test)</a>
   <ul class="collapse">
   <li><a href="#shapiro-wilk-test" id="toc-shapiro-wilk-test" class="nav-link" data-scroll-target="#shapiro-wilk-test"><span class="header-section-number">4.3.1</span> Shapiro-Wilk test</a></li>
   <li><a href="#정규q-q-도표normal-q-q-plot" id="toc-정규q-q-도표normal-q-q-plot" class="nav-link" data-scroll-target="#정규q-q-도표normal-q-q-plot"><span class="header-section-number">4.3.2</span> 정규Q-Q 도표(Normal Q-Q plot)</a></li>
@@ -256,12 +256,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="two-sample-t-test" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="two-sample-t-test"><span class="header-section-number">4.1</span> Two sample t-test</h2>
+<section id="독립된-두-집단의-평균검정two-sample-t-test" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="독립된-두-집단의-평균검정two-sample-t-test"><span class="header-section-number">4.1</span> 독립된 두 집단의 평균검정(two sample t-test)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Two sample t-test</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>필요한 패키지를 로딩중입니다: carData</code></pre>
 </div>
@@ -402,11 +403,12 @@ sample estimates:
 </div>
 </div>
 </section>
-<section id="paired-t-test" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="paired-t-test"><span class="header-section-number">4.2</span> Paired t-test</h2>
+<section id="쌍을-이룬-데이터의-평균비교paired-t-test" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="쌍을-이룬-데이터의-평균비교paired-t-test"><span class="header-section-number">4.2</span> 쌍을 이룬 데이터의 평균비교(paired t-test)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read_sav</span>(<span class="st">"HN19_실습.sav"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(data<span class="sc">$</span>HE_sbp1,data<span class="sc">$</span>HE_sbp2,<span class="at">paired=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired t-test</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read_sav</span>(<span class="st">"HN19_실습.sav"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(data<span class="sc">$</span>HE_sbp1,data<span class="sc">$</span>HE_sbp2,<span class="at">paired=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Paired t-test
@@ -423,7 +425,7 @@ mean difference
 </div>
 </section>
 <section id="정규성-검정normality-test" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="정규성-검정normality-test"><span class="header-section-number">4.3</span> 정규성 검정(Normality test)</h2>
+<h2 data-number="4.3" class="anchored" data-anchor-id="정규성-검정normality-test"><span class="header-section-number">4.3</span> 정규성 검정(normality test)</h2>
 <section id="shapiro-wilk-test" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="shapiro-wilk-test"><span class="header-section-number">4.3.1</span> Shapiro-Wilk test</h3>
 <div class="cell">

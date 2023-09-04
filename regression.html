@@ -223,14 +223,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#pearsons-correlation-spearman-correlation" id="toc-pearsons-correlation-spearman-correlation" class="nav-link active" data-scroll-target="#pearsons-correlation-spearman-correlation"><span class="header-section-number">7.1</span> Pearson’s correlation &amp; Spearman correlation</a></li>
-  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link" data-scroll-target="#simple-linear-regression"><span class="header-section-number">7.2</span> Simple linear regression</a></li>
-  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"><span class="header-section-number">7.3</span> Multiple linear regression</a></li>
-  <li><a href="#multicollinearity" id="toc-multicollinearity" class="nav-link" data-scroll-target="#multicollinearity"><span class="header-section-number">7.4</span> Multicollinearity</a></li>
-  <li><a href="#residual-analysis" id="toc-residual-analysis" class="nav-link" data-scroll-target="#residual-analysis"><span class="header-section-number">7.5</span> Residual analysis</a></li>
-  <li><a href="#equal-variance" id="toc-equal-variance" class="nav-link" data-scroll-target="#equal-variance"><span class="header-section-number">7.6</span> Equal variance</a></li>
-  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence"><span class="header-section-number">7.7</span> Independence</a></li>
-  <li><a href="#normality" id="toc-normality" class="nav-link" data-scroll-target="#normality"><span class="header-section-number">7.8</span> Normality</a></li>
+  <li><a href="#상관분석correlation-analysis" id="toc-상관분석correlation-analysis" class="nav-link active" data-scroll-target="#상관분석correlation-analysis"><span class="header-section-number">7.1</span> 상관분석(correlation analysis)</a>
+  <ul class="collapse">
+  <li><a href="#pearsons-correlation-spearman-correlation" id="toc-pearsons-correlation-spearman-correlation" class="nav-link" data-scroll-target="#pearsons-correlation-spearman-correlation"><span class="header-section-number">7.1.1</span> Pearson’s correlation &amp; Spearman correlation</a></li>
+  </ul></li>
+  <li><a href="#단순선형회귀분석simple-linear-regression" id="toc-단순선형회귀분석simple-linear-regression" class="nav-link" data-scroll-target="#단순선형회귀분석simple-linear-regression"><span class="header-section-number">7.2</span> 단순선형회귀분석(Simple linear regression)</a></li>
+  <li><a href="#다중선형회귀분석multiple-linear-regression" id="toc-다중선형회귀분석multiple-linear-regression" class="nav-link" data-scroll-target="#다중선형회귀분석multiple-linear-regression"><span class="header-section-number">7.3</span> 다중선형회귀분석(Multiple linear regression)</a></li>
+  <li><a href="#다중공선성multicollinearity" id="toc-다중공선성multicollinearity" class="nav-link" data-scroll-target="#다중공선성multicollinearity"><span class="header-section-number">7.4</span> 다중공선성(Multicollinearity)</a></li>
+  <li><a href="#잔차분석residual-analysis" id="toc-잔차분석residual-analysis" class="nav-link" data-scroll-target="#잔차분석residual-analysis"><span class="header-section-number">7.5</span> 잔차분석(Residual analysis)</a>
+  <ul class="collapse">
+  <li><a href="#등분산성equal-variance" id="toc-등분산성equal-variance" class="nav-link" data-scroll-target="#등분산성equal-variance"><span class="header-section-number">7.5.1</span> 등분산성(Equal variance)</a></li>
+  </ul></li>
+  <li><a href="#독립성independence" id="toc-독립성independence" class="nav-link" data-scroll-target="#독립성independence"><span class="header-section-number">7.6</span> 독립성(Independence)</a></li>
+  <li><a href="#정규성normality" id="toc-정규성normality" class="nav-link" data-scroll-target="#정규성normality"><span class="header-section-number">7.7</span> 정규성(Normality)</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://jongsoo92.github.io/Biostatistics/edit/main/book/regression.qmd" class="toc-action">Edit this page</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/blob/main/book/regression.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -254,8 +259,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="pearsons-correlation-spearman-correlation" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="pearsons-correlation-spearman-correlation"><span class="header-section-number">7.1</span> Pearson’s correlation &amp; Spearman correlation</h2>
+<section id="상관분석correlation-analysis" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="상관분석correlation-analysis"><span class="header-section-number">7.1</span> 상관분석(correlation analysis)</h2>
+<section id="pearsons-correlation-spearman-correlation" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="pearsons-correlation-spearman-correlation"><span class="header-section-number">7.1.1</span> Pearson’s correlation &amp; Spearman correlation</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -311,8 +318,9 @@ sample estimates:
 </div>
 </div>
 </section>
-<section id="simple-linear-regression" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="simple-linear-regression"><span class="header-section-number">7.2</span> Simple linear regression</h2>
+</section>
+<section id="단순선형회귀분석simple-linear-regression" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="단순선형회귀분석simple-linear-regression"><span class="header-section-number">7.2</span> 단순선형회귀분석(Simple linear regression)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -772,29 +780,29 @@ F-statistic: 17.63 on 6 and 476 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="multiple-linear-regression" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="multiple-linear-regression"><span class="header-section-number">7.3</span> Multiple linear regression</h2>
+<section id="다중선형회귀분석multiple-linear-regression" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="다중선형회귀분석multiple-linear-regression"><span class="header-section-number">7.3</span> 다중선형회귀분석(Multiple linear regression)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to generate dummy variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="multicollinearity" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="multicollinearity"><span class="header-section-number">7.4</span> Multicollinearity</h2>
+<section id="다중공선성multicollinearity" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="다중공선성multicollinearity"><span class="header-section-number">7.4</span> 다중공선성(Multicollinearity)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># VIF</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="residual-analysis" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="residual-analysis"><span class="header-section-number">7.5</span> Residual analysis</h2>
+<section id="잔차분석residual-analysis" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="잔차분석residual-analysis"><span class="header-section-number">7.5</span> 잔차분석(Residual analysis)</h2>
+<section id="등분산성equal-variance" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="등분산성equal-variance"><span class="header-section-number">7.5.1</span> 등분산성(Equal variance)</h3>
 </section>
-<section id="equal-variance" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="equal-variance"><span class="header-section-number">7.6</span> Equal variance</h2>
 </section>
-<section id="independence" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="independence"><span class="header-section-number">7.7</span> Independence</h2>
+<section id="독립성independence" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="독립성independence"><span class="header-section-number">7.6</span> 독립성(Independence)</h2>
 </section>
-<section id="normality" class="level2" data-number="7.8">
-<h2 data-number="7.8" class="anchored" data-anchor-id="normality"><span class="header-section-number">7.8</span> Normality</h2>
+<section id="정규성normality" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="정규성normality"><span class="header-section-number">7.7</span> 정규성(Normality)</h2>
 
 
 </section>

@@ -223,10 +223,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#chi-square-test" id="toc-chi-square-test" class="nav-link active" data-scroll-target="#chi-square-test"><span class="header-section-number">6.1</span> Chi-square test</a></li>
-  <li><a href="#fishers-exact-test" id="toc-fishers-exact-test" class="nav-link" data-scroll-target="#fishers-exact-test"><span class="header-section-number">6.2</span> Fisher’s exact test</a></li>
+  <li><a href="#카이제곱검정chi-square-test" id="toc-카이제곱검정chi-square-test" class="nav-link active" data-scroll-target="#카이제곱검정chi-square-test"><span class="header-section-number">6.1</span> 카이제곱검정(Chi-square test)</a></li>
+  <li><a href="#피셔의-정확검정fishers-exact-test" id="toc-피셔의-정확검정fishers-exact-test" class="nav-link" data-scroll-target="#피셔의-정확검정fishers-exact-test"><span class="header-section-number">6.2</span> 피셔의 정확검정(Fisher’s exact test)</a></li>
   <li><a href="#mantel-haenszel-chi-square-test" id="toc-mantel-haenszel-chi-square-test" class="nav-link" data-scroll-target="#mantel-haenszel-chi-square-test"><span class="header-section-number">6.3</span> Mantel-Haenszel chi-square test</a></li>
-  <li><a href="#mcnemar-test" id="toc-mcnemar-test" class="nav-link" data-scroll-target="#mcnemar-test"><span class="header-section-number">6.4</span> McNemar test</a></li>
+  <li><a href="#맥니마검정mcnemar-test" id="toc-맥니마검정mcnemar-test" class="nav-link" data-scroll-target="#맥니마검정mcnemar-test"><span class="header-section-number">6.4</span> 맥니마검정(McNemar test)</a></li>
   <li><a href="#weight-cases-example" id="toc-weight-cases-example" class="nav-link" data-scroll-target="#weight-cases-example"><span class="header-section-number">6.5</span> Weight cases example</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://jongsoo92.github.io/Biostatistics/edit/main/book/compare_two_proportions.qmd" class="toc-action">Edit this page</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/blob/main/book/compare_two_proportions.qmd" class="toc-action">View source</a></p></div></div></nav>
@@ -251,8 +251,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="chi-square-test" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="chi-square-test"><span class="header-section-number">6.1</span> Chi-square test</h2>
+<section id="카이제곱검정chi-square-test" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="카이제곱검정chi-square-test"><span class="header-section-number">6.1</span> 카이제곱검정(Chi-square test)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -297,8 +297,8 @@ X-squared = 0.017955, df = 1, p-value = 0.8934</code></pre>
 </div>
 </div>
 </section>
-<section id="fishers-exact-test" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="fishers-exact-test"><span class="header-section-number">6.2</span> Fisher’s exact test</h2>
+<section id="피셔의-정확검정fishers-exact-test" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="피셔의-정확검정fishers-exact-test"><span class="header-section-number">6.2</span> 피셔의 정확검정(Fisher’s exact test)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>cursmoke <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>cursmoke)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>cursmoke) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>)</span>
@@ -391,8 +391,8 @@ X-squared = 12.157, df = 1, p-value = 0.0004891</code></pre>
 </div>
 </div>
 </section>
-<section id="mcnemar-test" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="mcnemar-test"><span class="header-section-number">6.4</span> McNemar test</h2>
+<section id="맥니마검정mcnemar-test" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="맥니마검정mcnemar-test"><span class="header-section-number">6.4</span> 맥니마검정(McNemar test)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sbp_group1 <span class="ot">=</span> <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_sbp1<span class="sc">&lt;=</span><span class="dv">120</span>,<span class="st">"normal"</span>,</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_sbp1<span class="sc">&gt;</span><span class="dv">120</span>,<span class="st">"danger"</span>,<span class="cn">NA</span>))</span>

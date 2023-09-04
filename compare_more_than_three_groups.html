@@ -223,9 +223,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#one-way-anova" id="toc-one-way-anova" class="nav-link active" data-scroll-target="#one-way-anova"><span class="header-section-number">5.1</span> One-way ANOVA</a></li>
-  <li><a href="#multiple-comparison-bonferroni-procedure" id="toc-multiple-comparison-bonferroni-procedure" class="nav-link" data-scroll-target="#multiple-comparison-bonferroni-procedure"><span class="header-section-number">5.2</span> Multiple comparison (Bonferroni procedure)</a></li>
-  <li><a href="#multiple-comparison-tukeyhsd" id="toc-multiple-comparison-tukeyhsd" class="nav-link" data-scroll-target="#multiple-comparison-tukeyhsd"><span class="header-section-number">5.3</span> Multiple comparison (TukeyHSD)</a></li>
+  <li><a href="#일원분산분석one-way-anova" id="toc-일원분산분석one-way-anova" class="nav-link active" data-scroll-target="#일원분산분석one-way-anova"><span class="header-section-number">5.1</span> 일원분산분석(One-way ANOVA)</a></li>
+  <li><a href="#다중비교-bonferroni-procedure" id="toc-다중비교-bonferroni-procedure" class="nav-link" data-scroll-target="#다중비교-bonferroni-procedure"><span class="header-section-number">5.2</span> 다중비교 (Bonferroni procedure)</a></li>
+  <li><a href="#다중비교-tukeyhsd" id="toc-다중비교-tukeyhsd" class="nav-link" data-scroll-target="#다중비교-tukeyhsd"><span class="header-section-number">5.3</span> 다중비교 (TukeyHSD)</a></li>
   <li><a href="#kruskal-wallis-test" id="toc-kruskal-wallis-test" class="nav-link" data-scroll-target="#kruskal-wallis-test"><span class="header-section-number">5.4</span> Kruskal-Wallis test</a></li>
   <li><a href="#dunn-procedure" id="toc-dunn-procedure" class="nav-link" data-scroll-target="#dunn-procedure"><span class="header-section-number">5.5</span> Dunn procedure</a></li>
   </ul>
@@ -251,8 +251,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="one-way-anova" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="one-way-anova"><span class="header-section-number">5.1</span> One-way ANOVA</h2>
+<section id="일원분산분석one-way-anova" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="일원분산분석one-way-anova"><span class="header-section-number">5.1</span> 일원분산분석(One-way ANOVA)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -268,11 +268,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_BMI<span class="sc">&gt;=</span><span class="dv">25</span>,<span class="st">"3 heavy"</span>,<span class="cn">NA</span>)))</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># boxplot</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>pp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data,<span class="fu">aes</span>(<span class="at">x=</span>BMI_gp, <span class="at">y=</span> HE_sbp, <span class="at">fill=</span>BMI_gp)) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>pp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(data, <span class="sc">!</span><span class="fu">is.na</span>(BMI_gp)),<span class="fu">aes</span>(<span class="at">x=</span>BMI_gp, <span class="at">y=</span> HE_sbp, <span class="at">fill=</span>BMI_gp)) <span class="sc">+</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>pp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_boxplot()`).</code></pre>
+<pre><code>Warning: Removed 1 rows containing non-finite values (`stat_boxplot()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="compare_more_than_three_groups_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
@@ -310,8 +310,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 </div>
 </div>
 </section>
-<section id="multiple-comparison-bonferroni-procedure" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="multiple-comparison-bonferroni-procedure"><span class="header-section-number">5.2</span> Multiple comparison (Bonferroni procedure)</h2>
+<section id="다중비교-bonferroni-procedure" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="다중비교-bonferroni-procedure"><span class="header-section-number">5.2</span> 다중비교 (Bonferroni procedure)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.t.test</span>(data<span class="sc">$</span>age, data<span class="sc">$</span>BMI_gp, <span class="at">p.adj =</span> <span class="st">"bonf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -343,8 +343,8 @@ P value adjustment method: none </code></pre>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">=</span> <span class="fu">subset</span>(data,BMI_gp <span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"light"</span>,<span class="st">"normal"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="multiple-comparison-tukeyhsd" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="multiple-comparison-tukeyhsd"><span class="header-section-number">5.3</span> Multiple comparison (TukeyHSD)</h2>
+<section id="다중비교-tukeyhsd" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="다중비교-tukeyhsd"><span class="header-section-number">5.3</span> 다중비교 (TukeyHSD)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(rslt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

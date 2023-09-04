@@ -223,10 +223,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#kaplan-meier-plot" id="toc-kaplan-meier-plot" class="nav-link active" data-scroll-target="#kaplan-meier-plot"><span class="header-section-number">9.1</span> Kaplan-Meier plot</a></li>
-  <li><a href="#log-rank-test" id="toc-log-rank-test" class="nav-link" data-scroll-target="#log-rank-test"><span class="header-section-number">9.2</span> Log-rank test</a></li>
+  <li><a href="#카플란마이어-생존곡선kaplan-meier-survival-curve" id="toc-카플란마이어-생존곡선kaplan-meier-survival-curve" class="nav-link active" data-scroll-target="#카플란마이어-생존곡선kaplan-meier-survival-curve"><span class="header-section-number">9.1</span> 카플란마이어 생존곡선(Kaplan-Meier survival curve)</a></li>
+  <li><a href="#로그순위검정log-rank-test" id="toc-로그순위검정log-rank-test" class="nav-link" data-scroll-target="#로그순위검정log-rank-test"><span class="header-section-number">9.2</span> 로그순위검정(Log-rank test)</a></li>
   <li><a href="#breslow-test-tarone-ware-test" id="toc-breslow-test-tarone-ware-test" class="nav-link" data-scroll-target="#breslow-test-tarone-ware-test"><span class="header-section-number">9.3</span> Breslow test &amp; Tarone-Ware test</a></li>
-  <li><a href="#cox-proportional-hazard-model" id="toc-cox-proportional-hazard-model" class="nav-link" data-scroll-target="#cox-proportional-hazard-model"><span class="header-section-number">9.4</span> Cox proportional hazard model</a></li>
+  <li><a href="#콕스비례위험모형cox-proportional-hazard-model" id="toc-콕스비례위험모형cox-proportional-hazard-model" class="nav-link" data-scroll-target="#콕스비례위험모형cox-proportional-hazard-model"><span class="header-section-number">9.4</span> 콕스비례위험모형(Cox proportional hazard model)</a></li>
+  <li><a href="#비례위험-가정검토" id="toc-비례위험-가정검토" class="nav-link" data-scroll-target="#비례위험-가정검토"><span class="header-section-number">9.5</span> 비례위험 가정검토</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://jongsoo92.github.io/Biostatistics/edit/main/book/survival_analysis.qmd" class="toc-action">Edit this page</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/blob/main/book/survival_analysis.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -250,8 +251,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="kaplan-meier-plot" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="kaplan-meier-plot"><span class="header-section-number">9.1</span> Kaplan-Meier plot</h2>
+<section id="카플란마이어-생존곡선kaplan-meier-survival-curve" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="카플란마이어-생존곡선kaplan-meier-survival-curve"><span class="header-section-number">9.1</span> 카플란마이어 생존곡선(Kaplan-Meier survival curve)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -745,8 +746,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="log-rank-test" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="log-rank-test"><span class="header-section-number">9.2</span> Log-rank test</h2>
+<section id="로그순위검정log-rank-test" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="로그순위검정log-rank-test"><span class="header-section-number">9.2</span> 로그순위검정(Log-rank test)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">=</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(DI1_ag,DI1_dg) <span class="sc">~</span> smoke, <span class="at">type =</span> <span class="st">"kaplan-meier"</span>, <span class="at">data =</span> final_data)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -902,8 +903,8 @@ $scores
 </div>
 </div>
 </section>
-<section id="cox-proportional-hazard-model" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="cox-proportional-hazard-model"><span class="header-section-number">9.4</span> Cox proportional hazard model</h2>
+<section id="콕스비례위험모형cox-proportional-hazard-model" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="콕스비례위험모형cox-proportional-hazard-model"><span class="header-section-number">9.4</span> 콕스비례위험모형(Cox proportional hazard model)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to generate BMI group variable</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp <span class="ot">=</span> <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">22</span>,<span class="st">"1 light"</span>,</span>
@@ -942,6 +943,9 @@ Wald test            = 31.79  on 5 df,   p=7e-06
 Score (logrank) test = 31.93  on 5 df,   p=6e-06</code></pre>
 </div>
 </div>
+</section>
+<section id="비례위험-가정검토" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="비례위험-가정검토"><span class="header-section-number">9.5</span> 비례위험 가정검토</h2>
 
 
 </section>

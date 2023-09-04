@@ -223,9 +223,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#subset" id="toc-subset" class="nav-link active" data-scroll-target="#subset"><span class="header-section-number">8.1</span> subset</a></li>
-  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression"><span class="header-section-number">8.2</span> Logistic regression</a></li>
+  <li><a href="#데이터-전처리preprocessing" id="toc-데이터-전처리preprocessing" class="nav-link active" data-scroll-target="#데이터-전처리preprocessing"><span class="header-section-number">8.1</span> 데이터 전처리(Preprocessing)</a></li>
+  <li><a href="#로지스틱회귀분석logistic-regression" id="toc-로지스틱회귀분석logistic-regression" class="nav-link" data-scroll-target="#로지스틱회귀분석logistic-regression"><span class="header-section-number">8.2</span> 로지스틱회귀분석(Logistic regression)</a></li>
   <li><a href="#auc-area-under-the-curve" id="toc-auc-area-under-the-curve" class="nav-link" data-scroll-target="#auc-area-under-the-curve"><span class="header-section-number">8.3</span> AUC, Area Under the Curve</a></li>
+  <li><a href="#hosmer-lemeshow-test" id="toc-hosmer-lemeshow-test" class="nav-link" data-scroll-target="#hosmer-lemeshow-test"><span class="header-section-number">8.4</span> Hosmer-Lemeshow test</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://jongsoo92.github.io/Biostatistics/edit/main/book/logistic_regression.qmd" class="toc-action">Edit this page</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/blob/main/book/logistic_regression.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -249,8 +250,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="subset" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="subset"><span class="header-section-number">8.1</span> subset</h2>
+<section id="데이터-전처리preprocessing" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="데이터-전처리preprocessing"><span class="header-section-number">8.1</span> 데이터 전처리(Preprocessing)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -376,8 +377,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="logistic-regression" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="logistic-regression"><span class="header-section-number">8.2</span> Logistic regression</h2>
+<section id="로지스틱회귀분석logistic-regression" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="로지스틱회귀분석logistic-regression"><span class="header-section-number">8.2</span> 로지스틱회귀분석(Logistic regression)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -505,6 +506,9 @@ data:  final_data$DI1_dg, fitted(fit.logistic)
 X-squared = 6.9265, df = 8, p-value = 0.5446</code></pre>
 </div>
 </div>
+</section>
+<section id="hosmer-lemeshow-test" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="hosmer-lemeshow-test"><span class="header-section-number">8.4</span> Hosmer-Lemeshow test</h2>
 
 
 </section>
