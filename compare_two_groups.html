@@ -225,14 +225,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#독립된-두-집단의-평균검정two-sample-t-test" id="toc-독립된-두-집단의-평균검정two-sample-t-test" class="nav-link active" data-scroll-target="#독립된-두-집단의-평균검정two-sample-t-test"><span class="header-section-number">4.1</span> 독립된 두 집단의 평균검정(two sample t-test)</a></li>
   <li><a href="#쌍을-이룬-데이터의-평균비교paired-t-test" id="toc-쌍을-이룬-데이터의-평균비교paired-t-test" class="nav-link" data-scroll-target="#쌍을-이룬-데이터의-평균비교paired-t-test"><span class="header-section-number">4.2</span> 쌍을 이룬 데이터의 평균비교(paired t-test)</a></li>
-  <li><a href="#정규성-검정normality-test" id="toc-정규성-검정normality-test" class="nav-link" data-scroll-target="#정규성-검정normality-test"><span class="header-section-number">4.3</span> 정규성 검정(normality test)</a>
+  <li><a href="#쌍을-이룬-데이터를-이용하여-two-sample-t-test를-돌린다면-결과는-어떻게-될까" id="toc-쌍을-이룬-데이터를-이용하여-two-sample-t-test를-돌린다면-결과는-어떻게-될까" class="nav-link" data-scroll-target="#쌍을-이룬-데이터를-이용하여-two-sample-t-test를-돌린다면-결과는-어떻게-될까"><span class="header-section-number">4.3</span> 쌍을 이룬 데이터를 이용하여 two sample t-test를 돌린다면? 결과는 어떻게 될까?</a></li>
+  <li><a href="#정규성-검정normality-test" id="toc-정규성-검정normality-test" class="nav-link" data-scroll-target="#정규성-검정normality-test"><span class="header-section-number">4.4</span> 정규성 검정(normality test)</a>
   <ul class="collapse">
-  <li><a href="#shapiro-wilk-test" id="toc-shapiro-wilk-test" class="nav-link" data-scroll-target="#shapiro-wilk-test"><span class="header-section-number">4.3.1</span> Shapiro-Wilk test</a></li>
-  <li><a href="#정규q-q-도표normal-q-q-plot" id="toc-정규q-q-도표normal-q-q-plot" class="nav-link" data-scroll-target="#정규q-q-도표normal-q-q-plot"><span class="header-section-number">4.3.2</span> 정규Q-Q 도표(Normal Q-Q plot)</a></li>
-  <li><a href="#kolmogorov-smirnov-test" id="toc-kolmogorov-smirnov-test" class="nav-link" data-scroll-target="#kolmogorov-smirnov-test"><span class="header-section-number">4.3.3</span> Kolmogorov-Smirnov test</a></li>
+  <li><a href="#shapiro-wilk-test" id="toc-shapiro-wilk-test" class="nav-link" data-scroll-target="#shapiro-wilk-test"><span class="header-section-number">4.4.1</span> Shapiro-Wilk test</a></li>
+  <li><a href="#정규q-q-도표normal-q-q-plot" id="toc-정규q-q-도표normal-q-q-plot" class="nav-link" data-scroll-target="#정규q-q-도표normal-q-q-plot"><span class="header-section-number">4.4.2</span> 정규Q-Q 도표(Normal Q-Q plot)</a></li>
+  <li><a href="#kolmogorov-smirnov-test" id="toc-kolmogorov-smirnov-test" class="nav-link" data-scroll-target="#kolmogorov-smirnov-test"><span class="header-section-number">4.4.3</span> Kolmogorov-Smirnov test</a></li>
   </ul></li>
-  <li><a href="#mann-whitney-u-test-or-wilcoxon-rank-sum-test" id="toc-mann-whitney-u-test-or-wilcoxon-rank-sum-test" class="nav-link" data-scroll-target="#mann-whitney-u-test-or-wilcoxon-rank-sum-test"><span class="header-section-number">4.4</span> Mann-Whitney U test (or Wilcoxon rank-sum test)</a></li>
-  <li><a href="#wilcoxon-signed-rank-test" id="toc-wilcoxon-signed-rank-test" class="nav-link" data-scroll-target="#wilcoxon-signed-rank-test"><span class="header-section-number">4.5</span> Wilcoxon signed-rank test</a></li>
+  <li><a href="#mann-whitney-u-test-or-wilcoxon-rank-sum-test" id="toc-mann-whitney-u-test-or-wilcoxon-rank-sum-test" class="nav-link" data-scroll-target="#mann-whitney-u-test-or-wilcoxon-rank-sum-test"><span class="header-section-number">4.5</span> Mann-Whitney U test (or Wilcoxon rank-sum test)</a></li>
+  <li><a href="#wilcoxon-signed-rank-test" id="toc-wilcoxon-signed-rank-test" class="nav-link" data-scroll-target="#wilcoxon-signed-rank-test"><span class="header-section-number">4.6</span> Wilcoxon signed-rank test</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://jongsoo92.github.io/Biostatistics/edit/main/book/compare_two_groups.qmd" class="toc-action">Edit this page</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/blob/main/book/compare_two_groups.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -429,17 +430,69 @@ mean difference
 </div>
 </div>
 </section>
-<section id="정규성-검정normality-test" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="정규성-검정normality-test"><span class="header-section-number">4.3</span> 정규성 검정(normality test)</h2>
-<section id="shapiro-wilk-test" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="shapiro-wilk-test"><span class="header-section-number">4.3.1</span> Shapiro-Wilk test</h3>
+<section id="쌍을-이룬-데이터를-이용하여-two-sample-t-test를-돌린다면-결과는-어떻게-될까" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="쌍을-이룬-데이터를-이용하여-two-sample-t-test를-돌린다면-결과는-어떻게-될까"><span class="header-section-number">4.3</span> 쌍을 이룬 데이터를 이용하여 two sample t-test를 돌린다면? 결과는 어떻게 될까?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read_sav</span>(<span class="st">"HN19_실습.sav"</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data<span class="sc">$</span>HE_sbp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(data.table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>필요한 패키지를 로딩중입니다: data.table</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>sub_data <span class="ot">=</span> <span class="fu">subset</span>(data, <span class="at">select=</span><span class="fu">c</span>(<span class="st">"ID"</span>,<span class="st">"HE_sbp1"</span>,<span class="st">"HE_sbp2"</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>long_data <span class="ot">=</span> reshape2<span class="sc">::</span><span class="fu">melt</span>(sub_data,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">id.vars=</span><span class="st">"ID"</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">measure.vars=</span><span class="fu">c</span>(<span class="st">"HE_sbp1"</span>,<span class="st">"HE_sbp2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: attributes are not identical across measure variables; they will be
+dropped</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(value <span class="sc">~</span> variable, <span class="at">data=</span>long_data, <span class="at">center =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = mean)
+       Df F value Pr(&gt;F)
+group   1  0.0077 0.9302
+      994               </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(value<span class="sc">~</span>variable, <span class="at">data=</span>long_data, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  value by variable
+t = 0.82768, df = 994, p-value = 0.408
+alternative hypothesis: true difference in means between group HE_sbp1 and group HE_sbp2 is not equal to 0
+95 percent confidence interval:
+ -1.167193  2.870005
+sample estimates:
+mean in group HE_sbp1 mean in group HE_sbp2 
+             121.2771              120.4257 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(value<span class="sc">~</span>variable, <span class="at">data=</span>long_data, <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  value by variable
+t = 0.82768, df = 993.42, p-value = 0.408
+alternative hypothesis: true difference in means between group HE_sbp1 and group HE_sbp2 is not equal to 0
+95 percent confidence interval:
+ -1.167195  2.870006
+sample estimates:
+mean in group HE_sbp1 mean in group HE_sbp2 
+             121.2771              120.4257 </code></pre>
+</div>
+</div>
+</section>
+<section id="정규성-검정normality-test" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="정규성-검정normality-test"><span class="header-section-number">4.4</span> 정규성 검정(normality test)</h2>
+<section id="shapiro-wilk-test" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="shapiro-wilk-test"><span class="header-section-number">4.4.1</span> Shapiro-Wilk test</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read_sav</span>(<span class="st">"HN19_실습.sav"</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data<span class="sc">$</span>HE_sbp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -449,20 +502,20 @@ W = 0.97678, p-value = 4.081e-07</code></pre>
 </div>
 </div>
 </section>
-<section id="정규q-q-도표normal-q-q-plot" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="정규q-q-도표normal-q-q-plot"><span class="header-section-number">4.3.2</span> 정규Q-Q 도표(Normal Q-Q plot)</h3>
+<section id="정규q-q-도표normal-q-q-plot" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="정규q-q-도표normal-q-q-plot"><span class="header-section-number">4.4.2</span> 정규Q-Q 도표(Normal Q-Q plot)</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(data<span class="sc">$</span>HE_sbp);<span class="fu">qqline</span>(data<span class="sc">$</span>HE_sbp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(data<span class="sc">$</span>HE_sbp);<span class="fu">qqline</span>(data<span class="sc">$</span>HE_sbp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="compare_two_groups_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="compare_two_groups_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="kolmogorov-smirnov-test" class="level3" data-number="4.3.3">
-<h3 data-number="4.3.3" class="anchored" data-anchor-id="kolmogorov-smirnov-test"><span class="header-section-number">4.3.3</span> Kolmogorov-Smirnov test</h3>
+<section id="kolmogorov-smirnov-test" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="kolmogorov-smirnov-test"><span class="header-section-number">4.4.3</span> Kolmogorov-Smirnov test</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read_sav</span>(<span class="st">"HN19_실습.sav"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(data<span class="sc">$</span>HE_sbp1,data<span class="sc">$</span>HE_sbp2,<span class="at">paired=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read_sav</span>(<span class="st">"HN19_실습.sav"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(data<span class="sc">$</span>HE_sbp1,data<span class="sc">$</span>HE_sbp2,<span class="at">paired=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Paired t-test
@@ -479,10 +532,10 @@ mean difference
 </div>
 </section>
 </section>
-<section id="mann-whitney-u-test-or-wilcoxon-rank-sum-test" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="mann-whitney-u-test-or-wilcoxon-rank-sum-test"><span class="header-section-number">4.4</span> Mann-Whitney U test (or Wilcoxon rank-sum test)</h2>
+<section id="mann-whitney-u-test-or-wilcoxon-rank-sum-test" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="mann-whitney-u-test-or-wilcoxon-rank-sum-test"><span class="header-section-number">4.5</span> Mann-Whitney U test (or Wilcoxon rank-sum test)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(age<span class="sc">~</span>sex, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(age<span class="sc">~</span>sex, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Wilcoxon rank sum test with continuity correction
@@ -493,10 +546,10 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </div>
 </section>
-<section id="wilcoxon-signed-rank-test" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="wilcoxon-signed-rank-test"><span class="header-section-number">4.5</span> Wilcoxon signed-rank test</h2>
+<section id="wilcoxon-signed-rank-test" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="wilcoxon-signed-rank-test"><span class="header-section-number">4.6</span> Wilcoxon signed-rank test</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(data<span class="sc">$</span>HE_sbp1, data<span class="sc">$</span>HE_sbp2, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(data<span class="sc">$</span>HE_sbp1, data<span class="sc">$</span>HE_sbp2, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Wilcoxon signed rank test with continuity correction
