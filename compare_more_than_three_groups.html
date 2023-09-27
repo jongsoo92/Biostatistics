@@ -228,6 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#다중비교-tukeyhsd" id="toc-다중비교-tukeyhsd" class="nav-link" data-scroll-target="#다중비교-tukeyhsd"><span class="header-section-number">5.3</span> 다중비교 (TukeyHSD)</a></li>
   <li><a href="#kruskal-wallis-test" id="toc-kruskal-wallis-test" class="nav-link" data-scroll-target="#kruskal-wallis-test"><span class="header-section-number">5.4</span> Kruskal-Wallis test</a></li>
   <li><a href="#dunn-procedure" id="toc-dunn-procedure" class="nav-link" data-scroll-target="#dunn-procedure"><span class="header-section-number">5.5</span> Dunn procedure</a></li>
+  <li><a href="#quiz.-dunn-procedure를-이용하지-않고-wilcoxon-rank-sum-test로-3번-비교한다면" id="toc-quiz.-dunn-procedure를-이용하지-않고-wilcoxon-rank-sum-test로-3번-비교한다면" class="nav-link" data-scroll-target="#quiz.-dunn-procedure를-이용하지-않고-wilcoxon-rank-sum-test로-3번-비교한다면"><span class="header-section-number">5.6</span> Quiz. Dunn procedure를 이용하지 않고 Wilcoxon rank sum test로 3번 비교한다면?</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://jongsoo92.github.io/Biostatistics/edit/main/book/compare_more_than_three_groups.qmd" class="toc-action">Edit this page</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/blob/main/book/compare_more_than_three_groups.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -426,13 +427,13 @@ $BMI_gp
 <section id="kruskal-wallis-test" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="kruskal-wallis-test"><span class="header-section-number">5.4</span> Kruskal-Wallis test</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(HE_sbp<span class="sc">~</span>BMI_gp,<span class="at">data=</span>data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(HE_dbp<span class="sc">~</span>BMI_gp,<span class="at">data=</span>data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Kruskal-Wallis rank sum test
 
-data:  HE_sbp by BMI_gp
-Kruskal-Wallis chi-squared = 15.849, df = 2, p-value = 0.0003617</code></pre>
+data:  HE_dbp by BMI_gp
+Kruskal-Wallis chi-squared = 7.1671, df = 2, p-value = 0.02778</code></pre>
 </div>
 </div>
 </section>
@@ -459,7 +460,7 @@ Kruskal-Wallis chi-squared = 15.849, df = 2, p-value = 0.0003617</code></pre>
 
     bootCase</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dunnTest</span>(HE_sbp<span class="sc">~</span>BMI_gp,<span class="at">data=</span>data, <span class="at">method =</span> <span class="st">"bonferroni"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dunnTest</span>(HE_dbp<span class="sc">~</span>BMI_gp,<span class="at">data=</span>data, <span class="at">method =</span> <span class="st">"bonferroni"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: BMI_gp was coerced to a factor.</code></pre>
 </div>
@@ -473,12 +474,15 @@ Kruskal-Wallis chi-squared = 15.849, df = 2, p-value = 0.0003617</code></pre>
 <pre><code>  p-values adjusted with the Bonferroni method.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          Comparison         Z      P.unadj        P.adj
-1 1 light - 2 normal -2.812301 4.918837e-03 0.0147565123
-2  1 light - 3 heavy -3.964764 7.346848e-05 0.0002204054
-3 2 normal - 3 heavy -2.016553 4.374220e-02 0.1312266133</code></pre>
+<pre><code>          Comparison          Z     P.unadj     P.adj
+1 1 light - 2 normal  0.3196458 0.749236832 1.0000000
+2  1 light - 3 heavy -1.4581882 0.144788680 0.4343660
+3 2 normal - 3 heavy -2.6525864 0.007987768 0.0239633</code></pre>
 </div>
 </div>
+</section>
+<section id="quiz.-dunn-procedure를-이용하지-않고-wilcoxon-rank-sum-test로-3번-비교한다면" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="quiz.-dunn-procedure를-이용하지-않고-wilcoxon-rank-sum-test로-3번-비교한다면"><span class="header-section-number">5.6</span> Quiz. Dunn procedure를 이용하지 않고 Wilcoxon rank sum test로 3번 비교한다면?</h2>
 
 
 </section>

@@ -535,13 +535,13 @@ mean difference
 <section id="mann-whitney-u-test-or-wilcoxon-rank-sum-test" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="mann-whitney-u-test-or-wilcoxon-rank-sum-test"><span class="header-section-number">4.5</span> Mann-Whitney U test (or Wilcoxon rank-sum test)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(age<span class="sc">~</span>sex, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(HE_sbp<span class="sc">~</span>sex, <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Wilcoxon rank sum test with continuity correction
 
-data:  age by sex
-W = 27880, p-value = 0.09726
+data:  HE_sbp by sex
+W = 31956, p-value = 0.3017
 alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </div>
@@ -549,13 +549,13 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 <section id="wilcoxon-signed-rank-test" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="wilcoxon-signed-rank-test"><span class="header-section-number">4.6</span> Wilcoxon signed-rank test</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(data<span class="sc">$</span>HE_sbp1, data<span class="sc">$</span>HE_sbp2, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(data<span class="sc">$</span>HE_dbp1, data<span class="sc">$</span>HE_dbp2, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Wilcoxon signed rank test with continuity correction
 
-data:  data$HE_sbp1 and data$HE_sbp2
-V = 47066, p-value = 0.000416
+data:  data$HE_dbp1 and data$HE_dbp2
+V = 37502, p-value = 0.09585
 alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </div>
