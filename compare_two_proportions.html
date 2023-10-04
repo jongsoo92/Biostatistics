@@ -144,7 +144,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Preface</span></a>
+ <span class="menu-text">공지사항</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -226,7 +226,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#카이제곱검정chi-square-test" id="toc-카이제곱검정chi-square-test" class="nav-link active" data-scroll-target="#카이제곱검정chi-square-test"><span class="header-section-number">6.1</span> 카이제곱검정(Chi-square test)</a></li>
   <li><a href="#피셔의-정확검정fishers-exact-test" id="toc-피셔의-정확검정fishers-exact-test" class="nav-link" data-scroll-target="#피셔의-정확검정fishers-exact-test"><span class="header-section-number">6.2</span> 피셔의 정확검정(Fisher’s exact test)</a></li>
   <li><a href="#mantel-haenszel-chi-square-test" id="toc-mantel-haenszel-chi-square-test" class="nav-link" data-scroll-target="#mantel-haenszel-chi-square-test"><span class="header-section-number">6.3</span> Mantel-Haenszel chi-square test</a></li>
-  <li><a href="#맥니마검정mcnemar-test" id="toc-맥니마검정mcnemar-test" class="nav-link" data-scroll-target="#맥니마검정mcnemar-test"><span class="header-section-number">6.4</span> 맥니마검정(McNemar test)</a></li>
+  <li><a href="#맥네마검정mcnemar-test" id="toc-맥네마검정mcnemar-test" class="nav-link" data-scroll-target="#맥네마검정mcnemar-test"><span class="header-section-number">6.4</span> 맥네마검정(McNemar test)</a></li>
   <li><a href="#weight-cases-example" id="toc-weight-cases-example" class="nav-link" data-scroll-target="#weight-cases-example"><span class="header-section-number">6.5</span> Weight cases example</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://jongsoo92.github.io/Biostatistics/edit/main/book/compare_two_proportions.qmd" class="toc-action">Edit this page</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/blob/main/book/compare_two_proportions.qmd" class="toc-action">View source</a></p></div></div></nav>
@@ -474,8 +474,8 @@ X-squared = 12.157, df = 1, p-value = 0.0004891</code></pre>
 </div>
 </div>
 </section>
-<section id="맥니마검정mcnemar-test" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="맥니마검정mcnemar-test"><span class="header-section-number">6.4</span> 맥니마검정(McNemar test)</h2>
+<section id="맥네마검정mcnemar-test" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="맥네마검정mcnemar-test"><span class="header-section-number">6.4</span> 맥네마검정(McNemar test)</h2>
 <p>Q. 수축기 혈압을 120 을 기준으로 아래와 같이 정상군, 고혈압 위험군 두 군으로 나누었을 때, 1차 수축기 혈압 고혈압 위험 군 비율과 2차 수축기 혈압 고혈압 위험군 비율이 다르다고 할 수 있는가?</p>
 <p>SBP &lt;= 120 : sbp_group = 1 (정상군)</p>
 <p>SBP &gt; 120: sbp_group = 2 (고혈압 위험군)</p>
@@ -535,6 +535,38 @@ McNemar's chi-squared = 0.32653, df = 1, p-value = 0.5677</code></pre>
 </section>
 <section id="weight-cases-example" class="level2" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="weight-cases-example"><span class="header-section-number">6.5</span> Weight cases example</h2>
+<p>Q. 30명은 active, 30명은 received 처치 방법(medication)에 따라 울혈성 심부전증 발생 비율의 차이가 있는가?</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">처치</th>
+<th style="text-align: center;">울혈성심부전증(Yes)</th>
+<th style="text-align: center;">울혈성심부전증(No)</th>
+<th style="text-align: center;">합계</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Active</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">30</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Received</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">30</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">합계</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">53</td>
+<td style="text-align: center;">60</td>
+</tr>
+</tbody>
+</table>
+<p>위 표를 matrix 형태로 입력하여 분석을 진행하시오</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">28</span>,<span class="dv">5</span>,<span class="dv">25</span>),<span class="at">nrow=</span><span class="dv">2</span>,<span class="at">ncol=</span><span class="dv">2</span>,<span class="at">byrow =</span> T)</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>test_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -543,7 +575,19 @@ McNemar's chi-squared = 0.32653, df = 1, p-value = 0.5677</code></pre>
 [1,]    2   28
 [2,]    5   25</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(test_data, <span class="at">correct=</span> <span class="cn">FALSE</span>)<span class="co"># Warning. expected cell count &lt;= 5 50%</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in chisq.test(test_data, correct = FALSE): 카이제곱 approximation은
+정확하지 않을수도 있습니다</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  test_data
+X-squared = 1.4555, df = 1, p-value = 0.2276</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Fisher's Exact Test for Count Data
