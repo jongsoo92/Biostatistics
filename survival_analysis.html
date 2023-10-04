@@ -224,10 +224,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#카플란마이어-생존곡선kaplan-meier-survival-curve" id="toc-카플란마이어-생존곡선kaplan-meier-survival-curve" class="nav-link active" data-scroll-target="#카플란마이어-생존곡선kaplan-meier-survival-curve"><span class="header-section-number">9.1</span> 카플란마이어 생존곡선(Kaplan-Meier survival curve)</a></li>
-  <li><a href="#로그순위검정log-rank-test" id="toc-로그순위검정log-rank-test" class="nav-link" data-scroll-target="#로그순위검정log-rank-test"><span class="header-section-number">9.2</span> 로그순위검정(Log-rank test)</a></li>
-  <li><a href="#breslow-test-tarone-ware-test" id="toc-breslow-test-tarone-ware-test" class="nav-link" data-scroll-target="#breslow-test-tarone-ware-test"><span class="header-section-number">9.3</span> Breslow test &amp; Tarone-Ware test</a></li>
-  <li><a href="#콕스비례위험모형cox-proportional-hazard-model" id="toc-콕스비례위험모형cox-proportional-hazard-model" class="nav-link" data-scroll-target="#콕스비례위험모형cox-proportional-hazard-model"><span class="header-section-number">9.4</span> 콕스비례위험모형(Cox proportional hazard model)</a></li>
-  <li><a href="#비례위험-가정검토" id="toc-비례위험-가정검토" class="nav-link" data-scroll-target="#비례위험-가정검토"><span class="header-section-number">9.5</span> 비례위험 가정검토</a></li>
+  <li><a href="#생존곡선-비교" id="toc-생존곡선-비교" class="nav-link" data-scroll-target="#생존곡선-비교"><span class="header-section-number">9.2</span> 생존곡선 비교</a>
+  <ul class="collapse">
+  <li><a href="#로그순위검정log-rank-test" id="toc-로그순위검정log-rank-test" class="nav-link" data-scroll-target="#로그순위검정log-rank-test"><span class="header-section-number">9.2.1</span> 로그순위검정(Log-rank test)</a></li>
+  <li><a href="#breslow-test-tarone-ware-test" id="toc-breslow-test-tarone-ware-test" class="nav-link" data-scroll-target="#breslow-test-tarone-ware-test"><span class="header-section-number">9.2.2</span> Breslow test &amp; Tarone-Ware test</a></li>
+  </ul></li>
+  <li><a href="#콕스비례위험모형cox-proportional-hazard-model" id="toc-콕스비례위험모형cox-proportional-hazard-model" class="nav-link" data-scroll-target="#콕스비례위험모형cox-proportional-hazard-model"><span class="header-section-number">9.3</span> 콕스비례위험모형(Cox proportional hazard model)</a></li>
+  <li><a href="#비례위험-가정검토" id="toc-비례위험-가정검토" class="nav-link" data-scroll-target="#비례위험-가정검토"><span class="header-section-number">9.4</span> 비례위험 가정검토</a>
+  <ul class="collapse">
+  <li><a href="#log-logst-plot을-이용한-방법" id="toc-log-logst-plot을-이용한-방법" class="nav-link" data-scroll-target="#log-logst-plot을-이용한-방법"><span class="header-section-number">9.4.1</span> 1. log(-log(S(t))) plot을 이용한 방법</a></li>
+  <li><a href="#time-dependent-cox-regression을-이용한-방법" id="toc-time-dependent-cox-regression을-이용한-방법" class="nav-link" data-scroll-target="#time-dependent-cox-regression을-이용한-방법"><span class="header-section-number">9.4.2</span> 2. Time dependent cox regression을 이용한 방법</a></li>
+  <li><a href="#schoenfeld-residual을-이용한-방법" id="toc-schoenfeld-residual을-이용한-방법" class="nav-link" data-scroll-target="#schoenfeld-residual을-이용한-방법"><span class="header-section-number">9.4.3</span> 3. Schoenfeld residual을 이용한 방법</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-git"></i></div><div class="action-links"><p><a href="https://jongsoo92.github.io/Biostatistics/edit/main/book/survival_analysis.qmd" class="toc-action">Edit this page</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://jongsoo92.github.io/Biostatistics/blob/main/book/survival_analysis.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -253,6 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="카플란마이어-생존곡선kaplan-meier-survival-curve" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="카플란마이어-생존곡선kaplan-meier-survival-curve"><span class="header-section-number">9.1</span> 카플란마이어 생존곡선(Kaplan-Meier survival curve)</h2>
+<p>Q. 40세 이상인 대상자들의 고혈압 진단 나이에 대해 생명표를 구하고 Kaplan-Meier estimator 방법으로 생존율(고혈압 진단 받지 않은 비율)을 구하시오</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -746,8 +755,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="로그순위검정log-rank-test" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="로그순위검정log-rank-test"><span class="header-section-number">9.2</span> 로그순위검정(Log-rank test)</h2>
+<section id="생존곡선-비교" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="생존곡선-비교"><span class="header-section-number">9.2</span> 생존곡선 비교</h2>
+<section id="로그순위검정log-rank-test" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="로그순위검정log-rank-test"><span class="header-section-number">9.2.1</span> 로그순위검정(Log-rank test)</h3>
+<p>Q. 40세 이상인 대상자들의 고혈압 진단 나이에 대해 Kaplan-Meier estimator으로 생존함수를 추정하고, smoke 그룹에 따라 생존함수에 차이가 있는지 검정하시오</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">변수명</th>
+<th style="text-align: center;">변수설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">DI1_ag</td>
+<td style="text-align: center;">고혈압 진단 시기(나이)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">DI1_dg</td>
+<td style="text-align: center;">고혈압 진단 여부 (1. 고혈압 진단, 0. 정상)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">smoke</td>
+<td style="text-align: center;">흡연여부 (1. 현재흡연, 2. 과거흡연, 3. 비흡연)</td>
+</tr>
+</tbody>
+</table>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">=</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(DI1_ag,DI1_dg) <span class="sc">~</span> smoke, <span class="at">type =</span> <span class="st">"kaplan-meier"</span>, <span class="at">data =</span> final_data)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -852,8 +886,8 @@ smoke=3 221       74     77.2    0.1323     0.387
 </div>
 </div>
 </section>
-<section id="breslow-test-tarone-ware-test" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="breslow-test-tarone-ware-test"><span class="header-section-number">9.3</span> Breslow test &amp; Tarone-Ware test</h2>
+<section id="breslow-test-tarone-ware-test" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="breslow-test-tarone-ware-test"><span class="header-section-number">9.2.2</span> Breslow test &amp; Tarone-Ware test</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survMisc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -903,16 +937,18 @@ $scores
 </div>
 </div>
 </section>
-<section id="콕스비례위험모형cox-proportional-hazard-model" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="콕스비례위험모형cox-proportional-hazard-model"><span class="header-section-number">9.4</span> 콕스비례위험모형(Cox proportional hazard model)</h2>
+</section>
+<section id="콕스비례위험모형cox-proportional-hazard-model" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="콕스비례위험모형cox-proportional-hazard-model"><span class="header-section-number">9.3</span> 콕스비례위험모형(Cox proportional hazard model)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to generate BMI group variable</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp <span class="ot">=</span> <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">22</span>,<span class="st">"1 light"</span>,</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">26</span>,<span class="st">"2 normal"</span>,</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&gt;</span><span class="dv">26</span>,<span class="st">"3 heavy"</span>,<span class="cn">NA</span>)))</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#final_data$BMI_gp = relevel(final_data$BMI_gp, ref = "3 heavy")</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>cox.fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(DI1_ag, DI1_dg) <span class="sc">~</span> age<span class="sc">+</span>sex<span class="sc">+</span>HE_chol<span class="sc">+</span>BMI_gp, <span class="at">data=</span>final_data)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cox.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp <span class="ot">=</span> <span class="fu">factor</span>(final_data<span class="sc">$</span>BMI_gp)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#final_data$BMI_gp = relevel(final_data$BMI_gp, ref = "3 heavy")</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>cox.fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(DI1_ag, DI1_dg) <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> HE_chol <span class="sc">+</span> BMI_gp, <span class="at">data =</span> final_data)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cox.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 coxph(formula = Surv(DI1_ag, DI1_dg) ~ age + sex + HE_chol + 
@@ -944,10 +980,120 @@ Score (logrank) test = 31.93  on 5 df,   p=6e-06</code></pre>
 </div>
 </div>
 </section>
-<section id="비례위험-가정검토" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="비례위험-가정검토"><span class="header-section-number">9.5</span> 비례위험 가정검토</h2>
+<section id="비례위험-가정검토" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="비례위험-가정검토"><span class="header-section-number">9.4</span> 비례위험 가정검토</h2>
+<section id="log-logst-plot을-이용한-방법" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="log-logst-plot을-이용한-방법"><span class="header-section-number">9.4.1</span> 1. log(-log(S(t))) plot을 이용한 방법</h3>
+</section>
+<section id="time-dependent-cox-regression을-이용한-방법" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="time-dependent-cox-regression을-이용한-방법"><span class="header-section-number">9.4.2</span> 2. Time dependent cox regression을 이용한 방법</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp <span class="ot">=</span> <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">22</span>,<span class="dv">1</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">26</span>,<span class="dv">2</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&gt;</span><span class="dv">26</span>,<span class="dv">3</span>,<span class="cn">NA</span>)))</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp2 <span class="ot">=</span> <span class="fu">ifelse</span>(final_data<span class="sc">$</span>BMI_gp<span class="sc">==</span><span class="dv">2</span>,<span class="dv">1</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(final_data<span class="sc">$</span>BMI_gp <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>),<span class="dv">0</span>,<span class="cn">NA</span>))</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp3 <span class="ot">=</span> <span class="fu">ifelse</span>(final_data<span class="sc">$</span>BMI_gp<span class="sc">==</span><span class="dv">3</span>,<span class="dv">1</span>,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(final_data<span class="sc">$</span>BMI_gp <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="dv">0</span>,<span class="cn">NA</span>))</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co"># time variable</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>time <span class="ot">=</span> final_data<span class="sc">$</span>DI1_ag</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co"># event variable</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>event <span class="ot">=</span> final_data<span class="sc">$</span>DI1_dg</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 1.</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(DI1_ag,DI1_dg) <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> HE_chol <span class="sc">+</span> BMI_gp2 <span class="sc">+</span> BMI_gp3 <span class="sc">+</span><span class="fu">tt</span>(BMI_gp2)<span class="sc">+</span><span class="fu">tt</span>(BMI_gp3), <span class="at">data=</span>final_data, <span class="at">tt=</span> <span class="cf">function</span>(x,t,...) x<span class="sc">*</span><span class="fu">log</span>(t) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(DI1_ag, DI1_dg) ~ age + sex + HE_chol + 
+    BMI_gp2 + BMI_gp3 + tt(BMI_gp2) + tt(BMI_gp3), data = final_data, 
+    tt = function(x, t, ...) x * log(t))
+
+                 coef exp(coef)  se(coef)      z        p
+age         -0.043714  0.957228  0.012127 -3.605 0.000313
+sex          0.063579  1.065644  0.196219  0.324 0.745922
+HE_chol     -0.010062  0.989989  0.002676 -3.760 0.000170
+BMI_gp2     -5.793835  0.003046  4.395546 -1.318 0.187465
+BMI_gp3      3.247787 25.733320  3.922143  0.828 0.407634
+tt(BMI_gp2)  1.430893  4.182432  1.096793  1.305 0.192024
+tt(BMI_gp3) -0.670871  0.511263  0.990329 -0.677 0.498138
+
+Likelihood ratio test=37.17  on 7 df, p=4.36e-06
+n= 341, number of events= 114 
+   (결측으로 인하여 16개의 관측치가 삭제되었습니다.)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 2.</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>data.cp <span class="ot">=</span> <span class="fu">survSplit</span>(final_data,<span class="at">cut =</span> final_data<span class="sc">$</span>DI1_ag[final_data<span class="sc">$</span>DI1_dg<span class="sc">==</span><span class="dv">1</span>],<span class="at">end=</span><span class="st">"time"</span>,<span class="at">event=</span><span class="st">"event"</span>, <span class="at">start =</span> <span class="st">"start"</span>, <span class="at">id=</span><span class="st">"ID2"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>data.cp<span class="sc">$</span>logbmi_gp2 <span class="ot">&lt;-</span> data.cp<span class="sc">$</span>BMI_gp2 <span class="sc">*</span> <span class="fu">log</span>(data.cp<span class="sc">$</span>time)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>data.cp<span class="sc">$</span>logbmi_gp3 <span class="ot">&lt;-</span> data.cp<span class="sc">$</span>BMI_gp3 <span class="sc">*</span> <span class="fu">log</span>(data.cp<span class="sc">$</span>time)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># time dependent cox regression</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">=</span> <span class="fu">Surv</span>(data.cp<span class="sc">$</span>start, data.cp<span class="sc">$</span>time, data.cp<span class="sc">$</span>event)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>cox.rslt <span class="ot">=</span> <span class="fu">coxph</span>(Y <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> HE_chol <span class="sc">+</span> BMI_gp2 <span class="sc">+</span> BMI_gp3 <span class="sc">+</span> logbmi_gp2 <span class="sc">+</span> logbmi_gp3 <span class="sc">+</span> <span class="fu">cluster</span>(ID2), <span class="at">data =</span> data.cp)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cox.rslt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Y ~ age + sex + HE_chol + BMI_gp2 + BMI_gp3 + 
+    logbmi_gp2 + logbmi_gp3, data = data.cp, cluster = ID2)
+
+  n= 7707, number of events= 114 
+   (결측으로 인하여 437개의 관측치가 삭제되었습니다.)
+
+                coef exp(coef)  se(coef) robust se      z Pr(&gt;|z|)    
+age        -0.043714  0.957228  0.012127  0.011667 -3.747 0.000179 ***
+sex         0.063579  1.065644  0.196219  0.199395  0.319 0.749832    
+HE_chol    -0.010062  0.989989  0.002676  0.002918 -3.448 0.000564 ***
+BMI_gp2    -5.793835  0.003046  4.395546  5.252839 -1.103 0.270031    
+BMI_gp3     3.247787 25.733320  3.922143  3.362840  0.966 0.334151    
+logbmi_gp2  1.430893  4.182432  1.096793  1.308988  1.093 0.274337    
+logbmi_gp3 -0.670871  0.511263  0.990329  0.855708 -0.784 0.433043    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+           exp(coef) exp(-coef) lower .95 upper .95
+age         0.957228    1.04468 9.356e-01 9.794e-01
+sex         1.065644    0.93840 7.209e-01 1.575e+00
+HE_chol     0.989989    1.01011 9.843e-01 9.957e-01
+BMI_gp2     0.003046  328.26962 1.029e-07 9.016e+01
+BMI_gp3    25.733320    0.03886 3.532e-02 1.875e+04
+logbmi_gp2  4.182432    0.23910 3.215e-01 5.441e+01
+logbmi_gp3  0.511263    1.95594 9.556e-02 2.735e+00
+
+Concordance= 0.684  (se = 0.027 )
+Likelihood ratio test= 37.17  on 7 df,   p=4e-06
+Wald test            = 36.33  on 7 df,   p=6e-06
+Score (logrank) test = 37.54  on 7 df,   p=4e-06,   Robust = 26.36  p=4e-04
+
+  (Note: the likelihood ratio and score tests assume independence of
+     observations within a cluster, the Wald and robust score tests do not).</code></pre>
+</div>
+</div>
+</section>
+<section id="schoenfeld-residual을-이용한-방법" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="schoenfeld-residual을-이용한-방법"><span class="header-section-number">9.4.3</span> 3. Schoenfeld residual을 이용한 방법</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cox.fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(DI1_ag, DI1_dg) <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> HE_chol <span class="sc">+</span> BMI_gp, <span class="at">data =</span> final_data)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">cox.zph</span>(cox.fit, <span class="at">transform =</span> <span class="st">'log'</span>) </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(temp) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        chisq df     p
+age     1.752  1 0.186
+sex     2.995  1 0.084
+HE_chol 3.891  1 0.049
+BMI_gp  0.875  1 0.350
+GLOBAL  9.630  4 0.047</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temp) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

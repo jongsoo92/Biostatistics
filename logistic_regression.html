@@ -379,6 +379,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="로지스틱회귀분석logistic-regression" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="로지스틱회귀분석logistic-regression"><span class="header-section-number">8.2</span> 로지스틱회귀분석(Logistic regression)</h2>
+<p>Q. 어떤 변수들이 고혈압 진단여부(DI1_dg, 1. 고혈압 진단, 0. 정상)에 영향을 주는지 알아보고자 한다 분석에 포함될 독립변수는 다음과 같다</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">독립변수명</th>
+<th style="text-align: center;">변수설명</th>
+<th style="text-align: center;">내용</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">sex</td>
+<td style="text-align: center;">성별</td>
+<td style="text-align: center;">1. 남자 2. 여자</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">age</td>
+<td style="text-align: center;">만나이</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">HE_sbp</td>
+<td style="text-align: center;">최종수축기혈압</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">HE_chol</td>
+<td style="text-align: center;">총콜레스테롤</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">HE_TG</td>
+<td style="text-align: center;">중성지방</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">smoke</td>
+<td style="text-align: center;">흡연 여부</td>
+<td style="text-align: center;">1. 현재흡연, 2. 과거흡연, 3. 비흡연</td>
+</tr>
+</tbody>
+</table>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -388,7 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Loaded glmnet 4.1-7</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>final_data <span class="ot">=</span> final_data[<span class="fu">complete.cases</span>(final_data),]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>DI1_dg <span class="ot">=</span> <span class="fu">as.factor</span>(final_data<span class="sc">$</span>DI1_dg)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#final_data$DI1_dg = as.factor(final_data$DI1_dg)</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>fit.logistic <span class="ot">=</span> <span class="fu">glm</span>(DI1_dg<span class="sc">~</span>age<span class="sc">+</span>sex<span class="sc">+</span>HE_sbp<span class="sc">+</span>HE_chol<span class="sc">+</span>HE_TG<span class="sc">+</span>smoke,</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> final_data,</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
@@ -490,7 +532,12 @@ Setting direction: controls &lt; cases</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Area under the curve: 0.854</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hosmer-Lemeshow test</span></span>
+</div>
+</section>
+<section id="hosmer-lemeshow-test" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="hosmer-lemeshow-test"><span class="header-section-number">8.4</span> Hosmer-Lemeshow test</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># method 1.</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 결과 재확인 필요(2023.08.29)</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">logitgof</span>(final_data<span class="sc">$</span>DI1_dg,<span class="fu">fitted</span>(fit.logistic))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -505,10 +552,53 @@ incorrect.</code></pre>
 data:  final_data$DI1_dg, fitted(fit.logistic)
 X-squared = 6.9265, df = 8, p-value = 0.5446</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># method 2.</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ResourceSelection)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ResourceSelection 0.3-6      2023-06-27</code></pre>
 </div>
-</section>
-<section id="hosmer-lemeshow-test" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="hosmer-lemeshow-test"><span class="header-section-number">8.4</span> Hosmer-Lemeshow test</h2>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>hl_gof <span class="ot">&lt;-</span> <span class="fu">hoslem.test</span>(final_data<span class="sc">$</span>DI1_dg, <span class="fu">fitted</span>(fit.logistic), <span class="at">g =</span> <span class="dv">10</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>hl_gof</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Hosmer and Lemeshow goodness of fit (GOF) test
+
+data:  final_data$DI1_dg, fitted(fit.logistic)
+X-squared = 6.9265, df = 8, p-value = 0.5446</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># method 3.</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">performance_hosmer</span>(fit.logistic, <span class="at">n_bins =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Hosmer-Lemeshow Goodness-of-Fit Test
+
+  Chi-squared: 6.927
+           df: 8    
+      p-value: 0.545</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Summary: model seems to fit well.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># method 4.</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(largesamplehl)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hltest</span>(fit.logistic, <span class="at">G =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Modified Hosmer-Lemeshow test for large samples
+    H0: epsilon&lt;=epsilon0 vs. Ha: epsilon&gt;epsilon0
+    In-sample goodness of fit.
+
+data:  Model evaluated on 484 observations
+HL statistic = 6.9265, dof = 8.0000000, lambda = 0.0036335, p-value =
+0.5449
+alternative hypothesis: true epsilon is greater than 0.002739948
+95 percent confidence interval:
+   0 Inf
+sample estimates:
+epsilonHat 
+         0 </code></pre>
+</div>
+</div>
 
 
 </section>
