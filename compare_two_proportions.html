@@ -253,6 +253,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="카이제곱검정chi-square-test" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="카이제곱검정chi-square-test"><span class="header-section-number">6.1</span> 카이제곱검정(Chi-square test)</h2>
+<p>Q. 성별(sex)에 따라 당뇨병 발생 비율(DE1_dg)에 차이가 있는가?</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">당뇨병 진단여부(Yes)</th>
+<th style="text-align: center;">당뇨병 진단여부(No)</th>
+<th style="text-align: center;">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">남자</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">여자</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -265,19 +290,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>sex)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"Male"</span>,<span class="st">"Female"</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>DE1_dg <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>DE1_dg)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>DE1_dg) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>sex,data<span class="sc">$</span>DE1_dg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>DE1_dg <span class="ot">=</span> <span class="fu">factor</span>(data<span class="sc">$</span>DE1_dg, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"Yes"</span>,<span class="st">"No"</span>))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>sex,data<span class="sc">$</span>DE1_dg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        
-          No Yes
-  Male   189  23
-  Female 259  29</code></pre>
+         Yes  No
+  Male    23 189
+  Female  29 259</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(data<span class="sc">$</span>sex,data<span class="sc">$</span>DE1_dg),<span class="dv">1</span>),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        
-            No   Yes
-  Male   0.892 0.108
-  Female 0.899 0.101</code></pre>
+           Yes    No
+  Male   0.108 0.892
+  Female 0.101 0.899</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(data<span class="sc">$</span>sex,data<span class="sc">$</span>DE1_dg),<span class="at">correct=</span><span class="cn">FALSE</span>)<span class="co"># Asymptotic significance</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -299,22 +325,48 @@ X-squared = 0.017955, df = 1, p-value = 0.8934</code></pre>
 </section>
 <section id="피셔의-정확검정fishers-exact-test" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="피셔의-정확검정fishers-exact-test"><span class="header-section-number">6.2</span> 피셔의 정확검정(Fisher’s exact test)</h2>
+<p>Q. 현재 흡연 여부에 따라 당뇨병 발생(DE1_dg) 비율의 차이가 있는가?</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">당뇨병 진단여부(Yes)</th>
+<th style="text-align: center;">당뇨병 진단여부(No)</th>
+<th style="text-align: center;">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">현재흡연(Yes)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">현재흡연(No)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>cursmoke <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>cursmoke)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>cursmoke) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>cursmoke,data<span class="sc">$</span>DE1_dg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>cursmoke <span class="ot">=</span> <span class="fu">factor</span>(data<span class="sc">$</span>cursmoke, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"Yes"</span>,<span class="st">"No"</span>))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>cursmoke,data<span class="sc">$</span>DE1_dg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     
-       No Yes
-  No  373  43
-  Yes  75   9</code></pre>
+      Yes  No
+  Yes   9  75
+  No   43 373</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(data<span class="sc">$</span>cursmoke,data<span class="sc">$</span>DE1_dg),<span class="dv">1</span>),<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     
-         No   Yes
-  No  0.897 0.103
-  Yes 0.893 0.107</code></pre>
+        Yes    No
+  Yes 0.107 0.893
+  No  0.103 0.897</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(data<span class="sc">$</span>cursmoke,data<span class="sc">$</span>DE1_dg),<span class="at">correct=</span><span class="cn">FALSE</span>)<span class="co"># Asymptotic significance</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -350,6 +402,34 @@ odds ratio
 </section>
 <section id="mantel-haenszel-chi-square-test" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="mantel-haenszel-chi-square-test"><span class="header-section-number">6.3</span> Mantel-Haenszel chi-square test</h2>
+<p>Q. 체질량지수(HE_BMI)를 저체중군(20 이하), 정상군(20 초과 ~25 이하), 과체중군(25 초과)의 세 군으로 나누었을 때 BMI 가 높은 그룹일수록 고혈압 발생(DI1_dg) 비율이 높아지는가 ?</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">고혈압</th>
+<th style="text-align: center;">저체중</th>
+<th style="text-align: center;">정상</th>
+<th style="text-align: center;">비만</th>
+<th style="text-align: center;">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">No</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -366,12 +446,15 @@ odds ratio
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_BMI<span class="sc">&gt;</span><span class="dv">25</span>,<span class="dv">3</span>,<span class="cn">NA</span>)))</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>BMI_gp <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>BMI_gp)</span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>BMI_gp) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"light"</span>,<span class="st">"normal"</span>,<span class="st">"heavy"</span>)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>DI1_dg,data<span class="sc">$</span>BMI_gp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>DI1_dg <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>DI1_dg)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>DI1_dg)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"No"</span>,<span class="st">"Yes"</span>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>DI1_dg <span class="ot">=</span> <span class="fu">factor</span>(data<span class="sc">$</span>DI1_dg, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"Yes"</span>,<span class="st">"No"</span>))</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>DI1_dg,data<span class="sc">$</span>BMI_gp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   
-    light normal heavy
-  0    53    220   104
-  1     8     60    52</code></pre>
+<pre><code>     
+      light normal heavy
+  Yes     8     60    52
+  No     53    220   104</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(data<span class="sc">$</span>DI1_dg,data<span class="sc">$</span>BMI_gp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -393,17 +476,44 @@ X-squared = 12.157, df = 1, p-value = 0.0004891</code></pre>
 </section>
 <section id="맥니마검정mcnemar-test" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="맥니마검정mcnemar-test"><span class="header-section-number">6.4</span> 맥니마검정(McNemar test)</h2>
+<p>Q. 수축기 혈압을 120 을 기준으로 아래와 같이 정상군, 고혈압 위험군 두 군으로 나누었을 때, 1차 수축기 혈압 고혈압 위험 군 비율과 2차 수축기 혈압 고혈압 위험군 비율이 다르다고 할 수 있는가?</p>
+<p>SBP &lt;= 120 : sbp_group = 1 (정상군)</p>
+<p>SBP &gt; 120: sbp_group = 2 (고혈압 위험군)</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">2차 수축기 혈압(고혈압 위험군)</th>
+<th style="text-align: center;">2차 수축기 혈압(정상군)</th>
+<th style="text-align: center;">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1차 수축기 혈압(고혈압 위험군)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1차 수축기 혈압(정상군)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sbp_group1 <span class="ot">=</span> <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_sbp1<span class="sc">&lt;=</span><span class="dv">120</span>,<span class="st">"normal"</span>,</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_sbp1<span class="sc">&gt;</span><span class="dv">120</span>,<span class="st">"danger"</span>,<span class="cn">NA</span>))</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sbp_group2 <span class="ot">=</span> <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_sbp2<span class="sc">&lt;=</span><span class="dv">120</span>,<span class="st">"normal"</span>,</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_sbp2<span class="sc">&gt;</span><span class="dv">120</span>,<span class="st">"danger"</span>,<span class="cn">NA</span>))</span>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sbp_group1 <span class="ot">=</span> <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_sbp1<span class="sc">&lt;=</span><span class="dv">120</span>,<span class="st">"1"</span>,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_sbp1<span class="sc">&gt;</span><span class="dv">120</span>,<span class="st">"2"</span>,<span class="cn">NA</span>))</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sbp_group2 <span class="ot">=</span> <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_sbp2<span class="sc">&lt;=</span><span class="dv">120</span>,<span class="st">"1"</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">ifelse</span>(data<span class="sc">$</span>HE_sbp2<span class="sc">&gt;</span><span class="dv">120</span>,<span class="st">"2"</span>,<span class="cn">NA</span>))</span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>sbp_group1,data<span class="sc">$</span>sbp_group2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        
-         danger normal
-  danger    199     27
-  normal     22    250</code></pre>
+<pre><code>   
+      1   2
+  1 250  22
+  2  27 199</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcnemar.test</span>(<span class="fu">table</span>(data<span class="sc">$</span>sbp_group1,data<span class="sc">$</span>sbp_group2),<span class="at">correct=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
