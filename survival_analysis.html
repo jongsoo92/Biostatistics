@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#콕스비례위험모형cox-proportional-hazard-model" id="toc-콕스비례위험모형cox-proportional-hazard-model" class="nav-link" data-scroll-target="#콕스비례위험모형cox-proportional-hazard-model"><span class="header-section-number">9.3</span> 콕스비례위험모형(Cox proportional hazard model)</a></li>
   <li><a href="#비례위험-가정검토" id="toc-비례위험-가정검토" class="nav-link" data-scroll-target="#비례위험-가정검토"><span class="header-section-number">9.4</span> 비례위험 가정검토</a>
   <ul class="collapse">
-  <li><a href="#log-logst-plot을-이용한-방법" id="toc-log-logst-plot을-이용한-방법" class="nav-link" data-scroll-target="#log-logst-plot을-이용한-방법"><span class="header-section-number">9.4.1</span> 1. log(-log(S(t))) plot을 이용한 방법</a></li>
+  <li><a href="#plot을-이용한-방법" id="toc-plot을-이용한-방법" class="nav-link" data-scroll-target="#plot을-이용한-방법"><span class="header-section-number">9.4.1</span> 1. plot을 이용한 방법</a></li>
   <li><a href="#time-dependent-cox-regression을-이용한-방법" id="toc-time-dependent-cox-regression을-이용한-방법" class="nav-link" data-scroll-target="#time-dependent-cox-regression을-이용한-방법"><span class="header-section-number">9.4.2</span> 2. Time dependent cox regression을 이용한 방법</a></li>
   <li><a href="#schoenfeld-residual을-이용한-방법" id="toc-schoenfeld-residual을-이용한-방법" class="nav-link" data-scroll-target="#schoenfeld-residual을-이용한-방법"><span class="header-section-number">9.4.3</span> 3. Schoenfeld residual을 이용한 방법</a></li>
   </ul></li>
@@ -281,428 +281,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read_sav</span>(<span class="st">"HN19_실습.sav"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>final_data <span class="ot">=</span> <span class="fu">subset</span>(data, age <span class="sc">&gt;=</span><span class="dv">40</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(final_data,<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="table table-sm table-striped small">
-<colgroup>
-<col style="width: 4%">
-<col style="width: 1%">
-<col style="width: 1%">
-<col style="width: 4%">
-<col style="width: 2%">
-<col style="width: 4%">
-<col style="width: 1%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 3%">
-<col style="width: 2%">
-<col style="width: 1%">
-<col style="width: 1%">
-<col style="width: 4%">
-<col style="width: 3%">
-<col style="width: 3%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">ID</th>
-<th style="text-align: right;">sex</th>
-<th style="text-align: right;">age</th>
-<th style="text-align: right;">HE_BMI</th>
-<th style="text-align: right;">smoke</th>
-<th style="text-align: right;">cursmoke</th>
-<th style="text-align: right;">edu</th>
-<th style="text-align: right;">marri_1</th>
-<th style="text-align: right;">DI1_dg</th>
-<th style="text-align: right;">DI1_ag</th>
-<th style="text-align: right;">DE1_dg</th>
-<th style="text-align: right;">DE1_ag</th>
-<th style="text-align: right;">DI2_dg</th>
-<th style="text-align: right;">DI2_ag</th>
-<th style="text-align: right;">HE_sbp1</th>
-<th style="text-align: right;">HE_sbp2</th>
-<th style="text-align: right;">HE_sbp3</th>
-<th style="text-align: right;">HE_dbp1</th>
-<th style="text-align: right;">HE_dbp2</th>
-<th style="text-align: right;">HE_dbp3</th>
-<th style="text-align: right;">HE_sbp</th>
-<th style="text-align: right;">HE_dbp</th>
-<th style="text-align: right;">HE_ht</th>
-<th style="text-align: right;">HE_wt</th>
-<th style="text-align: right;">HE_wc</th>
-<th style="text-align: right;">HE_chol</th>
-<th style="text-align: right;">HE_TG</th>
-<th style="text-align: right;">BD1</th>
-<th style="text-align: right;">BP5</th>
-<th style="text-align: right;">mh_stress</th>
-<th style="text-align: right;">BP16_1</th>
-<th style="text-align: right;">BP16_2</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">A531220402</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">45</td>
-<td style="text-align: right;">19.96642</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">45</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">45</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">45</td>
-<td style="text-align: right;">106</td>
-<td style="text-align: right;">104</td>
-<td style="text-align: right;">102</td>
-<td style="text-align: right;">74</td>
-<td style="text-align: right;">72</td>
-<td style="text-align: right;">70</td>
-<td style="text-align: right;">103</td>
-<td style="text-align: right;">71</td>
-<td style="text-align: right;">171.9</td>
-<td style="text-align: right;">59.0</td>
-<td style="text-align: right;">73.9</td>
-<td style="text-align: right;">197</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">6</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">L501322401</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">51</td>
-<td style="text-align: right;">24.87020</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">51</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">51</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">50</td>
-<td style="text-align: right;">120</td>
-<td style="text-align: right;">112</td>
-<td style="text-align: right;">114</td>
-<td style="text-align: right;">76</td>
-<td style="text-align: right;">76</td>
-<td style="text-align: right;">72</td>
-<td style="text-align: right;">113</td>
-<td style="text-align: right;">74</td>
-<td style="text-align: right;">169.2</td>
-<td style="text-align: right;">71.2</td>
-<td style="text-align: right;">85.7</td>
-<td style="text-align: right;">242</td>
-<td style="text-align: right;">166</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">5</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">M503205101</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">68</td>
-<td style="text-align: right;">23.59494</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">66</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">68</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">67</td>
-<td style="text-align: right;">140</td>
-<td style="text-align: right;">136</td>
-<td style="text-align: right;">134</td>
-<td style="text-align: right;">74</td>
-<td style="text-align: right;">78</td>
-<td style="text-align: right;">74</td>
-<td style="text-align: right;">135</td>
-<td style="text-align: right;">76</td>
-<td style="text-align: right;">155.7</td>
-<td style="text-align: right;">57.2</td>
-<td style="text-align: right;">83.9</td>
-<td style="text-align: right;">138</td>
-<td style="text-align: right;">59</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">K501305402</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">56</td>
-<td style="text-align: right;">27.50619</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">56</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">56</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">56</td>
-<td style="text-align: right;">144</td>
-<td style="text-align: right;">144</td>
-<td style="text-align: right;">142</td>
-<td style="text-align: right;">82</td>
-<td style="text-align: right;">80</td>
-<td style="text-align: right;">82</td>
-<td style="text-align: right;">143</td>
-<td style="text-align: right;">81</td>
-<td style="text-align: right;">157.0</td>
-<td style="text-align: right;">67.8</td>
-<td style="text-align: right;">88.4</td>
-<td style="text-align: right;">170</td>
-<td style="text-align: right;">135</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">E506278202</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">66</td>
-<td style="text-align: right;">20.70085</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">66</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">66</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">65</td>
-<td style="text-align: right;">138</td>
-<td style="text-align: right;">132</td>
-<td style="text-align: right;">126</td>
-<td style="text-align: right;">82</td>
-<td style="text-align: right;">78</td>
-<td style="text-align: right;">74</td>
-<td style="text-align: right;">129</td>
-<td style="text-align: right;">76</td>
-<td style="text-align: right;">151.0</td>
-<td style="text-align: right;">47.2</td>
-<td style="text-align: right;">73.4</td>
-<td style="text-align: right;">200</td>
-<td style="text-align: right;">139</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">6</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A509211902</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">49</td>
-<td style="text-align: right;">22.89580</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">49</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">49</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">49</td>
-<td style="text-align: right;">134</td>
-<td style="text-align: right;">136</td>
-<td style="text-align: right;">136</td>
-<td style="text-align: right;">74</td>
-<td style="text-align: right;">72</td>
-<td style="text-align: right;">72</td>
-<td style="text-align: right;">136</td>
-<td style="text-align: right;">72</td>
-<td style="text-align: right;">179.9</td>
-<td style="text-align: right;">74.1</td>
-<td style="text-align: right;">89.3</td>
-<td style="text-align: right;">242</td>
-<td style="text-align: right;">121</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">6</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">H542222102</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">71</td>
-<td style="text-align: right;">25.90922</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">70</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">71</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">68</td>
-<td style="text-align: right;">194</td>
-<td style="text-align: right;">188</td>
-<td style="text-align: right;">186</td>
-<td style="text-align: right;">78</td>
-<td style="text-align: right;">88</td>
-<td style="text-align: right;">86</td>
-<td style="text-align: right;">187</td>
-<td style="text-align: right;">87</td>
-<td style="text-align: right;">144.1</td>
-<td style="text-align: right;">53.8</td>
-<td style="text-align: right;">90.8</td>
-<td style="text-align: right;">219</td>
-<td style="text-align: right;">141</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">7</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">H521268001</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">49</td>
-<td style="text-align: right;">23.41892</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">49</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">49</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">49</td>
-<td style="text-align: right;">120</td>
-<td style="text-align: right;">116</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: right;">80</td>
-<td style="text-align: right;">80</td>
-<td style="text-align: right;">80</td>
-<td style="text-align: right;">113</td>
-<td style="text-align: right;">80</td>
-<td style="text-align: right;">171.4</td>
-<td style="text-align: right;">68.8</td>
-<td style="text-align: right;">80.6</td>
-<td style="text-align: right;">227</td>
-<td style="text-align: right;">148</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">7</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">H542319001</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">64</td>
-<td style="text-align: right;">20.87199</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">64</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">64</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">64</td>
-<td style="text-align: right;">134</td>
-<td style="text-align: right;">134</td>
-<td style="text-align: right;">130</td>
-<td style="text-align: right;">78</td>
-<td style="text-align: right;">76</td>
-<td style="text-align: right;">76</td>
-<td style="text-align: right;">132</td>
-<td style="text-align: right;">76</td>
-<td style="text-align: right;">154.0</td>
-<td style="text-align: right;">49.5</td>
-<td style="text-align: right;">71.8</td>
-<td style="text-align: right;">224</td>
-<td style="text-align: right;">99</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A518230601</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">44</td>
-<td style="text-align: right;">23.47411</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">44</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">44</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">44</td>
-<td style="text-align: right;">124</td>
-<td style="text-align: right;">116</td>
-<td style="text-align: right;">112</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">92</td>
-<td style="text-align: right;">94</td>
-<td style="text-align: right;">114</td>
-<td style="text-align: right;">93</td>
-<td style="text-align: right;">170.7</td>
-<td style="text-align: right;">68.4</td>
-<td style="text-align: right;">82.2</td>
-<td style="text-align: right;">174</td>
-<td style="text-align: right;">77</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">6</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(DI1_ag,DI1_dg) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"kaplan-meier"</span>, <span class="at">data =</span> final_data)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Life table</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(DI1_ag,DI1_dg) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> final_data)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Call: survfit(formula = Surv(DI1_ag, DI1_dg) ~ 1, data = final_data, 
-    type = "kaplan-meier")
+<pre><code>Call: survfit(formula = Surv(DI1_ag, DI1_dg) ~ 1, data = final_data)
 
  time n.risk n.event survival std.err lower 95% CI upper 95% CI
    18    357       1    0.997 0.00280        0.992        1.000
@@ -749,9 +333,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    79     19       1    0.346 0.04892        0.262        0.457
    80     10       2    0.277 0.05873        0.183        0.420</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rslt <span class="ot">=</span> <span class="fu">summary</span>(fit,<span class="at">times=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">80</span>,<span class="dv">5</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>rslt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call: survfit(formula = Surv(DI1_ag, DI1_dg) ~ 1, data = final_data)
+
+ time n.risk n.event survival std.err lower 95% CI upper 95% CI
+    0    357       0    1.000 0.00000        1.000        1.000
+    5    357       0    1.000 0.00000        1.000        1.000
+   10    357       0    1.000 0.00000        1.000        1.000
+   15    357       0    1.000 0.00000        1.000        1.000
+   20    356       1    0.997 0.00280        0.992        1.000
+   25    356       0    0.997 0.00280        0.992        1.000
+   30    355       1    0.994 0.00395        0.987        1.000
+   35    353       3    0.986 0.00622        0.974        0.998
+   40    349       6    0.969 0.00915        0.951        0.987
+   45    294      15    0.923 0.01447        0.895        0.952
+   50    237      18    0.860 0.01979        0.822        0.899
+   55    180      20    0.776 0.02529        0.728        0.827
+   60    130      15    0.700 0.02943        0.645        0.760
+   65     87      17    0.591 0.03492        0.526        0.663
+   70     52      10    0.501 0.03964        0.429        0.585
+   75     32       6    0.432 0.04325        0.355        0.525
+   80     10       7    0.277 0.05873        0.183        0.420</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rslt<span class="sc">$</span>time,rslt<span class="sc">$</span>surv,<span class="at">type=</span><span class="st">"s"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Kaplan-Meier estimator</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">=</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(DI1_ag,DI1_dg) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"kaplan-meier"</span>, <span class="at">data =</span> final_data)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="survival_analysis_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># median survival time</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>fit2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call: survfit(formula = Surv(DI1_ag, DI1_dg) ~ 1, data = final_data, 
+    type = "kaplan-meier")
+
+       n events median 0.95LCL 0.95UCL
+[1,] 357    119     71      68      76</code></pre>
 </div>
 </div>
 </section>
@@ -783,8 +407,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">=</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(DI1_ag,DI1_dg) <span class="sc">~</span> smoke, <span class="at">type =</span> <span class="st">"kaplan-meier"</span>, <span class="at">data =</span> final_data)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">=</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(DI1_ag,DI1_dg) <span class="sc">~</span> smoke, <span class="at">type =</span> <span class="st">"kaplan-meier"</span>, <span class="at">data =</span> final_data)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call: survfit(formula = Surv(DI1_ag, DI1_dg) ~ smoke, data = final_data, 
     type = "kaplan-meier")
@@ -868,28 +492,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    79     13       1    0.355 0.06155        0.253        0.499
    80      8       2    0.267 0.07136        0.158        0.450</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(fit2, <span class="at">legend.title=</span><span class="st">"smoke"</span>,<span class="at">legend.labs=</span><span class="fu">c</span>(<span class="st">"current"</span>,<span class="st">"ex smoker"</span>,<span class="st">"non-smoker"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(fit3, <span class="at">legend.title=</span><span class="st">"smoke"</span>,<span class="at">legend.labs=</span><span class="fu">c</span>(<span class="st">"current"</span>,<span class="st">"ex smoker"</span>,<span class="st">"non-smoker"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="survival_analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(DI1_ag,DI1_dg) <span class="sc">~</span> smoke, <span class="at">data =</span> final_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>rslt2 <span class="ot">=</span> <span class="fu">survdiff</span>(<span class="fu">Surv</span>(DI1_ag,DI1_dg) <span class="sc">~</span> smoke, <span class="at">data =</span> final_data)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>rslt2<span class="sc">$</span>chisq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Call:
-survdiff(formula = Surv(DI1_ag, DI1_dg) ~ smoke, data = final_data)
-
-          N Observed Expected (O-E)^2/E (O-E)^2/V
-smoke=1  53       17     15.3    0.1937     0.228
-smoke=2  83       28     26.5    0.0821     0.108
-smoke=3 221       74     77.2    0.1323     0.387
-
- Chisq= 0.4  on 2 degrees of freedom, p= 0.8 </code></pre>
+<pre><code>[1] 0.4189026</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>rslt2<span class="sc">$</span>pvalue</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8110291</code></pre>
 </div>
 </div>
 </section>
 <section id="breslow-test-tarone-ware-test" class="level3" data-number="9.2.2">
 <h3 data-number="9.2.2" class="anchored" data-anchor-id="breslow-test-tarone-ware-test"><span class="header-section-number">9.2.2</span> Breslow test &amp; Tarone-Ware test</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survMisc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("survMisc")</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survMisc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 다음의 패키지를 부착합니다: 'survMisc'</code></pre>
@@ -899,22 +521,8 @@ smoke=3 221       74     77.2    0.1323     0.387
 
     autoplot</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ten</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      t e   n cg ncg
-  1: 27 1 360  1  53
-  2: 41 2 340  1  52
-  3: 43 2 320  1  50
-  4: 44 0 300  1  47
-  5: 45 1 290  1  43
- ---                
-101: 75 1  32  3  22
-102: 76 3  27  3  19
-103: 77 0  23  3  15
-104: 79 1  19  3  13
-105: 80 2  10  3   8</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comp</span>(<span class="fu">ten</span>(fit2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> <span class="fu">ten</span>(fit3)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">comp</span>(t1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              chiSq df pChisq
 1          0.418903  2      5
@@ -935,20 +543,35 @@ FH_p=1_q=1 -8.5474e-02  1.5072e+00 -0.069624     6
 $scores
 [1] 1 2 3</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Log-rank test</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pchisq</span>(<span class="fl">0.4189</span>,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8110302</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Breslow test</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pchisq</span>(<span class="fl">1.3213</span>,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5165155</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tarone-Ware test</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pchisq</span>(<span class="fl">0.8885</span>,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6413051</code></pre>
+</div>
 </div>
 </section>
 </section>
 <section id="콕스비례위험모형cox-proportional-hazard-model" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="콕스비례위험모형cox-proportional-hazard-model"><span class="header-section-number">9.3</span> 콕스비례위험모형(Cox proportional hazard model)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to generate BMI group variable</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp <span class="ot">=</span> <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">22</span>,<span class="st">"1 light"</span>,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">26</span>,<span class="st">"2 normal"</span>,</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&gt;</span><span class="dv">26</span>,<span class="st">"3 heavy"</span>,<span class="cn">NA</span>)))</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp <span class="ot">=</span> <span class="fu">factor</span>(final_data<span class="sc">$</span>BMI_gp)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#final_data$BMI_gp = relevel(final_data$BMI_gp, ref = "3 heavy")</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>cox.fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(DI1_ag, DI1_dg) <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> HE_chol <span class="sc">+</span> BMI_gp, <span class="at">data =</span> final_data)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cox.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to generate BMI group variable</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp <span class="ot">=</span> <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">22</span>,<span class="st">"1 light"</span>,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">26</span>,<span class="st">"2 normal"</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&gt;</span><span class="dv">26</span>,<span class="st">"3 heavy"</span>,<span class="cn">NA</span>)))</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp <span class="ot">=</span> <span class="fu">factor</span>(final_data<span class="sc">$</span>BMI_gp)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">#final_data$BMI_gp = relevel(final_data$BMI_gp, ref = "3 heavy")</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>cox.fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(DI1_ag, DI1_dg) <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> HE_chol <span class="sc">+</span> BMI_gp, <span class="at">data =</span> final_data)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cox.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 coxph(formula = Surv(DI1_ag, DI1_dg) ~ age + sex + HE_chol + 
@@ -982,29 +605,37 @@ Score (logrank) test = 31.93  on 5 df,   p=6e-06</code></pre>
 </section>
 <section id="비례위험-가정검토" class="level2" data-number="9.4">
 <h2 data-number="9.4" class="anchored" data-anchor-id="비례위험-가정검토"><span class="header-section-number">9.4</span> 비례위험 가정검토</h2>
-<section id="log-logst-plot을-이용한-방법" class="level3" data-number="9.4.1">
-<h3 data-number="9.4.1" class="anchored" data-anchor-id="log-logst-plot을-이용한-방법"><span class="header-section-number">9.4.1</span> 1. log(-log(S(t))) plot을 이용한 방법</h3>
+<section id="plot을-이용한-방법" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="plot을-이용한-방법"><span class="header-section-number">9.4.1</span> 1. plot을 이용한 방법</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cloglog   </span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>cloglog <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(DI1_ag, DI1_dg) <span class="sc">~</span> BMI_gp, <span class="at">data =</span> final_data)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(cloglog, <span class="at">fun =</span> <span class="st">"cloglog"</span>,<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">20</span>,<span class="dv">80</span>),<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="time-dependent-cox-regression을-이용한-방법" class="level3" data-number="9.4.2">
 <h3 data-number="9.4.2" class="anchored" data-anchor-id="time-dependent-cox-regression을-이용한-방법"><span class="header-section-number">9.4.2</span> 2. Time dependent cox regression을 이용한 방법</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp <span class="ot">=</span> <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">22</span>,<span class="dv">1</span>,</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">26</span>,<span class="dv">2</span>,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&gt;</span><span class="dv">26</span>,<span class="dv">3</span>,<span class="cn">NA</span>)))</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp2 <span class="ot">=</span> <span class="fu">ifelse</span>(final_data<span class="sc">$</span>BMI_gp<span class="sc">==</span><span class="dv">2</span>,<span class="dv">1</span>,</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(final_data<span class="sc">$</span>BMI_gp <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>),<span class="dv">0</span>,<span class="cn">NA</span>))</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp3 <span class="ot">=</span> <span class="fu">ifelse</span>(final_data<span class="sc">$</span>BMI_gp<span class="sc">==</span><span class="dv">3</span>,<span class="dv">1</span>,</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(final_data<span class="sc">$</span>BMI_gp <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="dv">0</span>,<span class="cn">NA</span>))</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co"># time variable</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>time <span class="ot">=</span> final_data<span class="sc">$</span>DI1_ag</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co"># event variable</span></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>event <span class="ot">=</span> final_data<span class="sc">$</span>DI1_dg</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 1.</span></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(DI1_ag,DI1_dg) <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> HE_chol <span class="sc">+</span> BMI_gp2 <span class="sc">+</span> BMI_gp3 <span class="sc">+</span><span class="fu">tt</span>(BMI_gp2)<span class="sc">+</span><span class="fu">tt</span>(BMI_gp3), <span class="at">data=</span>final_data, <span class="at">tt=</span> <span class="cf">function</span>(x,t,...) x<span class="sc">*</span><span class="fu">log</span>(t) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp <span class="ot">=</span> <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">22</span>,<span class="dv">1</span>,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&lt;=</span><span class="dv">26</span>,<span class="dv">2</span>,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(final_data<span class="sc">$</span>HE_BMI<span class="sc">&gt;</span><span class="dv">26</span>,<span class="dv">3</span>,<span class="cn">NA</span>)))</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp2 <span class="ot">=</span> <span class="fu">ifelse</span>(final_data<span class="sc">$</span>BMI_gp<span class="sc">==</span><span class="dv">2</span>,<span class="dv">1</span>,</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(final_data<span class="sc">$</span>BMI_gp <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>),<span class="dv">0</span>,<span class="cn">NA</span>))</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>BMI_gp3 <span class="ot">=</span> <span class="fu">ifelse</span>(final_data<span class="sc">$</span>BMI_gp<span class="sc">==</span><span class="dv">3</span>,<span class="dv">1</span>,</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">ifelse</span>(final_data<span class="sc">$</span>BMI_gp <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="dv">0</span>,<span class="cn">NA</span>))</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="co"># time variable</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>time <span class="ot">=</span> final_data<span class="sc">$</span>DI1_ag</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="co"># event variable</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>final_data<span class="sc">$</span>event <span class="ot">=</span> final_data<span class="sc">$</span>DI1_dg</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 1.</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(DI1_ag,DI1_dg) <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> HE_chol <span class="sc">+</span> BMI_gp2 <span class="sc">+</span> BMI_gp3 <span class="sc">+</span><span class="fu">tt</span>(BMI_gp2)<span class="sc">+</span><span class="fu">tt</span>(BMI_gp3), <span class="at">data=</span>final_data, <span class="at">tt=</span> <span class="cf">function</span>(x,t,...) x<span class="sc">*</span><span class="fu">log</span>(t) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 coxph(formula = Surv(DI1_ag, DI1_dg) ~ age + sex + HE_chol + 
@@ -1024,15 +655,15 @@ Likelihood ratio test=37.17  on 7 df, p=4.36e-06
 n= 341, number of events= 114 
    (결측으로 인하여 16개의 관측치가 삭제되었습니다.)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 2.</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>data.cp <span class="ot">=</span> <span class="fu">survSplit</span>(final_data,<span class="at">cut =</span> final_data<span class="sc">$</span>DI1_ag[final_data<span class="sc">$</span>DI1_dg<span class="sc">==</span><span class="dv">1</span>],<span class="at">end=</span><span class="st">"time"</span>,<span class="at">event=</span><span class="st">"event"</span>, <span class="at">start =</span> <span class="st">"start"</span>, <span class="at">id=</span><span class="st">"ID2"</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>data.cp<span class="sc">$</span>logbmi_gp2 <span class="ot">&lt;-</span> data.cp<span class="sc">$</span>BMI_gp2 <span class="sc">*</span> <span class="fu">log</span>(data.cp<span class="sc">$</span>time)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>data.cp<span class="sc">$</span>logbmi_gp3 <span class="ot">&lt;-</span> data.cp<span class="sc">$</span>BMI_gp3 <span class="sc">*</span> <span class="fu">log</span>(data.cp<span class="sc">$</span>time)</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># time dependent cox regression</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">=</span> <span class="fu">Surv</span>(data.cp<span class="sc">$</span>start, data.cp<span class="sc">$</span>time, data.cp<span class="sc">$</span>event)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>cox.rslt <span class="ot">=</span> <span class="fu">coxph</span>(Y <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> HE_chol <span class="sc">+</span> BMI_gp2 <span class="sc">+</span> BMI_gp3 <span class="sc">+</span> logbmi_gp2 <span class="sc">+</span> logbmi_gp3 <span class="sc">+</span> <span class="fu">cluster</span>(ID2), <span class="at">data =</span> data.cp)</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cox.rslt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 2.</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>data.cp <span class="ot">=</span> <span class="fu">survSplit</span>(final_data,<span class="at">cut =</span> final_data<span class="sc">$</span>DI1_ag[final_data<span class="sc">$</span>DI1_dg<span class="sc">==</span><span class="dv">1</span>],<span class="at">end=</span><span class="st">"time"</span>,<span class="at">event=</span><span class="st">"event"</span>, <span class="at">start =</span> <span class="st">"start"</span>, <span class="at">id=</span><span class="st">"ID2"</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>data.cp<span class="sc">$</span>logbmi_gp2 <span class="ot">&lt;-</span> data.cp<span class="sc">$</span>BMI_gp2 <span class="sc">*</span> <span class="fu">log</span>(data.cp<span class="sc">$</span>time)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>data.cp<span class="sc">$</span>logbmi_gp3 <span class="ot">&lt;-</span> data.cp<span class="sc">$</span>BMI_gp3 <span class="sc">*</span> <span class="fu">log</span>(data.cp<span class="sc">$</span>time)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># time dependent cox regression</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">=</span> <span class="fu">Surv</span>(data.cp<span class="sc">$</span>start, data.cp<span class="sc">$</span>time, data.cp<span class="sc">$</span>event)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>cox.rslt <span class="ot">=</span> <span class="fu">coxph</span>(Y <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> HE_chol <span class="sc">+</span> BMI_gp2 <span class="sc">+</span> BMI_gp3 <span class="sc">+</span> logbmi_gp2 <span class="sc">+</span> logbmi_gp3 <span class="sc">+</span> <span class="fu">cluster</span>(ID2), <span class="at">data =</span> data.cp)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cox.rslt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 coxph(formula = Y ~ age + sex + HE_chol + BMI_gp2 + BMI_gp3 + 
@@ -1074,9 +705,9 @@ Score (logrank) test = 37.54  on 7 df,   p=4e-06,   Robust = 26.36  p=4e-04
 <section id="schoenfeld-residual을-이용한-방법" class="level3" data-number="9.4.3">
 <h3 data-number="9.4.3" class="anchored" data-anchor-id="schoenfeld-residual을-이용한-방법"><span class="header-section-number">9.4.3</span> 3. Schoenfeld residual을 이용한 방법</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cox.fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(DI1_ag, DI1_dg) <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> HE_chol <span class="sc">+</span> BMI_gp, <span class="at">data =</span> final_data)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">cox.zph</span>(cox.fit, <span class="at">transform =</span> <span class="st">'log'</span>) </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(temp) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>cox.fit <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(DI1_ag, DI1_dg) <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> HE_chol <span class="sc">+</span> BMI_gp, <span class="at">data =</span> final_data)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">cox.zph</span>(cox.fit, <span class="at">transform =</span> <span class="st">'log'</span>) </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(temp) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        chisq df     p
 age     1.752  1 0.186
@@ -1085,10 +716,10 @@ HE_chol 3.891  1 0.049
 BMI_gp  0.875  1 0.350
 GLOBAL  9.630  4 0.047</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temp) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temp) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="survival_analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="survival_analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
